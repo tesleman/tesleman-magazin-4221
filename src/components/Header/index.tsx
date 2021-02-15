@@ -2,39 +2,40 @@ import React from 'react';
 import { useStyles, useStylesType } from './header.style';
 import Link from 'next/link';
 import { Grid } from '@material-ui/core';
+import Headercart from './Headercart';
 
 const cat = [
   {
     name: 'name1',
-    slug: 'slug',
+    slug: '/slug',
     subcat: [
       {
         name: 'subcatname1',
-        slug: 'subcatslug1',
+        slug: '/subcatslug1',
       },
     ],
   },
   {
     name: 'name2',
-    slug: 'slug2',
+    slug: '/slug2',
     subcat: [
       {
         name: 'subcatname2',
-        slug: 'subcatslug2',
+        slug: '/subcatslug2',
       },
       {
         name: 'subcatname3',
-        slug: 'subcatslug3',
+        slug: '/subcatslug3',
       },
       {
         name: 'subcatname4',
-        slug: 'subcatslug4',
+        slug: '/subcatslug4',
       },
     ],
   },
   {
     name: 'name3',
-    slug: 'slug3',
+    slug: '/slug3',
   },
 ];
 
@@ -68,7 +69,9 @@ export default function Header() {
             ))}
           </ul>
         </Grid>
-        <Grid item xs={2}></Grid>
+        <Grid item xs={2}>
+          <Headercart />
+        </Grid>
       </Grid>
     </nav>
   );
