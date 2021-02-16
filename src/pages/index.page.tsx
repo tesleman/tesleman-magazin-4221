@@ -6,9 +6,8 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div style={{ marginTop: 55 }}>
-        <Slider />
-      </div>
+
+      <Slider />
     </div>
   );
 }

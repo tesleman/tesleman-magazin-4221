@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 555,
     position: 'fixed',
     top: 0,
-    float: 'right',
+
     width: '100%',
     textAlign: 'center',
     borderBottom: '1px solid rgba(215, 215, 215, .5)',
