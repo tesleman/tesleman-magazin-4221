@@ -2,9 +2,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
 export default function connect() {
-  return nextConnect<NextApiRequest, NextApiResponse>({
-    onNoMatch(req, res) {
+  return nextConnect({
+    onError(error, req: NextApiRequest, res: NextApiResponse) {
+      res.status(501).json({ error: `Sorry something Happened! ${error.message}` });
+    },
+    onNoMatch(req: NextApiRequest, res: NextApiResponse) {
       res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
     },
   });
 }
+

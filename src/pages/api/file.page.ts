@@ -1,35 +1,22 @@
-import nextConnect from 'next-connect';
-import multer from 'multer';
 import { NextApiRequest, NextApiResponse } from 'next';
+import connect from './core/connect';
+import { upload } from './core/multer';
 
-const apiRoute = nextConnect({
-  onError(error, req: NextApiRequest, res: NextApiResponse) {
-    res.status(501).json({ error: `Sorry something Happened! ${error.message}` });
-  },
-  onNoMatch(req: NextApiRequest, res: NextApiResponse) {
-    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
-  },
-});
-
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: './public/uploads',
-    filename: (req, file, cb) => cb(null, file.originalname),
-  }),
-});
-
+const apiRoute = connect();
 apiRoute.use(upload.array('avatar', 12));
 interface NextApiRequestExtand extends NextApiRequest {
-  files: File;
+  files: Array<Express.Multer.File>;
 }
 apiRoute.post((req: NextApiRequestExtand, res: NextApiResponse) => {
   const file = req.files;
-  console.log(file, req.body);
+  console.log(file);
   if (!file) {
     const error = new Error('Please choose files');
   }
 
-  res.send(file);
+  let fileNames = file.map((element) => '/uploads/' + element.filename);
+
+  res.send(fileNames);
 });
 
 export default apiRoute;

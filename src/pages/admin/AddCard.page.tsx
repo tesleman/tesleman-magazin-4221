@@ -1,36 +1,57 @@
-import axios from 'axios';
 import React from 'react';
-
+import { useForm } from 'react-hook-form';
 const AddCard = () => {
-  const [state, setstate] = React.useState(null);
+  const [stateImg, setstateImg] = React.useState([]);
+  const { register, handleSubmit } = useForm();
 
-  const ref = React.useRef();
+  interface responsIntrfaceInput extends ReadableStream<Uint8Array> {
+    images: FormData;
+    title: string;
+    subtitle: string;
+    description: string;
+    category: string;
+  }
 
-  const hendelSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setstate(e.target.files);
-  };
-  console.log(state);
-  const ubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data: responsIntrfaceInput) => {
     const formData = new FormData();
-
-    Array.from(state).forEach((file: any) => {
+    Array.from(data.images).forEach((file: any) => {
       formData.append('avatar', file);
     });
-    console.log(formData);
+
     const response = await fetch('http://localhost:3000/api/file', {
       body: formData,
       method: 'post',
     });
+    console.log(data, '1');
     let user = await response.json();
-    console.log(user);
+    data.images = user;
+    console.log(data, '2');
+
+    const responseS = await fetch('http://localhost:3000/api/card', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      method: 'post',
+    });
+    let responseSs = await responseS.json();
+    console.log(responseSs, 'responseS.json()');
+    console.log(responseS, 'responseS ');
+    // setstateImg(user);
   };
 
   return (
-    <form onSubmit={ubmit}>
-      <input ref={ref} onChange={hendelSubmit} type="file" multiple />
-      <button type="submit">sad</button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input ref={register} type="file" name="images" multiple />
+        <input ref={register} type="text" name="title" multiple />
+        <input ref={register} type="text" name="subtitle" multiple />
+        <input ref={register} type="text" name="description" multiple />
+        <input ref={register} type="text" name="category" multiple />
+        <button type="submit">sad</button>
+      </form>
+      {/* {stateImg && stateImg.map((e, i) => <img key={i} src={e} alt="" />)} */}
+    </div>
   );
 };
 export default AddCard;
