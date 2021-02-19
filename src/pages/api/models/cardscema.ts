@@ -1,5 +1,6 @@
 import { model, Schema, Document, models } from 'mongoose';
-interface CardScemaInterface {
+
+export interface CardScemaInterface extends Document<any> {
   title: string;
   subtitle: string;
   description: string;
@@ -7,8 +8,7 @@ interface CardScemaInterface {
   images?: Array<string>;
 }
 
-export type sadf = CardScemaInterface & Document;
-const CardScema = new Schema<any>(
+const CardScema: Schema = new Schema(
   {
     title: {
       type: String,
@@ -38,4 +38,4 @@ const CardScema = new Schema<any>(
   },
 );
 
-export const Card = models.Card || model<any>('Card', CardScema);
+export const Card = models.Card || model<CardScemaInterface | any>('Card', CardScema);

@@ -1,16 +1,18 @@
+import { type } from 'os';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+
+export interface responsIntrfaceInput {
+  images: FormData;
+  title: string;
+  subtitle: string;
+  description: string;
+  category: string;
+}
+
 const AddCard = () => {
   const [stateImg, setstateImg] = React.useState([]);
   const { register, handleSubmit } = useForm();
-
-  interface responsIntrfaceInput extends ReadableStream<Uint8Array> {
-    images: FormData;
-    title: string;
-    subtitle: string;
-    description: string;
-    category: string;
-  }
 
   const onSubmit = async (data: responsIntrfaceInput) => {
     const formData = new FormData();
@@ -48,7 +50,7 @@ const AddCard = () => {
         <input ref={register} type="text" name="subtitle" multiple />
         <input ref={register} type="text" name="description" multiple />
         <input ref={register} type="text" name="category" multiple />
-        <button type="submit">sad</button>
+        <button type="submit">submit</button>
       </form>
       {/* {stateImg && stateImg.map((e, i) => <img key={i} src={e} alt="" />)} */}
     </div>
