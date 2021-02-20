@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useStyles, useStylesType } from './Slider.style';
 
 export const Slide = ({ src, afterChange, beforeChange }) => {

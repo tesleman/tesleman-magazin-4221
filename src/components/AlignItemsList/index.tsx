@@ -8,9 +8,10 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './AlignItemsList.style';
+import { AlignItemsListInterface } from '../component-types';
 
-export default function AlignItemsList({ hendlSetAlignItemsList, mYref }) {
-  const handleClickOutside = (e) => {
+const AlignItemsList: React.FC<AlignItemsListInterface> = ({ hendlSetAlignItemsList, mYref }) => {
+  const handleClickOutside = (e: any) => {
     if (!e.path.includes(myRef.current) && !e.path.includes(mYref.current)) {
       hendlSetAlignItemsList();
     }
@@ -19,7 +20,6 @@ export default function AlignItemsList({ hendlSetAlignItemsList, mYref }) {
   const myRef = React.useRef();
 
   React.useEffect(() => {
-    console.log(mYref);
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -90,4 +90,6 @@ export default function AlignItemsList({ hendlSetAlignItemsList, mYref }) {
       </ListItem>
     </List>
   );
-}
+};
+
+export default AlignItemsList;

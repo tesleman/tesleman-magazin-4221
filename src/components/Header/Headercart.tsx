@@ -3,14 +3,12 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import { useStyles, useStylesType } from './header.style';
 import { Badge } from '@material-ui/core';
 import AlignItemsList from '../AlignItemsList';
+
 export default function Headercart() {
   const style: useStylesType = useStyles();
   const [AlignItemsListState, setAlignItemsList] = React.useState(false);
   const ref = React.useRef();
-  React.useEffect(() => {
-    console.log(ref);
-    return () => {};
-  }, []);
+
   const hendlSetAlignItemsList = React.useCallback(() => {
     setAlignItemsList(!AlignItemsListState);
   }, [AlignItemsListState]);

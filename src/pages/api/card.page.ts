@@ -2,7 +2,6 @@ import connect from './core/connect';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Card, CardScemaInterface } from './models/cardscema';
 import dbConnect from './core/db';
-import { send } from 'process';
 
 dbConnect();
 const apiRoute = connect();
@@ -32,9 +31,25 @@ apiRoute.post(
 apiRoute.get(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-      const card = await Card.find({ category: req.query.categori });
-      res.send(card);
-      console.log(card);
+      /// api/card?page=0&limit=2
+      const numberOfCards = await Card.countDocuments();
+
+      const pageOptions = {
+        page: parseInt(req.query.page as string, 10) || 0,
+        limit: parseInt(req.query.limit as string, 10) || 10,
+        category: req.query.category ? { category: req.query.category } : {},
+      };
+
+      let card = await Card.find(pageOptions.category)
+        .skip(pageOptions.page * pageOptions.limit)
+        .limit(pageOptions.limit);
+
+      res.status(200).json({
+        message: 'succes',
+        pageLenght: card.length,
+        totalCount: numberOfCards,
+        data: card,
+      });
     } catch (e) {
       res.status(400).json({
         message: e,
