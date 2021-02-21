@@ -1,9 +1,12 @@
+import { useStylesType } from './Card/card.style';
+
 export interface TabItemInterface {
-  images: string;
+  images: Array<string>;
   title: string;
   subtitle: string;
   description: string;
   category: string;
+  style?: useStylesType;
 }
 
 export interface AlignItemsListInterface {

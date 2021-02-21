@@ -10,6 +10,7 @@ const connect = mongoose.connect('mongodb://localhost:27017/test', {
 });
 
 const db = mongoose.connection;
+
 async function dbConnect() {
   if (db) {
     return;

@@ -1,8 +1,9 @@
 import connect from './core/connect';
+import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Card, CardScemaInterface } from './models/cardscema';
 import dbConnect from './core/db';
-
+mongoose.Promise = global.Promise;
 dbConnect();
 const apiRoute = connect();
 apiRoute.post(

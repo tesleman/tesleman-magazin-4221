@@ -8,7 +8,7 @@ export interface CardScemaInterface extends Document<any> {
   images?: Array<string>;
 }
 
-const CardScema: Schema = new Schema(
+const CardScema = new Schema(
   {
     title: {
       type: String,

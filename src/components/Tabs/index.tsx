@@ -1,25 +1,25 @@
 import { Paper, Tab, Tabs, Container, Grid } from '@material-ui/core';
 import React from 'react';
-import { TabItem } from './TabItem';
+import { useSelector, useDispatch } from 'react-redux';
+import { getCard } from '../../redux/slicers/cardSlice';
+import { RootState } from '../../redux/store';
 
+import { Card } from '../Card';
 import { useStyles, useStylesType } from './tabs.style';
 
 const TabsCentr: React.FC<{}> = ({}) => {
   const style: useStylesType = useStyles();
   const [value, setValue] = React.useState('asd');
   const [cards, setCards] = React.useState([]);
-
+  const { entities, error } = useSelector((state: RootState) => state.card);
+  const dispatch: AppDispatch = useDispatch();
+  console.log(entities);
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
   };
 
   React.useEffect(() => {
-    const cardFeching = async () => {
-      const card = await fetch(`http://localhost:3000/api/card?limit=3&category=${value}`);
-      const data = await card.json();
-      setCards(data.data);
-    };
-    cardFeching();
+    dispatch(getCard(value));
   }, [value]);
   return (
     <div>
@@ -28,7 +28,7 @@ const TabsCentr: React.FC<{}> = ({}) => {
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
+          indicatorColor="secondary"
           textColor="primary"
           centered>
           <Tab value="asd" label="asd" />
@@ -38,7 +38,7 @@ const TabsCentr: React.FC<{}> = ({}) => {
       </Paper>
       <Container>
         <Grid container justify="center" direction="row">
-          {cards && cards.map((e) => <TabItem key={e._id} {...e} />)}
+          {entities && entities.map((e) => <Card key={e._id} {...e} />)}
         </Grid>
       </Container>
     </div>
