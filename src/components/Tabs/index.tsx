@@ -2,7 +2,7 @@ import { Paper, Tab, Tabs, Container, Grid } from '@material-ui/core';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCard } from '../../redux/slicers/cardSlice';
-import { RootState } from '../../redux/store';
+import { AppDispatch, RootState } from '../../redux/store';
 
 import { Card } from '../Card';
 import { useStyles, useStylesType } from './tabs.style';
@@ -31,7 +31,7 @@ const TabsCentr: React.FC<{}> = ({}) => {
           indicatorColor="secondary"
           textColor="primary"
           centered>
-          <Tab value="asd" label="asd" />
+          <Tab value="Related photos" label="Related photos" />
           <Tab value="4" label="4" />
           <Tab value="2" label="2" />
         </Tabs>

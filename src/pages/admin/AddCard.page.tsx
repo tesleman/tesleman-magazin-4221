@@ -45,11 +45,26 @@ const AddCard = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input ref={register} type="file" name="images" multiple />
-        <input ref={register} type="text" name="title" multiple />
-        <input ref={register} type="text" name="subtitle" multiple />
-        <input ref={register} type="text" name="description" multiple />
-        <input ref={register} type="text" name="category" multiple />
+        <label htmlFor="file">
+          file
+          <input ref={register} type="file" name="images" multiple />
+        </label>
+        <label htmlFor="title">
+          title
+          <input ref={register} type="text" name="title" multiple />
+        </label>
+        <label htmlFor="subtitle">
+          subtitle
+          <input ref={register} type="text" name="subtitle" multiple />
+        </label>
+        <label htmlFor="description">
+          description
+          <input ref={register} type="text" name="description" multiple />
+        </label>
+        <label htmlFor="category">
+          category
+          <input ref={register} type="text" name="category" multiple />
+        </label>
         <button type="submit">submit</button>
       </form>
       {/* {stateImg && stateImg.map((e, i) => <img key={i} src={e} alt="" />)} */}
