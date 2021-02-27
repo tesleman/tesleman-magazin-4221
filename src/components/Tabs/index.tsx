@@ -5,40 +5,53 @@ import { getCard } from '../../redux/slicers/cardSlice';
 import { AppDispatch, RootState } from '../../redux/store';
 
 import { Card } from '../Card';
+import { TabItemInterface, TabsCentrType } from '../component-types';
 import { useStyles, useStylesType } from './tabs.style';
 
-const TabsCentr: React.FC<{}> = ({}) => {
+const TabsCentr: React.FC<{ categorys: Array<TabsCentrType>; cards: Array<TabItemInterface> }> = ({
+  categorys,
+  cards,
+}) => {
   const style: useStylesType = useStyles();
-  const [value, setValue] = React.useState('asd');
-  const [cards, setCards] = React.useState([]);
+  const [category, seCategory] = React.useState(categorys[0].title);
   const { entities, error } = useSelector((state: RootState) => state.card);
   const dispatch: AppDispatch = useDispatch();
   console.log(entities);
+  console.log(cards);
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-    setValue(newValue);
+    seCategory(newValue);
   };
 
   React.useEffect(() => {
-    dispatch(getCard(value));
-  }, [value]);
+    const payload = {
+      category: category,
+      page: 0,
+      limit: 3,
+      table: 'card',
+    };
+    dispatch(getCard(payload));
+  }, [category]);
   return (
     <div>
       <Container className={style.constainer}>asd</Container>
       <Paper>
         <Tabs
-          value={value}
+          value={category}
           onChange={handleChange}
           indicatorColor="secondary"
           textColor="primary"
           centered>
-          <Tab value="Related photos" label="Related photos" />
-          <Tab value="4" label="4" />
-          <Tab value="2" label="2" />
+          {categorys &&
+            categorys.map((cat: TabsCentrType, i: number) => (
+              <Tab key={cat._id} value={cat.title} label={cat.title} />
+            ))}
         </Tabs>
       </Paper>
       <Container>
         <Grid container justify="center" direction="row">
-          {entities && entities.map((e) => <Card key={e._id} {...e} />)}
+          {entities && categorys[0].title !== category
+            ? entities.map((e) => <Card key={e._id} {...e} />)
+            : cards.map((e) => <Card key={e._id} {...e} />)}
         </Grid>
       </Container>
     </div>

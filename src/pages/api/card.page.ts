@@ -1,7 +1,7 @@
 import connect from './core/connect';
 import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Card, CardScemaInterface } from './models/cardscema';
+import { Card, CardScemaInterface } from './models/cardScema';
 import dbConnect from './core/db';
 mongoose.Promise = global.Promise;
 dbConnect();

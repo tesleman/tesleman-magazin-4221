@@ -7,9 +7,19 @@ export interface TabItemInterface {
   description: string;
   category: string;
   style?: useStylesType;
+  _id: string;
 }
 
 export interface AlignItemsListInterface {
   hendlSetAlignItemsList: () => void;
   mYref: { current: HTMLElement & SVGElement };
+}
+
+export interface TabsCentrType {
+  _id: string;
+  title: string;
+  meta: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
 }

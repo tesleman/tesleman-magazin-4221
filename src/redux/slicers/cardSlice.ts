@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { apiFetch } from '../redux-api/redux-api';
 
-export const getCard = createAsyncThunk('card/fetch', async (val: string) => {
-  const card = await fetch(`http://localhost:3000/api/card?limit=3&category=${val}`);
-  const data = await card.json();
-  return data.data;
+export const getCard = createAsyncThunk('card/fetch', async (payload: any) => {
+  const card = await apiFetch(payload);
+
+  return card;
 });
 
 const initialState = { entities: [], loading: 'idle', currentRequestId: undefined, error: null };
@@ -13,8 +14,8 @@ const CardSlise = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getCard.fulfilled, (state, { payload }) => {
-      state.entities = payload;
+    builder.addCase(getCard.fulfilled, (state, actyon) => {
+      state.entities = actyon.payload;
     });
   },
 });
