@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Card, CardScemaInterface } from './models/cardScema';
 import dbConnect from './core/db';
-mongoose.Promise = global.Promise;
+
 dbConnect();
 const apiRoute = connect();
 apiRoute.post(
@@ -15,6 +15,8 @@ apiRoute.post(
         description: req.body.description,
         category: req.body.category,
         images: req.body.images,
+        slug: req.body.slug,
+        detail: req.body.detail,
       };
       const card = await Card.create(cardSpred);
       res.status(200).json({

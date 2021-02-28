@@ -12,7 +12,12 @@ const CardScema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, 'Please add a title'],
+    },
+    slug: {
+      type: String,
+      required: [true, 'Please add a slug'],
+      unique: true,
     },
     subtitle: {
       type: String,
@@ -21,6 +26,9 @@ const CardScema = new Schema(
     description: {
       type: String,
       required: true,
+    },
+    detail: {
+      type: String,
     },
     category: {
       type: String,

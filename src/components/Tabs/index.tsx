@@ -1,11 +1,10 @@
 import { Paper, Tab, Tabs, Container, Grid } from '@material-ui/core';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCard } from '../../redux/slicers/cardSlice';
-import { AppDispatch, RootState } from '../../redux/store';
 
 import { Card } from '../Card';
 import { TabItemInterface, TabsCentrType } from '../component-types';
+import { AppDispatch, getCard, RootState } from '../import-export';
 import { useStyles, useStylesType } from './tabs.style';
 
 const TabsCentr: React.FC<{ categorys: Array<TabsCentrType>; cards: Array<TabItemInterface> }> = ({
@@ -16,8 +15,6 @@ const TabsCentr: React.FC<{ categorys: Array<TabsCentrType>; cards: Array<TabIte
   const [category, seCategory] = React.useState(categorys[0].title);
   const { entities, error } = useSelector((state: RootState) => state.card);
   const dispatch: AppDispatch = useDispatch();
-  console.log(entities);
-  console.log(cards);
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     seCategory(newValue);
   };

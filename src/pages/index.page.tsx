@@ -1,16 +1,15 @@
 import React from 'react';
 import { TabItemInterface } from '../components/component-types';
 
-import { Header, Slider, TabsCentr } from '../components/import-export';
+import { CountDown, Header, Slider, TabsCentr } from '../components/import-export';
 import { apiFetch } from '../redux/redux-api/redux-api';
 
 export default function Home({ category, cards }) {
   return (
     <div>
-      <Header />
-
       <Slider />
       <TabsCentr categorys={category} cards={cards} />
+      <CountDown />
     </div>
   );
 }
