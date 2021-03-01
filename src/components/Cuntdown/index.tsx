@@ -1,27 +1,27 @@
 import { Container, Grid } from '@material-ui/core';
 import moment, { Moment } from 'moment';
 import React from 'react';
+import { Card } from '../Card';
 import { useStyles, useStylesType } from './countdown.style';
 
-const CountDown = () => {
+const CountDown = ({ card }) => {
   const style: useStylesType = useStyles();
   const [state, setState] = React.useState({
-    days: undefined,
-    hours: undefined,
-    minutes: undefined,
-    seconds: undefined,
+    days: null,
+    hours: null,
+    minutes: null,
+    seconds: null,
   });
   React.useEffect(() => {
     const date = new Date();
     console.log(moment(date, 'MM DD YYYY, h:mm a'));
-    const timeTillDate = '05 1 2021, 6:00 am';
+    const timeTillDate = '03 3 2021, 6:00 am';
     const timeFormat = 'MM DD YYYY, h:mm a';
     const interval = setInterval(() => {
       const then = moment(timeTillDate, timeFormat);
       const now = moment();
-      const countdown = moment.duration(moment(then).diff(moment(now, 'DD/MM/YYYY HH:mm')));
+      const countdown = moment.duration(moment(then).diff(moment(now, 'MM DD YYYY, h:mm a')));
       const days = countdown.days();
-      console.log(days);
       const hours = countdown.hours();
       const minutes = countdown.minutes();
       const seconds = countdown.seconds();
@@ -38,11 +38,14 @@ const CountDown = () => {
   const minutesRadius = mapNumber(minutes, 60, 0, 0, 360);
   const secondsRadius = mapNumber(seconds, 60, 0, 0, 360);
 
-  const SVGCircle = ({ radius }) => (
-    <svg className={style.countdownSvg}>
-      <path fill="none" stroke="#333" stroke-width="4" d={describeArc(50, 50, 48, 0, radius)} />
-    </svg>
-  );
+  const SVGCircle = ({ radius }) => {
+    let d = describeArc(50, 50, 48, 0, radius);
+    return (
+      <svg className={style.countdownSvg}>
+        <path fill="none" stroke="#333" strokeWidth="4" d={d} />
+      </svg>
+    );
+  };
   return (
     <div className={style.root}>
       <div className={style.rootBg}>
@@ -54,37 +57,45 @@ const CountDown = () => {
               chair to create that ambience
             </p>
           </div>
-          <Grid container direction="row">
-            <div className={style.countdownWrapper}>
-              {
+          <Grid
+            alignItems="center"
+            className={style.rootContduwnContiner}
+            container
+            direction="row">
+            <Card {...card} />
+
+            <Grid item xs={6}>
+              <div className={style.countdownWrapper}>
                 <div className={style.countdownItem}>
                   <SVGCircle radius={daysRadius} />
                   {days}
                   <span>days</span>
                 </div>
-              }
-              {
+
                 <div className={style.countdownItem}>
                   <SVGCircle radius={hoursRadius} />
                   {hours}
                   <span>hours</span>
                 </div>
-              }
-              {
+
                 <div className={style.countdownItem}>
                   <SVGCircle radius={minutesRadius} />
                   {minutes}
                   <span>minutes</span>
                 </div>
-              }
-              {
+
                 <div className={style.countdownItem}>
-                  <SVGCircle radius={secondsRadius} />
+                  <SVGCircle radius={+secondsRadius} />
                   {seconds}
                   <span>seconds</span>
                 </div>
-              }
-            </div>
+              </div>
+              <h3>Cкидос</h3>
+              <p>
+                Fri™ is designed to create a cosy feel in any setting. Of course, it takes more than
+                a chair to create that ambience
+              </p>
+            </Grid>
           </Grid>
         </Container>
       </div>
@@ -96,7 +107,7 @@ export default CountDown;
 
 // From stackoverflow: https://stackoverflow.com/questions/5736398/how-to-calculate-the-svg-path-for-an-arc-of-a-circle
 function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
-  var angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+  const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
 
   return {
     x: centerX + radius * Math.cos(angleInRadians),
@@ -105,12 +116,14 @@ function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
 }
 
 function describeArc(x, y, radius, startAngle, endAngle) {
-  var start = polarToCartesian(x, y, radius, endAngle);
-  var end = polarToCartesian(x, y, radius, startAngle);
+  const start = polarToCartesian(x, y, radius, endAngle);
+  const end = polarToCartesian(x, y, radius, startAngle);
 
-  var largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+  const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
 
-  var d = ['M', start.x, start.y, 'A', radius, radius, 0, largeArcFlag, 0, end.x, end.y].join(' ');
+  const d = ['M', start.x, start.y, 'A', radius, radius, 0, largeArcFlag, 0, end.x, end.y].join(
+    ' ',
+  );
 
   return d;
 }

@@ -9,13 +9,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   rootBg: {
     backgroundImage: 'url(/bg_countdow2.jpg)',
-    position: 'absolute',
     width: '100%',
-    top: 0,
-    left: 0,
+    height: '450px',
+    marginBottom: 272,
   },
+
   countdownItem: {
-    color: '#111',
+    color: '#333',
     fontSize: '40px',
     display: 'flex',
     alignItems: 'center',
@@ -48,5 +48,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     left: '0',
     width: '100px',
     height: '100px',
+  },
+  rootContduwnContiner: {
+    background: 'white',
+    color: 'black',
+    padding: 15,
+    boxShadow: '0px 6px 20px rgb(0 0 0 / 65%)',
+    position: 'relative',
   },
 }));

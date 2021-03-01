@@ -38,7 +38,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     visibility: 'hidden',
 
     '& svg': {
-      background: ' rgb(60 58 58 / 20%)',
+      background: 'rgb(60 58 58 / 20%)',
       marginBottom: 5,
       width: 40,
       height: 40,

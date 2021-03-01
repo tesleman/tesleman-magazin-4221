@@ -1,6 +1,13 @@
-export const apiFetch = async ({ category = '', page = 0, limit = 3, table = '' }) => {
+import { apiFechInterface } from '../../components/component-types';
+
+export const apiFetch = async ({
+  category = '',
+  page = 0,
+  limit = 3,
+  table = '',
+}: apiFechInterface) => {
   const fecdData = await fetch(
-    `http://localhost:3000/api/${table}?page=${page}&limit=${limit}${
+    `http://${process.env.domein}/api/${table}?page=${page}&limit=${limit}${
       category && `&category=${category}`
     }`,
   );

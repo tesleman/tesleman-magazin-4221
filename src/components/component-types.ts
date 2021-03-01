@@ -23,3 +23,10 @@ export interface TabsCentrType {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface apiFechInterface {
+  category?: string;
+  page: number;
+  limit: number;
+  table: string;
+}

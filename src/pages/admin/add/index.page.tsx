@@ -25,7 +25,7 @@ const AddCard = () => {
       formData.append('avatar', file);
     });
 
-    const response = await fetch('http://localhost:3000/api/file', {
+    const response = await fetch(`http://${process.env.domein}/api/file`, {
       body: formData,
       method: 'post',
     }); // posting file to file system
@@ -33,7 +33,7 @@ const AddCard = () => {
     data.images = images; // appenh array with image link to react-hook-form
 
     // posting card  with image to DB
-    const responseS = await fetch('http://localhost:3000/api/card', {
+    const responseS = await fetch(`http://${process.env.domein}/api/card`, {
       headers: {
         'Content-Type': 'application/json',
       },

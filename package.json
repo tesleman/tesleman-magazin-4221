@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "mongo": "sudo systemctl start mongod",
     "start": "next start"
   },
   "dependencies": {
