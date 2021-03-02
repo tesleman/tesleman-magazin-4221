@@ -7,10 +7,10 @@ import { useStyles } from './blog.style';
 const Blog = ({ cards }) => {
   const style = useStyles();
   return (
-    <div>
+    <div className={style.rootroot}>
       <Container>
         {cards.map((item, index) => (
-          <BlogItem style={style} cards={item} index={index} />
+          <BlogItem key={item._id} style={style} cards={item} index={index} />
         ))}
       </Container>
     </div>

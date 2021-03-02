@@ -14,7 +14,6 @@ const CountDown = ({ card }) => {
   });
   React.useEffect(() => {
     const date = new Date();
-    console.log(moment(date, 'MM DD YYYY, h:mm a'));
     const timeTillDate = '03 3 2021, 6:00 am';
     const timeFormat = 'MM DD YYYY, h:mm a';
     const interval = setInterval(() => {
@@ -50,7 +49,7 @@ const CountDown = ({ card }) => {
     <div className={style.root}>
       <div className={style.rootBg}>
         <Container>
-          <div>
+          <div className={style.headerWraper}>
             <h1>FR CHAIR BY FRITZ HANSEN</h1>
             <p>
               Fri™ is designed to create a cosy feel in any setting. Of course, it takes more than a

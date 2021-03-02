@@ -2,7 +2,9 @@ import { makeStyles, Theme } from '@material-ui/core';
 
 export type useStylesType = ReturnType<typeof useStyles>;
 export const useStyles = makeStyles((theme: Theme) => ({
-  rootroot: {},
+  rootroot: {
+    marginBottom: 65,
+  },
   root: {
     position: 'relative',
     transition: 'all .5s ease',

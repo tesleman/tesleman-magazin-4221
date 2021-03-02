@@ -16,9 +16,8 @@ async function dbConnect() {
     return;
   } else {
     connect;
+    db.on('error', console.error.bind(console, 'conneCTION ERROR'));
   }
 }
-
-db.on('error', console.error.bind(console, 'conneCTION ERROR'));
 
 export default dbConnect;

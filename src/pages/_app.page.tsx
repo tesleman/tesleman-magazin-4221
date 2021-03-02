@@ -7,8 +7,8 @@ import { useRouter } from 'next/router';
 import theme from '../theme';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import Header from '../components/Header';
 import Admin from './admin/adminNav';
+import { Footer, Header } from '../components/import-export';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -35,6 +35,7 @@ export default function MyApp(props) {
           <CssBaseline />
           {router.pathname.includes('/admin') ? <Admin /> : <Header />}
           <Component {...pageProps} />
+          <Footer />
         </Provider>
       </ThemeProvider>
     </React.Fragment>

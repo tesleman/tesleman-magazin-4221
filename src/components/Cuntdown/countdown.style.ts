@@ -7,11 +7,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
     color: 'white',
     textAlign: 'center',
   },
+  headerWraper: {
+    padding: 45,
+  },
   rootBg: {
     backgroundImage: 'url(/bg_countdow2.jpg)',
     width: '100%',
     height: '450px',
-    marginBottom: 272,
+    marginBottom: 350,
   },
 
   countdownItem: {
