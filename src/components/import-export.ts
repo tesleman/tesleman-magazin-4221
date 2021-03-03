@@ -6,5 +6,6 @@ export { default as CountDown } from './Cuntdown';
 export { default as Advantages } from './Advantages';
 export { default as Footer } from './Footer';
 
+export { addTooCart } from '../redux/slicers/cartSlicer';
 export { getCard } from '../redux/slicers/cardSlice';
 export type { AppDispatch, RootState } from '../redux/store';

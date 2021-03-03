@@ -4,15 +4,24 @@ import { Grid, Modal } from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
-// import Carousel from 'react-material-ui-carousel'
 import { TabItemInterface } from '../component-types';
 import { useStylesType, useStyles } from './card.style';
 import { ModalCard } from './ModalCard';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, addTooCart } from '../import-export';
 
 export const Card: React.FC<TabItemInterface> = (props) => {
   const { images, title, subtitle, description, category } = props;
+  const style: useStylesType = useStyles();
   const [open, setOpen] = React.useState(false);
   const [imgIndex, setImgIndex] = React.useState(0);
+  const { cart } = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch();
+
+  console.log('asdsa', cart);
+  const addTooCartHendl = () => {
+    dispatch(addTooCart(props));
+  };
   const handleOpen = () => {
     setOpen(true);
   };
@@ -22,7 +31,7 @@ export const Card: React.FC<TabItemInterface> = (props) => {
   const hendlSetIndex = (i) => {
     setImgIndex(i);
   };
-  const style: useStylesType = useStyles();
+
   return (
     <Grid className={style.constainer} item xs={3}>
       <div>
@@ -47,7 +56,7 @@ export const Card: React.FC<TabItemInterface> = (props) => {
         <p>{subtitle}</p>
       </div>
       <div className={style.sideItem}>
-        <AddShoppingCartIcon />
+        <AddShoppingCartIcon onClick={addTooCartHendl} />
         <FavoriteBorderIcon />
         <ZoomInIcon onClick={handleOpen} />
       </div>

@@ -83,6 +83,7 @@ const AddCard = () => {
 
   const checBox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setstogleChecbox(!togleChecbox);
+    titleCheng(e);
   };
 
   return (

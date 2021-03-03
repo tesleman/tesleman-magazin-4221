@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import CardSlise from './slicers/cardSlice';
+import CartSlise from './slicers/cartSlicer';
 // ...
 
 const store = configureStore({
   reducer: {
     card: CardSlise,
+    cart: CartSlise,
   },
 });
 

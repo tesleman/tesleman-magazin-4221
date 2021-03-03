@@ -6,6 +6,35 @@ import { useStyles, useStylesType } from './countdown.style';
 
 const CountDown = ({ card }) => {
   const style: useStylesType = useStyles();
+
+  return (
+    <div className={style.root}>
+      <div className={style.rootBg}>
+        <Container>
+          <div className={style.headerWraper}>
+            <h1>FR CHAIR BY FRITZ HANSEN</h1>
+            <p>
+              Fri™ is designed to create a cosy feel in any setting. Of course, it takes more than a
+              chair to create that ambience
+            </p>
+          </div>
+          <Grid
+            alignItems="center"
+            className={style.rootContduwnContiner}
+            container
+            direction="row">
+            <Card {...card} />
+            <Countdown style={style} />
+          </Grid>
+        </Container>
+      </div>
+    </div>
+  );
+};
+
+export default CountDown;
+
+const Countdown = ({ style }) => {
   const [state, setState] = React.useState({
     days: null,
     hours: null,
@@ -46,63 +75,40 @@ const CountDown = ({ card }) => {
     );
   };
   return (
-    <div className={style.root}>
-      <div className={style.rootBg}>
-        <Container>
-          <div className={style.headerWraper}>
-            <h1>FR CHAIR BY FRITZ HANSEN</h1>
-            <p>
-              Fri™ is designed to create a cosy feel in any setting. Of course, it takes more than a
-              chair to create that ambience
-            </p>
-          </div>
-          <Grid
-            alignItems="center"
-            className={style.rootContduwnContiner}
-            container
-            direction="row">
-            <Card {...card} />
+    <Grid item xs={6}>
+      <div className={style.countdownWrapper}>
+        <div className={style.countdownItem}>
+          <SVGCircle radius={daysRadius} />
+          {days}
+          <span>days</span>
+        </div>
 
-            <Grid item xs={6}>
-              <div className={style.countdownWrapper}>
-                <div className={style.countdownItem}>
-                  <SVGCircle radius={daysRadius} />
-                  {days}
-                  <span>days</span>
-                </div>
+        <div className={style.countdownItem}>
+          <SVGCircle radius={hoursRadius} />
+          {hours}
+          <span>hours</span>
+        </div>
 
-                <div className={style.countdownItem}>
-                  <SVGCircle radius={hoursRadius} />
-                  {hours}
-                  <span>hours</span>
-                </div>
+        <div className={style.countdownItem}>
+          <SVGCircle radius={minutesRadius} />
+          {minutes}
+          <span>minutes</span>
+        </div>
 
-                <div className={style.countdownItem}>
-                  <SVGCircle radius={minutesRadius} />
-                  {minutes}
-                  <span>minutes</span>
-                </div>
-
-                <div className={style.countdownItem}>
-                  <SVGCircle radius={+secondsRadius} />
-                  {seconds}
-                  <span>seconds</span>
-                </div>
-              </div>
-              <h3>Cкидос</h3>
-              <p>
-                Fri™ is designed to create a cosy feel in any setting. Of course, it takes more than
-                a chair to create that ambience
-              </p>
-            </Grid>
-          </Grid>
-        </Container>
+        <div className={style.countdownItem}>
+          <SVGCircle radius={+secondsRadius} />
+          {seconds}
+          <span>seconds</span>
+        </div>
       </div>
-    </div>
+      <h3>Cкидос</h3>
+      <p>
+        Fri™ is designed to create a cosy feel in any setting. Of course, it takes more than a chair
+        to create that ambience
+      </p>
+    </Grid>
   );
 };
-
-export default CountDown;
 
 // From stackoverflow: https://stackoverflow.com/questions/5736398/how-to-calculate-the-svg-path-for-an-arc-of-a-circle
 function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
