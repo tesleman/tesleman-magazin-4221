@@ -3,14 +3,16 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Card } from '../Card';
-import { TabItemInterface, TabsCentrType } from '../component-types';
-import { AppDispatch, getCard, RootState } from '../import-export';
+import { cardInterface, TabsCentrType } from '../component-types';
+import { apiFechInterface, AppDispatch, getCard, RootState } from '../import-export';
 import { useStyles, useStylesType } from './tabs.style';
 
-const TabsCentr: React.FC<{ categorys: Array<TabsCentrType>; cards: Array<TabItemInterface> }> = ({
-  categorys,
-  cards,
-}) => {
+const TabsCentr: React.FC<{
+  addTooCartHendl: (payload: cardInterface) => void;
+  categorys: Array<TabsCentrType>;
+  cards: Array<cardInterface>;
+  cart: Array<cardInterface>;
+}> = ({ categorys, cards, addTooCartHendl, cart }) => {
   const style: useStylesType = useStyles();
   const [category, seCategory] = React.useState(categorys[0].title);
   const { entities, error } = useSelector((state: RootState) => state.card);
@@ -20,7 +22,7 @@ const TabsCentr: React.FC<{ categorys: Array<TabsCentrType>; cards: Array<TabIte
   };
 
   React.useEffect(() => {
-    const payload = {
+    const payload: apiFechInterface = {
       category: category,
       page: 0,
       limit: 3,
@@ -47,8 +49,12 @@ const TabsCentr: React.FC<{ categorys: Array<TabsCentrType>; cards: Array<TabIte
       <Container>
         <Grid container justify="center" direction="row">
           {entities && categorys[0].title !== category
-            ? entities.map((e) => <Card key={e._id} {...e} />)
-            : cards.map((e) => <Card key={e._id} {...e} />)}
+            ? entities.map((e: cardInterface) => (
+                <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />
+              ))
+            : cards.map((e: cardInterface) => (
+                <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />
+              ))}
         </Grid>
       </Container>
     </div>

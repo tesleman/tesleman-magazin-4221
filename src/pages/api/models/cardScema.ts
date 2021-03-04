@@ -1,11 +1,12 @@
 import { model, Schema, Document, models } from 'mongoose';
 
-export interface CardScemaInterface extends Document<any> {
+export interface CardScemaInterface {
   title: string;
   subtitle: string;
   description: string;
   category: string;
   images?: Array<string>;
+  price: number;
 }
 
 const CardScema = new Schema(
@@ -23,16 +24,20 @@ const CardScema = new Schema(
       type: String,
       required: true,
     },
+    price: {
+      type: Number,
+      required: [true, 'Please add a price'],
+    },
     description: {
       type: String,
-      required: true,
+      required: [true, 'Please add a description'],
     },
     detail: {
       type: String,
     },
     category: {
       type: String,
-      required: true,
+      required: [true, 'Please choise category'],
     },
     images: [
       {

@@ -39,7 +39,7 @@ const cat = [
   },
 ];
 
-export default function Header() {
+const Header: React.FC = () => {
   const style: useStylesType = useStyles();
   return (
     <nav className={style.nav}>
@@ -75,4 +75,5 @@ export default function Header() {
       </Grid>
     </nav>
   );
-}
+};
+export default Header;

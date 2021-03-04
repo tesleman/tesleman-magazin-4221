@@ -1,10 +1,15 @@
 import { Container, Grid } from '@material-ui/core';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import React from 'react';
 import { Card } from '../Card';
+import { cardInterface } from '../component-types';
 import { useStyles, useStylesType } from './countdown.style';
 
-const CountDown = ({ card }) => {
+const CountDown: React.FC<{
+  card: cardInterface;
+  cart: Array<cardInterface>;
+  addTooCartHendl: (payload: cardInterface) => void;
+}> = ({ card, addTooCartHendl, cart }) => {
   const style: useStylesType = useStyles();
 
   return (
@@ -23,7 +28,7 @@ const CountDown = ({ card }) => {
             className={style.rootContduwnContiner}
             container
             direction="row">
-            <Card {...card} />
+            <Card cart={cart} card={card} addTooCartHendl={addTooCartHendl} />
             <Countdown style={style} />
           </Grid>
         </Container>
@@ -34,7 +39,7 @@ const CountDown = ({ card }) => {
 
 export default CountDown;
 
-const Countdown = ({ style }) => {
+const Countdown: React.FC<{ style: useStylesType }> = ({ style }) => {
   const [state, setState] = React.useState({
     days: null,
     hours: null,
@@ -42,8 +47,7 @@ const Countdown = ({ style }) => {
     seconds: null,
   });
   React.useEffect(() => {
-    const date = new Date();
-    const timeTillDate = '03 3 2021, 6:00 am';
+    const timeTillDate = '04 3 2021, 6:00 am';
     const timeFormat = 'MM DD YYYY, h:mm a';
     const interval = setInterval(() => {
       const then = moment(timeTillDate, timeFormat);

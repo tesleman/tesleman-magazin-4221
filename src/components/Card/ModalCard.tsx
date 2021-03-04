@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import { TabItemInterface } from '../component-types';
+import { cardInterface } from '../component-types';
 import { Grid } from '@material-ui/core';
 
-export const ModalCard: React.FC<TabItemInterface> = ({
+export const ModalCard: React.FC<cardInterface> = ({
   images,
   title,
   subtitle,

@@ -1,4 +1,4 @@
-import { apiFechInterface } from '../../components/component-types';
+import { apiFechInterface } from '../redux-type';
 
 export const apiFetch = async ({
   category = '',

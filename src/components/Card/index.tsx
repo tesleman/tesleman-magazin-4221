@@ -4,59 +4,58 @@ import { Grid, Modal } from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
-import { TabItemInterface } from '../component-types';
+import { cardInterface } from '../component-types';
 import { useStylesType, useStyles } from './card.style';
 import { ModalCard } from './ModalCard';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, addTooCart } from '../import-export';
 
-export const Card: React.FC<TabItemInterface> = (props) => {
-  const { images, title, subtitle, description, category } = props;
+export const Card: React.FC<{
+  card: cardInterface;
+  cart: Array<cardInterface>;
+  addTooCartHendl: (payload: cardInterface) => void;
+}> = ({ card, addTooCartHendl, cart }) => {
   const style: useStylesType = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [imgIndex, setImgIndex] = React.useState(0);
-  const { cart } = useSelector((state: RootState) => state.cart);
-  const dispatch = useDispatch();
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [imgIndex, setImgIndex] = React.useState<number>(0);
 
-  console.log('asdsa', cart);
-  const addTooCartHendl = () => {
-    dispatch(addTooCart(props));
-  };
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const hendlSetIndex = (i) => {
+  const hendlSetIndex = (i: number) => {
     setImgIndex(i);
   };
-
+  console.log(cart.some((elem) => elem._id === card._id));
   return (
     <Grid className={style.constainer} item xs={3}>
       <div>
-        <h1>{title}</h1>
-        <h4>{description}</h4>
-        <span>{category}</span>
+        <h1>{card.title}</h1>
+        <h4>{card.description}</h4>
+        <span>{card.category}</span>
         <Image
-          src={images[imgIndex]}
+          src={card.images[imgIndex]}
           alt="Picture of the author"
           width={150}
           height={150}
           layout="responsive"
         />
         <div className={style.dots}>
-          {images.map((e, i) => (
+          {card.images.map((e, i) => (
             <div
               className={i === imgIndex ? style.dotActyve : style.dot}
               key={i}
               onClick={() => hendlSetIndex(i)}></div>
           ))}
         </div>
-        <p>{subtitle}</p>
+        <p>{card.subtitle}</p>
       </div>
       <div className={style.sideItem}>
-        <AddShoppingCartIcon onClick={addTooCartHendl} />
+        {cart.some((elem) => elem._id === card._id) ? (
+          ''
+        ) : (
+          <AddShoppingCartIcon onClick={() => addTooCartHendl(card)} />
+        )}
         <FavoriteBorderIcon />
         <ZoomInIcon onClick={handleOpen} />
       </div>
@@ -67,7 +66,7 @@ export const Card: React.FC<TabItemInterface> = (props) => {
         aria-describedby="simple-modal-description">
         {
           <div className={style.modal}>
-            <ModalCard {...props} style={style} />
+            <ModalCard {...card} style={style} />
           </div>
         }
       </Modal>

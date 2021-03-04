@@ -7,7 +7,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { useStyles, useStylesType } from './foote.style';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const style: useStylesType = useStyles();
   const date = new Date();
   return (
@@ -46,7 +46,6 @@ const Footer = () => {
               <a href="About_Us">About Us</a>
             </li>
             <li className={style.abouteLi}>
-              {' '}
               <a href="Shopping_Guide">Shopping Guide</a>
             </li>
             <li className={style.abouteLi}>

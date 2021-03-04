@@ -1,3 +1,6 @@
-export interface r {
-  asd: string;
+export interface apiFechInterface {
+  category?: string;
+  page: number;
+  limit: number;
+  table: string;
 }

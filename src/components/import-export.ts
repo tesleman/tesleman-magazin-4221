@@ -9,3 +9,4 @@ export { default as Footer } from './Footer';
 export { addTooCart } from '../redux/slicers/cartSlicer';
 export { getCard } from '../redux/slicers/cardSlice';
 export type { AppDispatch, RootState } from '../redux/store';
+export type { apiFechInterface } from '../redux/redux-type';

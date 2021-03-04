@@ -1,16 +1,31 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { apiFechInterface, TabItemInterface } from '../components/component-types';
+import { cardInterface } from '../components/component-types';
 
-import { CountDown, Blog, Slider, TabsCentr, Advantages } from '../components/import-export';
+import {
+  CountDown,
+  Blog,
+  Slider,
+  TabsCentr,
+  Advantages,
+  addTooCart,
+  RootState,
+  apiFechInterface,
+} from '../components/import-export';
 import { apiFetch } from '../redux/redux-api/redux-api';
 
 export default function Home({ category, cards }) {
+  const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
+  const dispatch = useDispatch();
+
+  console.log('totalCartPrice', totalCartPrice);
+  const addTooCartHendl = React.useCallback((props) => dispatch(addTooCart(props)), []);
   return (
     <div>
       <Slider />
-      <TabsCentr categorys={category} cards={cards} />
-      <CountDown card={cards[0]} />
+      <TabsCentr addTooCartHendl={addTooCartHendl} cart={cart} categorys={category} cards={cards} />
+      <CountDown addTooCartHendl={addTooCartHendl} cart={cart} card={cards[0]} />
       <Blog cards={cards} />
       <Advantages />
     </div>
@@ -30,7 +45,7 @@ Home.getInitialProps = async (ctx) => {
     limit: 3,
     table: 'card',
   };
-  const cardsApiFetch: Array<TabItemInterface> = await apiFetch(cardsApiFetchParams);
+  const cardsApiFetch: Array<cardInterface> = await apiFetch(cardsApiFetchParams);
 
   return { category: category, cards: cardsApiFetch };
 };

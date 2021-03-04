@@ -5,7 +5,7 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import React from 'react';
 import { useStyles, useStylesType } from './advantages.style';
 
-const Advantages = () => {
+const Advantages: React.FC = () => {
   const style: useStylesType = useStyles();
   return (
     <Container className={style.root}>

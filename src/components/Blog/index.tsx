@@ -2,14 +2,15 @@ import { Container, Grid, Button } from '@material-ui/core';
 import React from 'react';
 import Image from 'next/image';
 
-import { useStyles } from './blog.style';
+import { useStyles, useStylesType } from './blog.style';
+import { cardInterface } from '../component-types';
 
-const Blog = ({ cards }) => {
-  const style = useStyles();
+const Blog: React.FC<{ cards: Array<cardInterface> }> = ({ cards }) => {
+  const style: useStylesType = useStyles();
   return (
     <div className={style.rootroot}>
       <Container>
-        {cards.map((item, index) => (
+        {cards.map((item: cardInterface, index: number) => (
           <BlogItem key={item._id} style={style} cards={item} index={index} />
         ))}
       </Container>
@@ -19,7 +20,11 @@ const Blog = ({ cards }) => {
 
 export default Blog;
 
-const BlogItem = ({ style, cards, index }) => {
+const BlogItem: React.FC<{ style: useStylesType; cards: cardInterface; index: number }> = ({
+  style,
+  cards,
+  index,
+}) => {
   return (
     <Grid
       style={
