@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import slugify from 'slugify';
@@ -46,6 +47,10 @@ const AddCard = () => {
   };
 
   React.useEffect(() => {
+    titleCheng();
+  }, [togleChecbox]);
+
+  React.useEffect(() => {
     const fech = async () => {
       //feching categoryes
       const apiFetchCategoryParams = {
@@ -60,17 +65,9 @@ const AddCard = () => {
     return () => {};
   }, []);
 
-  const titleCheng = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const titleCheng = () => {
     // slug creator
-    if (togleChecbox) {
-      // if Checbox is on genereate slug frome title feald
-      let box = getValues('title');
-      let slug = slugify(box, {
-        replacement: '_',
-        remove: /[*+~.()'"!:@]/g,
-      });
-      setValue('slug', slug);
-    } else if (!togleChecbox) {
+    if (!togleChecbox) {
       // if Checbox is off genereate slug frome slug feald
       let box = getValues('slug');
       let slug = slugify(box, {
@@ -79,40 +76,69 @@ const AddCard = () => {
       });
       setValue('slug', slug);
     }
+    if (togleChecbox) {
+      // if Checbox is on genereate slug frome title feald
+      let box = getValues('title');
+      let slug = slugify(box, {
+        replacement: '_',
+        remove: /[*+~.()'"!:@]/g,
+      });
+      setValue('slug', slug);
+    }
   };
 
-  const checBox = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const checBox = () => {
     setstogleChecbox(!togleChecbox);
-    titleCheng(e);
   };
+  console.log(togleChecbox);
 
   return (
     <div>
       <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="file">
-          file
           <input ref={register} type="file" name="images" multiple />
+          file
         </label>
         <label htmlFor="title">
+          <input
+            key={124234535}
+            onChange={titleCheng}
+            ref={register}
+            type="text"
+            name="title"
+            multiple
+          />
           title
-          <input onChange={titleCheng} ref={register} type="text" name="title" multiple />
         </label>
         <label htmlFor="title">
-          slug
           <input onChange={titleCheng} ref={register} type="text" name="slug" multiple />
-          <input onChange={checBox} name="checkbox" type="checkbox" />
+          <Button
+            onClick={() => {
+              titleCheng();
+              checBox();
+            }}>
+            {togleChecbox ? 'Slug' : 'noSlug'}
+          </Button>
+          <input
+            key={124234535943583945}
+            onClick={titleCheng}
+            onChange={checBox}
+            name="checkbox"
+            type="checkbox"
+          />
+          slug
         </label>
         <label htmlFor="subtitle">
-          subtitle
           <input ref={register} type="text" name="subtitle" multiple />
+          subtitle
         </label>
         <label htmlFor="description">
-          description
           <input ref={register} type="text" name="description" multiple />
+          description
         </label>
         <label htmlFor="detail">
-          detail
           <textarea ref={register} name="detail" />
+          detail
         </label>
 
         <select name="category" ref={register}>

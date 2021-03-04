@@ -76,7 +76,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
         content: '">"',
         zIndex: 2,
         color: theme.palette.secondary.main,
-        transform: 'translate(-150%, -2 %)',
+        transform: ' translate(-150%, -2%)',
       },
     },
   },
