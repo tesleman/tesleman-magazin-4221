@@ -25,7 +25,12 @@ export default function Headercart() {
         />
       </Badge>
       {AlignItemsListState && (
-        <AlignItemsList cart={cart} mYref={ref} hendlSetAlignItemsList={hendlSetAlignItemsList} />
+        <AlignItemsList
+          totalCartPrice={totalCartPrice}
+          cart={cart}
+          mYref={ref}
+          hendlSetAlignItemsList={hendlSetAlignItemsList}
+        />
       )}
     </div>
   );

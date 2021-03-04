@@ -16,6 +16,7 @@ export interface AlignItemsListInterface {
   hendlSetAlignItemsList: () => void;
   mYref: { current: HTMLElement & SVGElement };
   cart: Array<cartInterface>;
+  totalCartPrice: number;
 }
 
 export interface TabsCentrType {
