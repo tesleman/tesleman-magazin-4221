@@ -26,7 +26,7 @@ export const Card: React.FC<{
   const hendlSetIndex = (i: number) => {
     setImgIndex(i);
   };
-  console.log(cart.some((elem) => elem._id === card._id));
+
   return (
     <Grid className={style.constainer} item xs={3}>
       <div>

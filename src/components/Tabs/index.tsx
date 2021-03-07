@@ -41,9 +41,11 @@ const TabsCentr: React.FC<{
           textColor="primary"
           centered>
           {categorys &&
-            categorys.map((cat: TabsCentrType, i: number) => (
-              <Tab key={cat._id} value={cat.title} label={cat.title} />
-            ))}
+            categorys
+              .slice(0, 3)
+              .map((cat: TabsCentrType, i: number) => (
+                <Tab key={cat._id} value={cat.title} label={cat.title} />
+              ))}
         </Tabs>
       </Paper>
       <Container>

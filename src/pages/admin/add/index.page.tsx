@@ -54,8 +54,6 @@ const AddCard = () => {
     const fech = async () => {
       //feching categoryes
       const apiFetchCategoryParams = {
-        page: 0,
-        limit: 3,
         table: 'category',
       };
       const category = await apiFetch(apiFetchCategoryParams);
@@ -90,7 +88,6 @@ const AddCard = () => {
   const checBox = () => {
     setstogleChecbox(!togleChecbox);
   };
-  console.log(togleChecbox);
 
   return (
     <div>
@@ -119,13 +116,7 @@ const AddCard = () => {
             }}>
             {togleChecbox ? 'Slug' : 'noSlug'}
           </Button>
-          <input
-            key={124234535943583945}
-            onClick={titleCheng}
-            onChange={checBox}
-            name="checkbox"
-            type="checkbox"
-          />
+          <input onClick={titleCheng} onChange={checBox} name="checkbox" type="checkbox" />
           slug
         </label>
         <label htmlFor="subtitle">

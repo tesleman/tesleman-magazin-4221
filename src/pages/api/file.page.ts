@@ -9,7 +9,7 @@ interface NextApiRequestExtand extends NextApiRequest {
 }
 apiRoute.post((req: NextApiRequestExtand, res: NextApiResponse) => {
   const file = req.files;
-  console.log(file);
+
   if (!file) {
     const error = new Error('Please choose files');
   }

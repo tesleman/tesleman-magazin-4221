@@ -32,7 +32,7 @@ const AlignItemsList: React.FC<AlignItemsListInterface> = ({
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-  console.log(cart, ' cart');
+
   const plusHendl = (id: string) => dispatch(plussItmCount(id));
   const minusHendl = (id: string) => dispatch(minusItmCount(id));
   const removeHendl = (id: string) => dispatch(removeItem(id));

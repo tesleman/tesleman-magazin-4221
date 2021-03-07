@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
     <Container>
       <Grid container direction="row" justify="center">
         <Grid className={style.root} item xs={4}>
-          <h2 className={style.itemTytle}>MEBLA FURNITURE</h2>.
+          <h2 className={style.itemTytle}>MEBLA FURNITURE</h2>
           <p>
             We are a global housewares product design company. We bring thought and creativity to
             everyday items through original design.

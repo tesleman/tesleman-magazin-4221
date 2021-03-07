@@ -22,11 +22,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     justifyItems: 'center',
     flexDirection: 'row',
+    background: 'white',
   },
   ulli: {
     padding: 15,
     position: 'relative',
     listStyle: 'none',
+    background: 'white',
     '& a': {
       color: 'black',
       textDecoration: 'none',
@@ -35,16 +37,23 @@ export const useStyles = makeStyles((theme: Theme) => ({
       opacity: 1,
       visibility: 'visible',
     },
-    '&:hover $navulliul': {
+    '&:hover $navulliul ': {
       opacity: 1,
       visibility: 'visible',
     },
   },
   li: {
+    background: 'white',
     padding: 15,
-    // display: 'none',
+
+    '& :hover': {
+      color: theme.palette.secondary.main,
+      transform: 'translateX(5px)',
+      transition: 'all .5s ease',
+    },
   },
   navulliul: {
+    background: 'white',
     opacity: 0,
     transition: '.5s',
     zIndex: 0,

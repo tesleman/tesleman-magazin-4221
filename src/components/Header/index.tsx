@@ -4,69 +4,33 @@ import Link from 'next/link';
 import { Grid } from '@material-ui/core';
 import Headercart from './Headercart';
 
-const cat = [
-  {
-    name: 'name1',
-    slug: '/slug',
-    subcat: [
-      {
-        name: 'subcatname1',
-        slug: '/subcatslug1',
-      },
-    ],
-  },
-  {
-    name: 'name2',
-    slug: '/slug2',
-    subcat: [
-      {
-        name: 'subcatname2',
-        slug: '/subcatslug2',
-      },
-      {
-        name: 'subcatname3',
-        slug: '/subcatslug3',
-      },
-      {
-        name: 'subcatname4',
-        slug: '/subcatslug4',
-      },
-    ],
-  },
-  {
-    name: 'name3',
-    slug: '/slug3',
-  },
-];
-
-const Header: React.FC = () => {
+const Header: React.FC<any> = ({ category }) => {
   const style: useStylesType = useStyles();
   return (
     <nav className={style.nav}>
       <Grid container direction="row">
         <Grid item xs={2}>
-          sad
+          Logo
         </Grid>
         <Grid item xs={8}>
           <ul className={style.ulRoot}>
-            {cat.map((el) => (
-              <li key={el.slug} className={style.ulli}>
-                <Link href={el.slug}>
-                  <a> {el.name}</a>
-                </Link>
-                {el.subcat && (
-                  <ul className={style.navulliul}>
-                    {el.subcat.map((el) => (
-                      <li className={style.li} key={el.slug}>
-                        <Link href={el.slug}>
-                          <a> {el.name}</a>
+            {category.length &&
+              category.map((el, i) => (
+                <li key={el._id + i} className={style.ulli}>
+                  <Link href={`/${el.slug}`}>
+                    <a> {el.title}</a>
+                  </Link>
+                  {el.subcat && (
+                    <ul className={style.navulliul}>
+                      {el.subcat.map((el) => (
+                        <Link key={el.createdAt} href={`/${el.slug}`}>
+                          <li className={style.li}>{el.title}</li>
                         </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
           </ul>
         </Grid>
         <Grid item xs={2}>

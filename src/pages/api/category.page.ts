@@ -11,7 +11,6 @@ const category = connect();
 category.post(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-      console.log(req.body);
       const data = {
         title: req.body.title,
         meta: req.body.meta,

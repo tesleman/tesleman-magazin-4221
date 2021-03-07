@@ -1,8 +1,7 @@
+import { NextPageContext } from 'next';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { cardInterface } from '../components/component-types';
-
 import {
   CountDown,
   Blog,
@@ -19,7 +18,6 @@ export default function Home({ category, cards }) {
   const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
 
-  console.log('totalCartPrice', totalCartPrice);
   const addTooCartHendl = React.useCallback((props) => dispatch(addTooCart(props)), []);
   return (
     <div>
@@ -32,10 +30,8 @@ export default function Home({ category, cards }) {
   );
 }
 
-Home.getInitialProps = async (ctx) => {
+export async function getStaticProps(ctx: NextPageContext) {
   const apiFetchCategoryParams: apiFechInterface = {
-    page: 0,
-    limit: 3,
     table: 'category',
   };
   const category = await apiFetch(apiFetchCategoryParams);
@@ -47,5 +43,5 @@ Home.getInitialProps = async (ctx) => {
   };
   const cardsApiFetch: Array<cardInterface> = await apiFetch(cardsApiFetchParams);
 
-  return { category: category, cards: cardsApiFetch };
-};
+  return { props: { category: category, cards: cardsApiFetch } };
+}

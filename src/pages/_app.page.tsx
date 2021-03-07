@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import store from '../redux/store';
 import Admin from './admin/adminNav';
 import { Footer, Header } from '../components/import-export';
+import { apiFetch } from '../redux/redux-api/redux-api';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -33,7 +34,11 @@ export default function MyApp(props) {
         <Provider store={store}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {router.pathname.includes('/admin') ? <Admin /> : <Header />}
+          {!router.pathname.includes('/admin') ? (
+            <Header category={pageProps.categoryes} />
+          ) : (
+            <Admin />
+          )}
           <Component {...pageProps} />
           <Footer />
         </Provider>
@@ -41,3 +46,19 @@ export default function MyApp(props) {
     </React.Fragment>
   );
 }
+
+MyApp.getInitialProps = async ({ Component, ctx }) => {
+  let pageProps = {};
+
+  // Make any initial calls we need to fetch data required for SSR
+  const categoryes = await apiFetch({ table: 'menue' });
+
+  // Load the page getInitiaProps
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps({ categoryes, ...ctx });
+  }
+
+  return { pageProps: { ...pageProps, categoryes } };
+  // Or, if the async data is separate from your page props:
+  // { pageProps, data: { isAuthed } };
+};
