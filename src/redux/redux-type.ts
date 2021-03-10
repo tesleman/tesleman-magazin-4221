@@ -3,4 +3,5 @@ export interface apiFechInterface {
   page?: number;
   limit?: number;
   table: string;
+  all?: boolean;
 }

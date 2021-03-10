@@ -14,17 +14,18 @@ const Header: React.FC<any> = ({ category }) => {
         </Grid>
         <Grid item xs={8}>
           <ul className={style.ulRoot}>
-            {category.length &&
+            {category &&
               category.map((el, i) => (
                 <li key={el._id + i} className={style.ulli}>
-                  <Link href={`/${el.slug}`}>
-                    <a> {el.title}</a>
-                  </Link>
+                  <Link href={`${el.slug}`}>{el.title}</Link>
+
                   {el.subcat && (
                     <ul className={style.navulliul}>
-                      {el.subcat.map((el) => (
-                        <Link key={el.createdAt} href={`/${el.slug}`}>
-                          <li className={style.li}>{el.title}</li>
+                      {el.subcat.map((elem) => (
+                        <Link
+                          key={elem._id}
+                          href={el.title === 'Shop' ? `/shop/${elem.slug}` : `${elem.slug}`}>
+                          <li className={style.li}>{elem.title}</li>
                         </Link>
                       ))}
                     </ul>

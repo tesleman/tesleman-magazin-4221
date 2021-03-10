@@ -7,7 +7,14 @@ export const getCard = createAsyncThunk('card/fetch', async (payload: any) => {
   return card;
 });
 
-const initialState = { entities: [], loading: 'idle', currentRequestId: undefined, error: null };
+const initialState = {
+  pageLenght: 0,
+  totalCount: 0,
+  entities: [],
+  loading: 'idle',
+  currentRequestId: undefined,
+  error: null,
+};
 
 const CardSlise = createSlice({
   name: 'card',
@@ -15,7 +22,9 @@ const CardSlise = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getCard.fulfilled, (state, actyon) => {
-      state.entities = actyon.payload;
+      state.entities = actyon.payload.data;
+      state.totalCount = actyon.payload.totalCount;
+      state.pageLenght = actyon.payload.pageLenght;
     });
   },
 });

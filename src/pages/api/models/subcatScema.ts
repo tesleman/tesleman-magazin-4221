@@ -1,16 +1,15 @@
 import { model, Schema, Document, models } from 'mongoose';
 
-export interface CategoryScemaInterface extends Document<any> {
+export interface SubcatScemaInterface extends Document<any> {
   title: string;
   meta: string;
   slug: string;
 }
 
-const CategoryScema = new Schema(
+const SubcatScema = new Schema(
   {
     title: {
       type: String,
-
       maxlength: [20, 'Title cannot be more than 20 characters'],
     },
     meta: {
@@ -24,5 +23,4 @@ const CategoryScema = new Schema(
   },
 );
 
-export const Category =
-  models.Category || model<CategoryScemaInterface | any>('Category', CategoryScema);
+export const Subcat = models.Subcat || model<SubcatScemaInterface | any>('Subcat', SubcatScema);

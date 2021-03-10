@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 import connect from './core/connect';
 import dbConnect from './core/db';
 import { Menue } from './models/menueScema';
+import { Category } from './models/categoryScema';
+import category from './category.page';
+import { Subcat } from './models/subcatScema';
 
 mongoose.Promise = global.Promise;
 dbConnect();
@@ -14,7 +17,7 @@ menues.post(
       const data = {
         title: req.body.title,
         meta: req.body.meta,
-        slug: req.body.slug,
+        slug: `/${req.body.slug}`,
         active: req.body.active,
         subcat: req.body.id,
       };
@@ -35,11 +38,43 @@ menues.post(
 menues.get(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-      const categoryCreate = await Menue.find({}).populate('subcat').exec();
+      const categoryFindShop = await Menue.aggregate([
+        {
+          $match: {
+            title: 'Shop',
+          },
+        },
+        {
+          $lookup: {
+            from: 'categories',
+            localField: 'subcat',
+            foreignField: '_id',
+            as: 'subcat',
+          },
+        },
+      ]);
+
+      const categoryFindNoShop = await Menue.aggregate([
+        {
+          $match: {
+            title: {
+              $ne: 'Shhop',
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'subcats',
+            localField: 'subcat',
+            foreignField: '_id',
+            as: 'subcat',
+          },
+        },
+      ]);
 
       res.status(200).json({
         message: 'succes',
-        data: categoryCreate,
+        data: [...categoryFindShop, ...categoryFindNoShop].sort((a, b) => a.sort - b.sort),
       });
     } catch (error) {
       res.status(400).json({

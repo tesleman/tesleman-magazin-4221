@@ -17,16 +17,17 @@ const MenueScema = new Schema(
     },
     slug: {
       type: String,
-
+      unique: true,
       required: [true, 'Please add a slug'],
     },
     active: {
       type: Boolean,
     },
+
     subcat: [
       {
         type: [Schema.Types.ObjectId],
-        ref: 'Category',
+        ref: 'Category' || 'Subcat',
       },
     ],
   },

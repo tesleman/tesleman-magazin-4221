@@ -12,7 +12,7 @@ import { Footer, Header } from '../components/import-export';
 import { apiFetch } from '../redux/redux-api/redux-api';
 
 export default function MyApp(props) {
-  const { Component, pageProps } = props;
+  const { Component, pageProps, categoryes } = props;
 
   const router = useRouter();
 
@@ -34,11 +34,7 @@ export default function MyApp(props) {
         <Provider store={store}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {!router.pathname.includes('/admin') ? (
-            <Header category={pageProps.categoryes} />
-          ) : (
-            <Admin />
-          )}
+          {!router.pathname.includes('/admin') ? <Header category={categoryes} /> : <Admin />}
           <Component {...pageProps} />
           <Footer />
         </Provider>
@@ -58,7 +54,7 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     pageProps = await Component.getInitialProps({ categoryes, ...ctx });
   }
 
-  return { pageProps: { ...pageProps, categoryes } };
+  return { pageProps, categoryes };
   // Or, if the async data is separate from your page props:
-  // { pageProps, data: { isAuthed } };
+  // { pageProps, data: { categoryes } };
 };
