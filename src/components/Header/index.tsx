@@ -16,21 +16,23 @@ const Header: React.FC<any> = ({ category }) => {
           <ul className={style.ulRoot}>
             {category &&
               category.map((el, i) => (
-                <li key={el._id + i} className={style.ulli}>
-                  <Link href={`${el.slug}`}>{el.title}</Link>
+                <Link key={el._id} href={`${el.slug}`}>
+                  <li className={style.ulli}>
+                    {el.title}
 
-                  {el.subcat && (
-                    <ul className={style.navulliul}>
-                      {el.subcat.map((elem) => (
-                        <Link
-                          key={elem._id}
-                          href={el.title === 'Shop' ? `/shop/${elem.slug}` : `${elem.slug}`}>
-                          <li className={style.li}>{elem.title}</li>
-                        </Link>
-                      ))}
-                    </ul>
-                  )}
-                </li>
+                    {el.subcat && (
+                      <ul className={style.navulliul}>
+                        {el.subcat.map((elem) => (
+                          <Link
+                            key={elem._id}
+                            href={el.title === 'Shop' ? `/shop/${elem.slug}` : `${elem.slug}`}>
+                            <li className={style.li}>{elem.title}</li>
+                          </Link>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                </Link>
               ))}
           </ul>
         </Grid>

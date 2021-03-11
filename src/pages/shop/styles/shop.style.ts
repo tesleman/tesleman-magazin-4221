@@ -23,9 +23,17 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     height: 450,
     flex: 1,
+  },
+  wrapper: {
+    color: 'white',
+    margin: 'auto',
     '& h1': {
+      textAlign: 'center',
+      margin: 0,
+    },
+    '& a': {
+      textDecoration: 'none',
       color: 'white',
-      margin: 'auto',
     },
   },
   head: {},

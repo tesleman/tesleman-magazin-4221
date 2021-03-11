@@ -35,14 +35,13 @@ apiRoute.get(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
       /// api/card?page=0&limit=2
-      const numberOfCards = await Card.countDocuments();
 
       const pageOptions = {
         page: parseInt(req.query.page as string, 10) || 0,
         limit: parseInt(req.query.limit as string, 10) || 10,
         category: req.query.category ? { category: req.query.category } : {},
       };
-
+      const numberOfCards = await Card.find(pageOptions.category).count();
       let card = await Card.find(pageOptions.category)
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);

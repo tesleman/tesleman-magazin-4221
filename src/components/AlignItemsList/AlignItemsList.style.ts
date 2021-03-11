@@ -10,6 +10,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: '0 2px 5px rgba(0,0,0, .5)',
     zIndex: -1,
+    overflow: 'scroll',
   },
   inline: {
     display: 'inline',

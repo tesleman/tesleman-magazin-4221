@@ -58,7 +58,7 @@ menues.get(
         {
           $match: {
             title: {
-              $ne: 'Shhop',
+              $ne: 'Shop',
             },
           },
         },

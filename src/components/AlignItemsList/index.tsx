@@ -39,7 +39,7 @@ const AlignItemsList: React.FC<AlignItemsListInterface> = ({
   return (
     <List ref={myRef} className={style.root}>
       {cart.length > 0 ? (
-        <div>
+        <div style={{ maxHeight: 750 }}>
           {cart.map((elem) => (
             <div key={elem._id}>
               <ListItem alignItems="flex-start">

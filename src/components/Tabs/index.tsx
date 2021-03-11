@@ -15,7 +15,7 @@ const TabsCentr: React.FC<{
 }> = ({ categorys, cards, addTooCartHendl, cart }) => {
   const style: useStylesType = useStyles();
   const [category, seCategory] = React.useState(categorys[0].title);
-  const { entities, error } = useSelector((state: RootState) => state.card);
+  const { entities, error, loading } = useSelector((state: RootState) => state.card);
   const dispatch: AppDispatch = useDispatch();
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     seCategory(newValue);
@@ -27,8 +27,11 @@ const TabsCentr: React.FC<{
       page: 0,
       limit: 3,
       table: 'card',
+      all: true,
     };
+
     dispatch(getCard(payload));
+    console.log(entities);
   }, [category]);
   return (
     <div>
