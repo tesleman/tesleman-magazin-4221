@@ -1,16 +1,10 @@
 import { Grid } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
-import { NextPageContext, GetServerSideProps } from 'next';
+import { GetServerSideProps } from 'next';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCard } from '../../redux/slicers/cardSlice';
-import { RootState } from '../../redux/store';
-import ShopLayuot from './shop.layuot';
-import { Card } from '../../components/Card';
-import { useStyles, useStylesType } from './styles/shop.style';
-import { addTooCart } from '../../components/import-export';
-import { apiFetch } from '../../redux/redux-api/redux-api';
-import Pagin from '../../components/Pagination';
+import ShopLayuot from '../shop.layuot';
+import { useStyles, useStylesType } from '../styles/shop.style';
+import { Card, Pagin, apiFetch, addTooCart, RootState, getCard } from '../shop.import-export';
 
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   //@ts-ignore
@@ -34,15 +28,16 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
     };
   }
 };
-const SingleCard = ({ context, cards, client = true }) => {
+const SingleCard = ({ context, cards, client }) => {
   console.log(context, cards, client, 'client');
   const style: useStylesType = useStyles();
   const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
   const { entities, pageLenght, totalCount, error } = useSelector((state: RootState) => state.card);
   const limitLocal = 3;
-
-  const count = Math.round(client ? totalCount : cards.totalCount / limitLocal);
   const [page, setPage] = React.useState(1);
+
+  const count = Math.round((page !== 1 ? totalCount : cards.totalCount) / limitLocal);
+
   const dispatch = useDispatch();
   const handleChange = React.useCallback((event, value) => {
     setPage(value);

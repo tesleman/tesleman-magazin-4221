@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-import { Breadcrumbs, Container, Grid } from '@material-ui/core';
+import { Breadcrumbs, Container, Grid, Typography } from '@material-ui/core';
 
 import { useStyles, useStylesType } from './styles/shop.style';
 import Link from 'next/link';
@@ -10,7 +10,9 @@ import { useRouter } from 'next/router';
 const ShopLayuot = ({ children }) => {
   const style: useStylesType = useStyles();
   const routwr = useRouter();
-  const breadcrumbs = routwr.query.slug && routwr.query.slug.toString().split('_').join(' ');
+  const breadcrumbsCatregory =
+    routwr.query.slug && routwr.query.slug.toString().split('_').join(' ');
+  const breadcrumbsCard = routwr.query.card && routwr.query.card.toString().split('_').join(' ');
 
   return (
     <div>
@@ -24,7 +26,10 @@ const ShopLayuot = ({ children }) => {
             <Breadcrumbs aria-label="breadcrumb">
               <Link href="/">Home</Link>
               <Link href="/shop">Shop</Link>
-              {routwr.query.slug && <Link href={`/shop/${routwr.query.slug}`}>{breadcrumbs}</Link>}
+              {routwr.query.slug && (
+                <Link href={`/shop/${routwr.query.slug}`}>{breadcrumbsCatregory}</Link>
+              )}
+              {routwr.query.card && <Typography color="textPrimary">{breadcrumbsCard}</Typography>}
             </Breadcrumbs>
           </div>
         </div>

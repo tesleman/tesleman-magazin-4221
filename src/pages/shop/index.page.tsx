@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     // will be passed to the page component as props
   };
 };
-const Shpo = ({ data }) => {
+const Shpo = ({ data, totalCount: totalCounts }) => {
   console.log(data);
   const style: useStylesType = useStyles();
   const dispatch = useDispatch();
@@ -33,8 +33,9 @@ const Shpo = ({ data }) => {
   const handleChange = React.useCallback((event, value) => {
     setPage(value);
   }, []);
+
   const limitLocal = 3;
-  const count = Math.round(totalCount / limitLocal);
+  const count = Math.round((page !== 1 ? totalCount : totalCounts) / limitLocal);
 
   console.log(count);
   React.useEffect(() => {
