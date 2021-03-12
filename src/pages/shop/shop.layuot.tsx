@@ -7,7 +7,7 @@ import { useStyles, useStylesType } from './styles/shop.style';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const ShopLayuot = ({ children }) => {
+const ShopLayuot = (props) => {
   const style: useStylesType = useStyles();
   const routwr = useRouter();
   const breadcrumbsCatregory =
@@ -29,21 +29,23 @@ const ShopLayuot = ({ children }) => {
               {routwr.query.slug && (
                 <Link href={`/shop/${routwr.query.slug}`}>{breadcrumbsCatregory}</Link>
               )}
-              {routwr.query.card && <Typography color="textPrimary">{breadcrumbsCard}</Typography>}
+              {routwr.query.card && <Typography color="textPrimary">{props.br}</Typography>}
             </Breadcrumbs>
           </div>
         </div>
-        <div className={style.head}>
-          <Grid container>
-            <Grid item xs={6}>
-              Showing 1–12 of 76 results
+        {!routwr.query.card && (
+          <div className={style.head}>
+            <Grid container>
+              <Grid item xs={6}>
+                Showing 1–12 of 76 results
+              </Grid>
+              <Grid item xs={6}>
+                Фильтр
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              Фильтр
-            </Grid>
-          </Grid>
-        </div>
-        {children}
+          </div>
+        )}
+        {props.children}
       </Container>
     </div>
   );

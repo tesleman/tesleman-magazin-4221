@@ -18,7 +18,7 @@ export const Card: React.FC<{
   const [open, setOpen] = React.useState<boolean>(false);
   const [imgIndex, setImgIndex] = React.useState<number>(0);
   console.log();
-  const link = `/shop/${card.category.split(' ').join('_')}/${card._id} `;
+  const link = `/shop/${card.category.split(' ').join('_')}/${card.slug} `;
   const handleOpen = () => {
     setOpen(true);
   };

@@ -5,31 +5,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import ShopLayuot from '../shop.layuot';
 import { useStyles, useStylesType } from '../styles/shop.style';
 import { Card, Pagin, apiFetch, addTooCart, RootState, getCard } from '../shop.import-export';
-
+import { SingleCategoryI } from '../shop-types';
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   //@ts-ignore
   const categorys = query.slug.split('_').join(' ');
 
-  if (req) {
-    const cards = await apiFetch({
-      table: 'card',
-      limit: 3,
-      page: 0,
-      all: true,
-      category: categorys,
-    });
-    return {
-      props: { context: categorys, cards: cards, client: false }, // will be passed to the page component as props
-    };
-  }
-  if (!req) {
-    return {
-      props: { client: true }, // will be passed to the page component as props
-    };
-  }
+  const cards = await apiFetch({
+    table: 'card',
+    limit: 3,
+    page: 0,
+    all: true,
+    category: categorys,
+  });
+  return {
+    props: { context: categorys, cards: cards }, // will be passed to the page component as props
+  };
 };
-const SingleCard = ({ context, cards, client }) => {
-  console.log(context, cards, client, 'client');
+
+const SingleCategory: React.FC<SingleCategoryI> = ({ context, cards }) => {
+  console.log(context, cards, 'client');
   const style: useStylesType = useStyles();
   const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
   const { entities, pageLenght, totalCount, error } = useSelector((state: RootState) => state.card);
@@ -79,4 +73,4 @@ const SingleCard = ({ context, cards, client }) => {
   );
 };
 
-export default SingleCard;
+export default SingleCategory;

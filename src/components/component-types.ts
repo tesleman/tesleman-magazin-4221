@@ -2,14 +2,19 @@ import { cartInterface } from '../redux/slicers/cartSlicer';
 import { useStylesType } from './Card/card.style';
 
 export interface cardInterface {
-  images: Array<string>;
-  title: string;
-  subtitle: string;
-  description: string;
   category: string;
-  style?: useStylesType;
-  _id: string;
+  createdAt: string;
+  description: string;
+  images: Array<string>;
   price: number;
+  subtitle: string;
+  title: string;
+  detail?: string;
+  slug: string;
+  updatedAt: string;
+  __v: number;
+  _id: string;
+  style?: useStylesType;
 }
 
 export interface AlignItemsListInterface {

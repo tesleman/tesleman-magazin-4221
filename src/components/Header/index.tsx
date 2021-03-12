@@ -4,7 +4,18 @@ import Link from 'next/link';
 import { Grid } from '@material-ui/core';
 import Headercart from './Headercart';
 
-const Header: React.FC<any> = ({ category }) => {
+interface props {
+  _id: string;
+  slug: string;
+  title: string;
+  subcat?: Array<{
+    _id: string;
+    slug: string;
+    title: string;
+  }>;
+}
+
+const Header: React.FC<{ category: Array<props> }> = ({ category }) => {
   const style: useStylesType = useStyles();
   return (
     <nav className={style.nav}>

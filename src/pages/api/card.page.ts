@@ -41,7 +41,7 @@ apiRoute.get(
         limit: parseInt(req.query.limit as string, 10) || 10,
         category: req.query.category ? { category: req.query.category } : {},
       };
-      const numberOfCards = await Card.find(pageOptions.category).count();
+      const numberOfCards = await Card.find(pageOptions.category).countDocuments();
       let card = await Card.find(pageOptions.category)
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);

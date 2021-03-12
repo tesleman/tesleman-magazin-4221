@@ -40,4 +40,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
   paginate: {
     background: 'gray',
   },
+  imagePagination: {
+    padding: 7,
+    cursor: 'pointer',
+  },
+  cardDetails: {
+    textAlign: 'center',
+  },
 }));
