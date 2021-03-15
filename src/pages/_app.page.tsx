@@ -3,13 +3,27 @@ import React from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 import theme from '../theme';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import Admin from './admin/adminNav';
 import { Footer, Header } from '../components/import-export';
 import { apiFetch } from '../redux/redux-api/redux-api';
+
+NProgress.configure({ showSpinner: false });
+
+Router.events.on('routeChangeStart', () => {
+  NProgress.start();
+});
+Router.events.on('routeChangeComplete', () => {
+  NProgress.done();
+});
+Router.events.on('routeChangeError', () => {
+  console.log('Error');
+});
 
 export default function MyApp(props) {
   const { Component, pageProps, categoryes } = props;

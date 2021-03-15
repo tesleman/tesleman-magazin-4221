@@ -13,14 +13,21 @@ const findIndex = (state: initialStateInterface, action: PayloadAction<string>) 
   const index = state.cart.findIndex((elem) => elem._id === action.payload);
   return index;
 };
+
+const statePlus = (state: initialStateInterface, index: number) => {
+  return state.cart[index].count + 1;
+};
+const stateMinus = (state: initialStateInterface, index: number) => {
+  return state.cart[index].count - 1;
+};
 const chang = (
   state: initialStateInterface,
   action: PayloadAction<string>,
-  arg: 'pluss' | 'minus',
+  arg: (state: initialStateInterface, index: number) => number,
 ) => {
   const index = findIndex(state, action);
-  state.cart[index].count =
-    arg === 'pluss' ? state.cart[index].count + 1 : state.cart[index].count - 1;
+  state.cart[index].count = arg(state, index);
+
   state.cart[index].totalPrice = state.cart[index].price * state.cart[index].count;
 };
 
@@ -46,11 +53,11 @@ const CartSlise = createSlice({
       getTotalPrice(state);
     },
     plussItmCount(state: initialStateInterface, action: PayloadAction<string>) {
-      chang(state, action, 'pluss');
+      chang(state, action, statePlus);
       getTotalPrice(state);
     },
     minusItmCount(state: initialStateInterface, action: PayloadAction<string>) {
-      chang(state, action, 'minus');
+      chang(state, action, stateMinus);
       getTotalPrice(state);
     },
     removeItem(state: initialStateInterface, action: PayloadAction<string>) {

@@ -17,7 +17,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
 
 const CartPage: React.FC<PropsSingleCard> = (props) => {
   const style: useStylesType = useStyles();
-  const router = useRouter();
   const [index, setIndex] = React.useState(0);
   const setIndexHendl = (i) => {
     setIndex(i);
