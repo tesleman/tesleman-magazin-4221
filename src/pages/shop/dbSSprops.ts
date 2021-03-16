@@ -7,7 +7,7 @@ export const cardProps = async (query) => {
   const pageOptions = {
     page: ((+query.page - 1) as number) || 0,
     limit: parseInt(query.limit as string, 10) || 3,
-    category: query.slug ? { categories_slug: query.slug } : {},
+    category: query.slug ? { categoryslug: query.slug } : {},
   };
   const numberOfCards = await Carda.find(pageOptions.category).countDocuments();
   let card = await Carda.find(pageOptions.category)

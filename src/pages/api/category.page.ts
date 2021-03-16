@@ -13,7 +13,7 @@ category.post(
     try {
       const data = {
         title: req.body.title,
-        meta: req.body.meta,
+        meta: req.body.meta ? req.body.meta : '',
         slug: req.body.slug,
       };
       const categoryCreate = await Category.create(data);

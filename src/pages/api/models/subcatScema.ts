@@ -12,6 +12,10 @@ const SubcatScema = new Schema(
       type: String,
       maxlength: [20, 'Title cannot be more than 20 characters'],
     },
+    slug: {
+      type: String,
+      unique: [true, 'nead unique slug'],
+    },
     meta: {
       type: String,
       maxLenght: [40, 'Title cannot be more than 40 characters'],

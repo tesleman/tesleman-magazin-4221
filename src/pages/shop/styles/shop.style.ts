@@ -43,6 +43,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
   imagePagination: {
     padding: 7,
     cursor: 'pointer',
+    textAlign: 'center',
   },
   cardDetails: {
     textAlign: 'center',

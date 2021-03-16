@@ -12,22 +12,21 @@ const menuesEdit = connect();
 menuesEdit.post(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-      // const ass = await Category.aggregate([
-      //   {
-      //     $project: {
-      //       _id: 1,
-      //     },
-      //   },
-      // ]);
+      const ass = await Category.aggregate([
+        {
+          $project: {
+            _id: 1,
+          },
+        },
+      ]);
 
       const data = {
         title: req.body.title,
-        meta: req.body.meta,
         slug: `/${req.body.slug}`,
         active: req.body.active,
-        subcat: req.body.subcat,
+        subcat: ass,
       };
-
+      console.log(data);
       const categoryFind = await Menue.findByIdAndUpdate(req.query, data).exec();
 
       res.status(200).json({

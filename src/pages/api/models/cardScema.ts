@@ -18,15 +18,15 @@ const CardScema = new Schema(
     slug: {
       type: String,
       required: [true, 'Please add a slug'],
-      unique: true,
+      unique: [true, 'Please add unique slug'],
     },
     subtitle: {
       type: String,
       required: true,
     },
-    price: {
+    prise: {
       type: Number,
-      required: [true, 'Please add a price'],
+      required: [true, 'Please add a prise'],
     },
     description: {
       type: String,
@@ -39,6 +39,11 @@ const CardScema = new Schema(
       type: String,
       required: [true, 'Please choise category'],
     },
+    categoryslug: {
+      type: String,
+      required: [true, 'Please choise category'],
+    },
+
     images: [
       {
         type: String,

@@ -6,7 +6,7 @@ const connect = mongoose.connect(`mongodb://${process.env.domein}:27017/test`, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
-  useFindAndModify: true,
+  useFindAndModify: false,
 });
 
 const db = mongoose.connection;

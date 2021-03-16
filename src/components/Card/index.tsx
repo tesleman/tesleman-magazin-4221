@@ -18,7 +18,7 @@ export const Card: React.FC<{
   const [open, setOpen] = React.useState<boolean>(false);
   const [imgIndex, setImgIndex] = React.useState<number>(0);
   console.log();
-  const link = `/shop/${card.category.split(' ').join('_')}/${card.slug} `;
+  const link = card ? `/shop/${card.categoryslug}/${card.slug} ` : '';
   const handleOpen = () => {
     setOpen(true);
   };
@@ -29,13 +29,14 @@ export const Card: React.FC<{
     setImgIndex(i);
   };
 
+  if (!card) return <div></div>;
   return (
     <Grid className={style.constainer} item xs={3}>
       <div>
         <Link href={link}>
           <div>
             <h1>{card.title}</h1>
-            <h4>{card.description}</h4>
+            <h3>{card.description}</h3>
             <span>{card.category}</span>
             <Image
               src={card.images[imgIndex]}

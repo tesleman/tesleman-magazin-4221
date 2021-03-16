@@ -13,6 +13,13 @@ const CategoryScema = new Schema(
 
       maxlength: [20, 'Title cannot be more than 20 characters'],
     },
+
+    slug: {
+      type: String,
+      require: true,
+      unique: [true, 'nead uniqe slug'],
+      maxlength: [20, 'Title cannot be more than 20 characters'],
+    },
     meta: {
       type: String,
       maxLenght: [40, 'Title cannot be more than 40 characters'],

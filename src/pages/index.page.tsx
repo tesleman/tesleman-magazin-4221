@@ -19,6 +19,8 @@ export default function Home({ category, cards }) {
   const dispatch = useDispatch();
 
   const addTooCartHendl = React.useCallback((props) => dispatch(addTooCart(props)), []);
+  if (!category && !cards) return <div> no data</div>;
+
   return (
     <div>
       <Slider />

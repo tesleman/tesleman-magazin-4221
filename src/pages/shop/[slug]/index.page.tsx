@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { cardProps } from '../dbSSprops';
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   const props = await cardProps(query);
-
+  console.log(query);
   return {
     props: { json: props },
     // will be passed to the page component as props

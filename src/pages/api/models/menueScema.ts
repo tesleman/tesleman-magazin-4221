@@ -12,7 +12,7 @@ const MenueScema = new Schema(
     title: {
       type: String,
       required: [true, 'Please add a title'],
-
+      
       maxlength: [20, 'Title cannot be more than 20 characters'],
     },
     slug: {

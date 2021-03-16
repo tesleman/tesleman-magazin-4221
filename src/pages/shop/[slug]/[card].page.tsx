@@ -35,7 +35,7 @@ const CartPage: React.FC<PropsSingleCard> = (props) => {
             />
             <Grid container direction="row" justify="center">
               {props.data.images.map((elem, index) => (
-                <div key={index} className={style.imagePagination}>
+                <Grid item xs={4} key={index} className={style.imagePagination}>
                   <Image
                     width={75}
                     height={75}
@@ -43,7 +43,7 @@ const CartPage: React.FC<PropsSingleCard> = (props) => {
                     onClick={() => setIndexHendl(index)}
                     alt=""
                   />
-                </div>
+                </Grid>
               ))}
             </Grid>
           </Grid>

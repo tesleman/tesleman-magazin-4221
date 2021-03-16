@@ -17,12 +17,15 @@ apiRoute.post(
         images: req.body.images,
         slug: req.body.slug,
         detail: req.body.detail,
+        categoryslug: req.body.categoryslug,
+        prise: req.body.prise,
       };
       const card = await Card.create(cardSpred);
       res.status(200).json({
         message: 'succes',
         data: card,
       });
+      res.status(400);
     } catch (e) {
       res.status(400).json({
         message: e,

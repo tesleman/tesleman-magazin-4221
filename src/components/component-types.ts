@@ -6,9 +6,10 @@ export interface cardInterface {
   createdAt: string;
   description: string;
   images: Array<string>;
-  price: number;
+  prise: number;
   subtitle: string;
   title: string;
+  categoryslug: string;
   detail?: string;
   slug: string;
   updatedAt: string;

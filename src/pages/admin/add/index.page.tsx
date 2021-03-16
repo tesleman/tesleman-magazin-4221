@@ -10,6 +10,9 @@ export interface responsIntrfaceInput {
   subtitle: string;
   description: string;
   category: string;
+  categoryslug: string;
+  detail: string;
+  slug: string;
 }
 
 const AddCard = () => {
@@ -19,7 +22,8 @@ const AddCard = () => {
   const [togleChecbox, setstogleChecbox] = React.useState(false);
 
   const onSubmit = async (data: responsIntrfaceInput) => {
-    // create a cerd
+    console.log(data);
+    // create a card
     const formData = new FormData();
     // appending images to form data
     Array.from(data.images).forEach((file: any) => {
@@ -42,8 +46,8 @@ const AddCard = () => {
       method: 'post',
     });
     let responseSs = await responseS.json();
-
-    setstateImg(responseSs);
+    console.log(responseSs);
+    setstateImg(responseSs.data.images);
   };
 
   React.useEffect(() => {
@@ -57,6 +61,7 @@ const AddCard = () => {
         table: 'category',
       };
       const category = await apiFetch(apiFetchCategoryParams);
+      console.log(category);
       setCat(category);
     };
     fech();
@@ -79,9 +84,12 @@ const AddCard = () => {
       let box = getValues('title');
       let slug = slugify(box, {
         replacement: '_',
-        remove: /[*+~.()'"!:@]/g,
+        remove: /[*+~.()'"!:@ь]/g,
+        lower: true,
+        locale: 'us',
       });
       setValue('slug', slug);
+      setValue('title', box.trim());
     }
   };
 
@@ -89,6 +97,13 @@ const AddCard = () => {
     setstogleChecbox(!togleChecbox);
   };
 
+  const categoryHandlChang = (event) => {
+    const parseEventCategorySlug = JSON.parse(event.target.value);
+    console.log(parseEventCategorySlug.title);
+    setValue('category', parseEventCategorySlug.title.trim());
+    setValue('categoryslug', parseEventCategorySlug.slug);
+  };
+  console.log(stateCat.length > 0 && stateCat[0].title);
   return (
     <div>
       <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit(onSubmit)}>
@@ -131,15 +146,28 @@ const AddCard = () => {
           <textarea ref={register} name="detail" />
           detail
         </label>
+        <label htmlFor="prise">
+          <input name="prise" ref={register} />
+          prise
+        </label>
 
-        <select name="category" ref={register}>
+        <select
+          style={{ width: 150 }}
+          defaultValue={stateCat.length > 0 && stateCat[0].title}
+          onChange={categoryHandlChang}>
+          <option value=""></option>
           {stateCat.map((e) => (
-            <option key={e._id} value={e.title}>
+            <option key={e._id} value={JSON.stringify(e)}>
               {e.title}
             </option>
           ))}
         </select>
-        <button type="submit">submit</button>
+        <input name="categoryslug" ref={register} style={{ display: 'none' }} />
+        <input name="category" ref={register} style={{ visibility: 'hidden' }} />
+
+        <button style={{ width: 70 }} type="submit">
+          submit
+        </button>
       </form>
       {/* {stateImg && stateImg.map((e, i) => <img key={i} src={e} alt="" />)} */}
     </div>
