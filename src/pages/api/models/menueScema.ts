@@ -1,10 +1,15 @@
-import { model, Schema, Document, models } from 'mongoose';
+import { model, Schema, Document, models, Model } from 'mongoose';
 
-export interface MenueScemaInterface extends Document<any> {
+export interface MenueScemaInterface extends Document {
+  _id: string;
+  subcat?: Array<string>;
   title: string;
-  meta: string;
   slug: string;
-  active: boolean;
+  active: true;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  sort: number;
 }
 
 const MenueScema = new Schema(
@@ -12,7 +17,7 @@ const MenueScema = new Schema(
     title: {
       type: String,
       required: [true, 'Please add a title'],
-      
+
       maxlength: [20, 'Title cannot be more than 20 characters'],
     },
     slug: {
@@ -23,7 +28,9 @@ const MenueScema = new Schema(
     active: {
       type: Boolean,
     },
-
+    sort: {
+      type: Number,
+    },
     subcat: [
       {
         type: [Schema.Types.ObjectId],
@@ -37,4 +44,7 @@ const MenueScema = new Schema(
   },
 );
 
-export const Menue = models.Menue || model<MenueScemaInterface | any>('Menue', MenueScema);
+const Menue: Model<MenueScemaInterface> =
+  models.Menue || model<MenueScemaInterface>('Menue', MenueScema);
+
+export default Menue;

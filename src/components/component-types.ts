@@ -33,3 +33,15 @@ export interface TabsCentrType {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface TopMenueIItemI {
+  _id: string;
+  subcat: Array<string>;
+  title: string;
+  slug: string;
+  active: true;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  sort: number;
+}

@@ -1,6 +1,7 @@
-import { model, Schema, Document, models } from 'mongoose';
+import { model, Schema, Document, models, Model } from 'mongoose';
 
-export interface CategoryScemaInterface extends Document<any> {
+export interface CategoryBaseDocument extends Document {
+  _id: string;
   title: string;
   meta: string;
   slug: string;
@@ -31,5 +32,6 @@ const CategoryScema = new Schema(
   },
 );
 
-export const Category =
-  models.Category || model<CategoryScemaInterface | any>('Category', CategoryScema);
+const Category: Model<CategoryBaseDocument> =
+  models.Category || model<CategoryBaseDocument>('Category', CategoryScema);
+export default Category;

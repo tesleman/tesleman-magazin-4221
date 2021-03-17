@@ -2,7 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import mongoose from 'mongoose';
 import connect from './core/connect';
 import dbConnect from './core/db';
-import { Category } from './models/categoryScema';
+import Category from './models/categoryScema';
+import Menue from './models/menueScema';
+import { TopMenueIItemI } from '../../components/component-types';
 
 mongoose.Promise = global.Promise;
 dbConnect();
@@ -43,6 +45,15 @@ category.get(
       let categorys = await Category.find(pageOptions.category)
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
+
+      const test = await Menue.aggregate<TopMenueIItemI>([
+        {
+          $match: {
+            title: 'Shop',
+          },
+        },
+      ]);
+      console.log(test[0]._id);
       res.status(200).json({
         message: 'succes',
         pageLenght: categorys.length,
