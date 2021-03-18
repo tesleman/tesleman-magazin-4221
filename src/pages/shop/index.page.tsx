@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 const Shpo = ({ json }) => {
   const { card, totalCount: totalCounts, client } = JSON.parse(json);
   const router = useRouter();
-  console.log(JSON.parse(json));
+
   const style: useStylesType = useStyles();
   const dispatch = useDispatch();
   const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);

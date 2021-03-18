@@ -51,27 +51,23 @@ const AlignItemsList: React.FC<AlignItemsListInterface> = ({
                   primary={elem.title}
                   secondary={
                     <React.Fragment>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        className={style.inline}
-                        color="textPrimary">
+                      <Typography component="span" className={style.inline} color="textPrimary">
                         {elem.subtitle}
                       </Typography>
                       <br />
-                      <Typography
+                      {/* <Typography
                         component="span"
                         variant="body2"
                         className={style.inline}
                         color="textPrimary">
                         {elem.description}
-                      </Typography>
+                      </Typography> */}
                       <br />
                       <Typography
-                        component="h4"
+                        component="span"
                         variant="body2"
                         className={style.inline}
-                        color="textPrimary">
+                        color="secondary">
                         {elem.totalPrice} $
                       </Typography>
                     </React.Fragment>

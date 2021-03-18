@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import connect from './core/connect';
 import dbConnect from './core/db';
 import Category from './models/categoryScema';
-import Menue from './models/menueScema';
+import Menue, { MenueScemaInterface } from './models/menueScema';
 import { TopMenueIItemI } from '../../components/component-types';
 
 mongoose.Promise = global.Promise;
@@ -19,9 +19,36 @@ category.post(
         slug: req.body.slug,
       };
       const categoryCreate = await Category.create(data);
+
+      const idForUpdatingSubcatShop = await Category.aggregate([
+        {
+          $project: {
+            _id: 1,
+          },
+        },
+      ]);
+
+      const test = await Menue.aggregate([
+        {
+          $match: {
+            title: 'Shop',
+          },
+        },
+      ]);
+
+      const dataUpdatedCategory = {
+        ...test[0],
+        subcat: idForUpdatingSubcatShop.map((item) => item._id),
+      };
+
+      const dataUpdatedCategorycategoryFind = await Menue.findByIdAndUpdate(
+        dataUpdatedCategory._id,
+        dataUpdatedCategory,
+      ).exec();
+
       res.status(200).json({
         message: 'succes',
-        data: categoryCreate,
+        data: dataUpdatedCategorycategoryFind,
       });
     } catch (error) {
       res.status(400).json({
@@ -46,14 +73,6 @@ category.get(
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
 
-      const test = await Menue.aggregate<TopMenueIItemI>([
-        {
-          $match: {
-            title: 'Shop',
-          },
-        },
-      ]);
-      console.log(test[0]._id);
       res.status(200).json({
         message: 'succes',
         pageLenght: categorys.length,

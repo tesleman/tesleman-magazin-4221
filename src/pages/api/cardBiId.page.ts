@@ -11,7 +11,7 @@ apiRoute.get(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
       /// api/card?page=0&limit=2
-      console.log(req.query.card);
+
       if (req.query.card) {
         const card = await Card.find({ slug: req.query.card });
 

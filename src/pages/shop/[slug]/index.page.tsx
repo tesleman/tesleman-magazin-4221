@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import { cardProps } from '../dbSSprops';
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   const props = await cardProps(query);
-  console.log(query);
+
   return {
     props: { json: props },
     // will be passed to the page component as props
@@ -19,13 +19,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
 const SingleCategory = ({ json }) => {
   const { totalCount, card, client } = JSON.parse(json);
-  console.log(card);
+
   const style: useStylesType = useStyles();
   const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
   const limitLocal = 3;
   const [page, setPage] = React.useState(1);
 
-  const count = Math.round(totalCount / limitLocal);
+  const count = Math.ceil(totalCount / limitLocal);
 
   const dispatch = useDispatch();
   const handleChange = React.useCallback((event, value) => {

@@ -6,7 +6,7 @@ export interface cardInterface {
   createdAt: string;
   description: string;
   images: Array<string>;
-  prise: number;
+  price: number;
   subtitle: string;
   title: string;
   categoryslug: string;
@@ -16,6 +16,7 @@ export interface cardInterface {
   __v: number;
   _id: string;
   style?: useStylesType;
+  count?: number;
 }
 
 export interface AlignItemsListInterface {

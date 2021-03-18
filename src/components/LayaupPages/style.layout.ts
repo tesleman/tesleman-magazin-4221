@@ -36,28 +36,4 @@ export const useStyles = makeStyles((theme: Theme) => ({
       color: 'white',
     },
   },
-  head: {},
-  paginate: {
-    background: 'gray',
-  },
-  imagePagination: {
-    position: 'relative',
-
-    padding: 7,
-    cursor: 'pointer',
-  },
-  cardDetails: {
-    float: 'left',
-    paddingLeft: 50,
-    '& h1': {
-      color: theme.palette.secondary.main,
-    },
-  },
-  input: {
-    height: 25,
-    width: 90,
-    '& input': {
-      padding: 8,
-    },
-  },
 }));

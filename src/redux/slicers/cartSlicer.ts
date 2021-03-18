@@ -1,4 +1,4 @@
-import { AnyAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cardInterface } from '../../components/component-types';
 
 const getTottalPrice = (arr: Array<cartInterface>) =>
@@ -28,7 +28,7 @@ const chang = (
   const index = findIndex(state, action);
   state.cart[index].count = arg(state, index);
 
-  state.cart[index].totalPrice = +state.cart[index].prise * +state.cart[index].count;
+  state.cart[index].totalPrice = +state.cart[index].price * +state.cart[index].count;
 };
 
 export interface cartInterface extends cardInterface {
@@ -49,7 +49,12 @@ const CartSlise = createSlice({
   initialState,
   reducers: {
     addTooCart(state: initialStateInterface, action: PayloadAction<cardInterface>) {
-      state.cart.push({ ...action.payload, count: 1, totalPrice: +action.payload.prise });
+      const cartItemCount = action.payload.count ? action.payload.count : 1;
+      state.cart.push({
+        ...action.payload,
+        count: cartItemCount,
+        totalPrice: +action.payload.price * cartItemCount,
+      });
       getTotalPrice(state);
     },
     plussItmCount(state: initialStateInterface, action: PayloadAction<string>) {

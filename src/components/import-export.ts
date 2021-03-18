@@ -5,6 +5,7 @@ export { default as Blog } from './Blog';
 export { default as CountDown } from './Cuntdown';
 export { default as Advantages } from './Advantages';
 export { default as Footer } from './Footer';
+export { default as Layuot } from './LayaupPages';
 
 export { addTooCart } from '../redux/slicers/cartSlicer';
 export { getCard } from '../redux/slicers/cardSlice';

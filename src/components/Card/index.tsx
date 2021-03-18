@@ -17,7 +17,7 @@ export const Card: React.FC<{
   const style: useStylesType = useStyles();
   const [open, setOpen] = React.useState<boolean>(false);
   const [imgIndex, setImgIndex] = React.useState<number>(0);
-  console.log();
+
   const link = card ? `/shop/${card.categoryslug}/${card.slug} ` : '';
   const handleOpen = () => {
     setOpen(true);
@@ -29,9 +29,13 @@ export const Card: React.FC<{
     setImgIndex(i);
   };
 
+  const hendlAddToCardDispatch = () => {
+    addTooCartHendl(card);
+  };
+
   if (!card) return <div></div>;
   return (
-    <Grid className={style.constainer} item xs={3}>
+    <Grid className={style.constainer} item xs={12} sm={8} md={3}>
       <div>
         <Link href={link}>
           <div>
@@ -61,7 +65,7 @@ export const Card: React.FC<{
         {cart.some((elem) => elem._id === card._id) ? (
           ''
         ) : (
-          <AddShoppingCartIcon onClick={() => addTooCartHendl(card)} />
+          <AddShoppingCartIcon onClick={hendlAddToCardDispatch} />
         )}
         <FavoriteBorderIcon />
         <ZoomInIcon onClick={handleOpen} />

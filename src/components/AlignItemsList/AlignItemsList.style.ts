@@ -29,6 +29,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   dellete: {
     cursor: 'pointer',
+    float: 'right',
+
     '&:hover': {
       color: theme.palette.secondary.main,
     },

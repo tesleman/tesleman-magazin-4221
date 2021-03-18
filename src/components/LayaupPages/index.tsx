@@ -1,0 +1,55 @@
+import React from 'react';
+import Image from 'next/image';
+
+import { Breadcrumbs, Container, Grid, Typography } from '@material-ui/core';
+
+import { useStyles, useStylesType } from './style.layout';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+const Layuot = (props) => {
+  const { br, children } = props;
+  const style: useStylesType = useStyles();
+  const routwr = useRouter();
+  const breadcrumbsCatregory =
+    routwr.query.slug && routwr.query.slug.toString().split('_').join(' ');
+  const breadcrumbsCard = routwr.query.card && routwr.query.card.toString().split('_').join(' ');
+
+  return (
+    <div>
+      <div className={style.imagin}>
+        <Image src="/shop-1.jpg" layout="fill" objectFit="fill" objectPosition="top" />
+      </div>
+      <Container className={style.root}>
+        <div className={style.headerShop}>
+          <div className={style.wrapper}>
+            <h1>SHOP</h1>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link href="/">Home</Link>
+              <Link href="/shop">Shop</Link>
+              {routwr.query.slug && (
+                <Link href={`/shop/${routwr.query.slug}`}>{breadcrumbsCatregory}</Link>
+              )}
+              {routwr.query.card && <Typography color="textPrimary">{br}</Typography>}
+            </Breadcrumbs>
+          </div>
+        </div>
+        {!routwr.query.card && (
+          <div>
+            <Grid container>
+              <Grid item xs={6}>
+                Showing 1–12 of 76 results
+              </Grid>
+              <Grid item xs={6}>
+                Фильтр
+              </Grid>
+            </Grid>
+          </div>
+        )}
+        {}
+      </Container>
+    </div>
+  );
+};
+
+export default Layuot;

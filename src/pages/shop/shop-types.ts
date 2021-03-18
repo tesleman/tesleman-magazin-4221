@@ -16,6 +16,7 @@ export interface singleCard {
   updatedAt: string;
   __v: number;
   _id: string;
+  categoryslug: string;
 }
 
 export interface SingleCategoryI {

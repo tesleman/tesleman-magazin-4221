@@ -10,6 +10,7 @@ export const ModalCard: React.FC<cardInterface> = ({
   description,
   category,
   style,
+  detail,
 }) => {
   return (
     <Grid container direction="row">
@@ -28,7 +29,8 @@ export const ModalCard: React.FC<cardInterface> = ({
         <h4>{description}</h4>
         <span>{category}</span>
 
-        <p>{subtitle}</p>
+        <b>{subtitle}</b>
+        <p>{detail}</p>
       </Grid>
     </Grid>
   );

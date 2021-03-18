@@ -18,7 +18,7 @@ apiRoute.post(
         slug: req.body.slug,
         detail: req.body.detail,
         categoryslug: req.body.categoryslug,
-        prise: req.body.prise,
+        price: req.body.price,
       };
       const card = await Card.create(cardSpred);
       res.status(200).json({

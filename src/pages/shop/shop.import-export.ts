@@ -6,3 +6,4 @@ export { apiFetch } from '../../redux/redux-api/redux-api';
 
 export type { AppDispatch, RootState } from '../../redux/store';
 export type { apiFechInterface } from '../../redux/redux-type';
+export type { cardInterface } from '../../components/component-types';

@@ -22,7 +22,6 @@ const AddCard = () => {
   const [togleChecbox, setstogleChecbox] = React.useState(false);
 
   const onSubmit = async (data: responsIntrfaceInput) => {
-    console.log(data);
     // create a card
     const formData = new FormData();
     // appending images to form data
@@ -46,7 +45,7 @@ const AddCard = () => {
       method: 'post',
     });
     let responseSs = await responseS.json();
-    console.log(responseSs);
+
     setstateImg(responseSs.data.images);
   };
 
@@ -146,9 +145,9 @@ const AddCard = () => {
           <textarea ref={register} name="detail" />
           detail
         </label>
-        <label htmlFor="prise">
-          <input name="prise" ref={register} />
-          prise
+        <label htmlFor="price">
+          <input name="price" ref={register} />
+          price
         </label>
 
         <select

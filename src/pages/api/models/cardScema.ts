@@ -24,9 +24,9 @@ const CardScema = new Schema(
       type: String,
       required: true,
     },
-    prise: {
+    price: {
       type: Number,
-      required: [true, 'Please add a prise'],
+      required: [true, 'Please add a price'],
     },
     description: {
       type: String,
