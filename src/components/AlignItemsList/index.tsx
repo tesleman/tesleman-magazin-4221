@@ -33,65 +33,21 @@ const AlignItemsList: React.FC<AlignItemsListInterface> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const plusHendl = (id: string) => dispatch(plussItmCount(id));
-  const minusHendl = (id: string) => dispatch(minusItmCount(id));
-  const removeHendl = (id: string) => dispatch(removeItem(id));
+  const plusHendl = React.useCallback((id: string) => dispatch(plussItmCount(id)), []);
+  const minusHendl = React.useCallback((id: string) => dispatch(minusItmCount(id)), []);
+  const removeHendl = React.useCallback((id: string) => dispatch(removeItem(id)), []);
   return (
     <List ref={myRef} className={style.root}>
       {cart.length > 0 ? (
         <div style={{ maxHeight: 750 }}>
           {cart.map((elem) => (
-            <div key={elem._id}>
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt={elem.title} src={elem.images[0]} />
-                </ListItemAvatar>
-
-                <ListItemText
-                  primary={elem.title}
-                  secondary={
-                    <React.Fragment>
-                      <Typography component="span" className={style.inline} color="textPrimary">
-                        {elem.subtitle}
-                      </Typography>
-                      <br />
-                      {/* <Typography
-                        component="span"
-                        variant="body2"
-                        className={style.inline}
-                        color="textPrimary">
-                        {elem.description}
-                      </Typography> */}
-                      <br />
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        className={style.inline}
-                        color="secondary">
-                        {elem.totalPrice} $
-                      </Typography>
-                    </React.Fragment>
-                  }
-                />
-
-                <Grid
-                  container
-                  className={style.container}
-                  direction="row"
-                  justify="flex-end"
-                  alignItems="center">
-                  <IconButton className={style.button} onClick={() => plusHendl(elem._id)}>
-                    +
-                  </IconButton>
-                  <div className={style.counter}>{elem.count}</div>
-                  <IconButton className={style.button} onClick={() => minusHendl(elem._id)}>
-                    -
-                  </IconButton>
-                </Grid>
-              </ListItem>
-              <DeleteIcon onClick={() => removeHendl(elem._id)} className={style.dellete} />
-              <Divider variant="inset" component="li" />
-            </div>
+            <ListCartItem
+              key={elem._id}
+              plusHendl={plusHendl}
+              minusHendl={minusHendl}
+              removeHendl={removeHendl}
+              elem={elem}
+            />
           ))}
           <div className={style.totalPrice}>{totalCartPrice} $</div>
         </div>
@@ -110,5 +66,65 @@ const EmptyCart = () => {
     <ListItem alignItems="flex-start">
       <ListItemText primary="Cart Empty" />
     </ListItem>
+  );
+};
+
+export const ListCartItem = ({ elem, plusHendl, minusHendl, removeHendl }) => {
+  const style = useStyles();
+
+  return (
+    <div key={elem._id}>
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt={elem.title} src={elem.images[0]} />
+        </ListItemAvatar>
+
+        <ListItemText
+          primary={elem.title}
+          secondary={
+            <React.Fragment>
+              <Typography component="span" className={style.inline} color="textPrimary">
+                {elem.subtitle}
+              </Typography>
+              <br />
+              {/* <Typography
+              component="span"
+              variant="body2"
+              className={style.inline}
+              color="textPrimary">
+              {elem.description}
+            </Typography> */}
+              <br />
+              <Typography
+                component="span"
+                variant="body2"
+                className={style.inline}
+                color="secondary">
+                {elem.totalPrice} $
+              </Typography>
+            </React.Fragment>
+          }
+        />
+        <Grid
+          container
+          className={style.container}
+          direction="row"
+          justify="flex-end"
+          alignItems="center">
+          <IconButton className={style.button} onClick={() => plusHendl(elem._id)}>
+            +
+          </IconButton>
+          <div className={style.counter}>{elem.count}</div>
+          <IconButton
+            disabled={elem.count <= 0}
+            className={style.button}
+            onClick={() => minusHendl(elem._id)}>
+            -
+          </IconButton>
+        </Grid>
+      </ListItem>
+      <DeleteIcon onClick={() => removeHendl(elem._id)} className={style.dellete} />
+      <Divider className={style.divider} variant="inset" component="li" />
+    </div>
   );
 };

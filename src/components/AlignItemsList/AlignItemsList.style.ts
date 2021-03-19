@@ -39,4 +39,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginTop: 10,
     padding: 5,
   },
+  divider: {
+    listStyle: 'none',
+  },
 }));

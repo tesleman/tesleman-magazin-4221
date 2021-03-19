@@ -16,10 +16,10 @@ menues.post(
     try {
       const data = {
         title: req.body.title,
-        meta: req.body.meta,
+        meta: req.body.meta ? req.body.meta : '',
         slug: `/${req.body.slug}`,
         active: req.body.active,
-        subcat: req.body.id,
+        subcat: req.body.id ? req.body.id : null,
       };
       const categoryCreate = await Menue.create(data);
 

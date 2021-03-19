@@ -7,7 +7,7 @@ import ShopLayuot from '../shop.layuot';
 import { PropsSingleCard } from '../shop-types';
 import { useStyles, useStylesType } from '../styles/shop.style';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTooCart, cardInterface, RootState } from '../shop.import-export';
+import { addTooCart, cardInterface, Layuot, RootState } from '../shop.import-export';
 
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   const card = await fetch(`http://${process.env.domein}/api/cardBiId?card=${query.card}`);
@@ -49,7 +49,10 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
     dispatch(addTooCart(payloadData));
   };
   return (
-    <ShopLayuot br={data.title}>
+    <Layuot
+      baseCategory={{ category: 'Shop', link: '/shop' }}
+      src={'/shop-1.jpg'}
+      breadcrumbsCard={data.title}>
       <Container>
         <Grid container direction="row">
           <Grid item xs={6}>
@@ -114,7 +117,7 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
           </Grid>
         </Grid>
       </Container>
-    </ShopLayuot>
+    </Layuot>
   );
 };
 

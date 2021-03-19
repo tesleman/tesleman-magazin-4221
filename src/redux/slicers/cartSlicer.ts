@@ -18,6 +18,7 @@ const statePlus = (state: initialStateInterface, index: number) => {
   return state.cart[index].count + 1;
 };
 const stateMinus = (state: initialStateInterface, index: number) => {
+  if (state.cart[index].count <= 0) return;
   return state.cart[index].count - 1;
 };
 const chang = (
