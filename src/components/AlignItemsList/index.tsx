@@ -86,6 +86,7 @@ export const ListCartItem = ({ elem, plusHendl, minusHendl, removeHendl }) => {
               <Typography component="span" className={style.inline} color="textPrimary">
                 {elem.subtitle}
               </Typography>
+
               <br />
               {/* <Typography
               component="span"
@@ -95,6 +96,7 @@ export const ListCartItem = ({ elem, plusHendl, minusHendl, removeHendl }) => {
               {elem.description}
             </Typography> */}
               <br />
+
               <Typography
                 component="span"
                 variant="body2"
