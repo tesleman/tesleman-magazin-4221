@@ -2,14 +2,19 @@ import {
   Button,
   Container,
   Divider,
+  FormControl,
+  FormHelperText,
   Grid,
+  Input,
+  InputLabel,
   Step,
   StepLabel,
   Stepper,
   Typography,
 } from '@material-ui/core';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import NumberFormat from 'react-number-format';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
@@ -19,10 +24,12 @@ import { Layuot } from '../../components/import-export';
 import { RootState, plussItmCount, minusItmCount, removeItem } from '../pages_import_export';
 
 import { useStyles } from './style.cart';
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const schema = yup.object().shape({
-  name: yup.string().required('Required field name'),
-  age: yup.number().required('Required field age'),
+  email: yup.string().email('NoEmail').required('Pusto'),
+  phone: yup.string().required(),
+  name: yup.string().required(),
 });
 const Cart = () => {
   return (
@@ -84,27 +91,77 @@ function StepperForm({
   register,
   handleSubmit,
   errors,
+  control,
   formState: { isDirty, isValid },
 }) {
   console.log(errors, 'errors', isDirty, 'isDirty', isValid, 'isValid');
   const ref = React.useRef(undefined);
-
+  const style = useStyles();
   React.useEffect(() => {
     hendleSubmitClick(ref);
   }, [ref]);
-
+  console.log(errors);
   return (
-    <div>
-      <form onSubmit={handleSubmit((data) => handleSetStateCallback(data))}>
-        <label htmlFor="name">
-          <input name="name" ref={register} />
-          {errors.name && <p>{errors.name.message}</p>}
-        </label>
-        <input name="age" type="number" ref={register} />
-        {errors.age && <p>{errors.age.message}</p>}
-        <button style={{ display: 'none' }} ref={ref} type="submit"></button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit((data) => handleSetStateCallback(data))}>
+      <Grid container direction="column">
+        <Grid item xs={4}>
+          <FormControl className={style.inpunFields} error={!!errors.email}>
+            <InputLabel htmlFor="component-error">Email</InputLabel>
+            <Controller
+              className={style.inpunFields}
+              as={Input}
+              name="email"
+              control={control}
+              defaultValue=""
+            />
+
+            <FormHelperText id="component-error-text">
+              {errors.email && errors.email.message}
+            </FormHelperText>
+          </FormControl>
+        </Grid>
+        <Grid item xs={4}>
+          <FormControl className={style.inpunFields} error={!!errors.phone}>
+            <InputLabel htmlFor="component-error">Phone</InputLabel>
+            <Controller
+              as={
+                <NumberFormat
+                  customInput={Input}
+                  format="+7 (###) ###-####"
+                  allowEmptyFormatting
+                  mask="_"
+                />
+              }
+              name="phone"
+              type="phone"
+              control={control}
+              defaultValue=""
+            />
+
+            <FormHelperText id="component-error-text">
+              {errors.phone && errors.phone.message}
+            </FormHelperText>
+          </FormControl>
+        </Grid>
+        <Grid item xs={4}>
+          <FormControl className={style.inpunFields} error={!!errors.name}>
+            <InputLabel htmlFor="component-error">Name</InputLabel>
+            <Controller
+              className={style.inpunFields}
+              as={Input}
+              name="name"
+              control={control}
+              defaultValue=""
+            />
+
+            <FormHelperText id="component-error-text">
+              {errors.name && errors.name.message}
+            </FormHelperText>
+          </FormControl>
+        </Grid>
+      </Grid>
+      <button style={{ display: 'none' }} ref={ref} type="submit"></button>
+    </form>
   );
 }
 
@@ -115,8 +172,8 @@ function HorizontalLabelPositionBelowStepper() {
   const [userData, setUserData] = React.useState([]);
 
   const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
-  const { register, handleSubmit, errors, formState } = useForm({
-    mode: 'onChange',
+  const { register, handleSubmit, errors, formState, control } = useForm({
+    mode: 'all',
     reValidateMode: 'onChange',
 
     resolver: yupResolver(schema),
@@ -147,6 +204,7 @@ function HorizontalLabelPositionBelowStepper() {
       case 1:
         return (
           <StepperForm
+            control={control}
             hendleSubmitClick={hendleSubmitClick}
             handleSetStateCallback={handleSetStateCallback}
             register={register}
@@ -183,13 +241,13 @@ function HorizontalLabelPositionBelowStepper() {
     switch (activeStep) {
       case 0:
         return firstActive;
-        break;
+
       case 1:
         return isValid;
-        break;
+
       case 2:
         return true;
-        break;
+
       default:
         return false;
     }

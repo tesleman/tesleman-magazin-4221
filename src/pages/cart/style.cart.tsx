@@ -12,4 +12,11 @@ export const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+  inpunFields: {
+    width: '100%',
+  },
+  inpunFieldsForm: {
+    textAlign: 'center',
+    width: '100%',
+  },
 }));
