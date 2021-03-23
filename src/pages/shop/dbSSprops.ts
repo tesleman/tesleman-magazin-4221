@@ -1,5 +1,5 @@
 import dbConnect from '../api/core/db';
-import { Card as Carda } from '../api/models/cardScema';
+import Carda from '../api/models/cardScema';
 
 export const cardProps = async (query) => {
   dbConnect();

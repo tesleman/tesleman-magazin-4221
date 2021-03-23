@@ -80,6 +80,7 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
           <Grid item xs={6}>
             <div className={style.cardDetails}>
               <h2>{data.title}</h2>
+              <p>{data.artikul}</p>
               <h1>$ {data.price}</h1>
               <h3>{data.category}</h3>
 

@@ -36,7 +36,7 @@ export interface cartInterface extends cardInterface {
   totalPrice: number;
   count: number;
 }
-interface initialStateInterface {
+export interface initialStateInterface {
   cart: Array<cartInterface>;
   totalCartPrice: number;
 }

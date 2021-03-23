@@ -3,9 +3,7 @@ import mongoose from 'mongoose';
 import connect from './core/connect';
 import dbConnect from './core/db';
 import Menue from './models/menueScema';
-import Category from './models/categoryScema';
-import category from './category.page';
-import { Subcat } from './models/subcatScema';
+
 
 mongoose.Promise = global.Promise;
 dbConnect();

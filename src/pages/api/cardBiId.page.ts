@@ -1,7 +1,7 @@
 import connect from './core/connect';
 
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Card } from './models/cardScema';
+import Card from './models/cardScema';
 import dbConnect from './core/db';
 
 dbConnect();
@@ -13,7 +13,7 @@ apiRoute.get(
       /// api/card?page=0&limit=2
 
       if (req.query.card) {
-        const card = await Card.find({ slug: req.query.card });
+        const card = await Card.find({ slug: req.query.card.toString() });
 
         res.status(200).json({
           message: 'succes',

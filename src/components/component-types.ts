@@ -17,6 +17,7 @@ export interface cardInterface {
   _id: string;
   style?: useStylesType;
   count?: number;
+  artikul: string;
 }
 
 export interface AlignItemsListInterface {

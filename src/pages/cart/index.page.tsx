@@ -1,17 +1,18 @@
 import {
   Button,
   Container,
-  Divider,
   FormControl,
   FormHelperText,
   Grid,
   Input,
   InputLabel,
+  Paper,
   Step,
   StepLabel,
   Stepper,
   Typography,
 } from '@material-ui/core';
+
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { Controller, useForm } from 'react-hook-form';
@@ -22,8 +23,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ListCartItem } from '../../components/AlignItemsList';
 import { Layuot } from '../../components/import-export';
 import { RootState, plussItmCount, minusItmCount, removeItem } from '../pages_import_export';
+import { formUserdataI } from '../pages_type';
 
 import { useStyles } from './style.cart';
+import FinailStage from './FinailStage';
+import CartStepperItem from './CartStepperItem';
+import StepperForm from './StepperForm';
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const schema = yup.object().shape({
@@ -46,139 +51,46 @@ const Cart = () => {
 
 export default Cart;
 
-function FinailStage({ userData, cart }) {
-  return (
-    <div>
-      {JSON.stringify(userData)}
-      {JSON.stringify(cart)}
-    </div>
-  );
-}
-
-function CartStepperItem() {
-  const style = useStyles();
-  const dispatch = useDispatch();
-  const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
-
-  const plusHendl = React.useCallback((id: string) => dispatch(plussItmCount(id)), []);
-  const minusHendl = React.useCallback((id: string) => dispatch(minusItmCount(id)), []);
-  const removeHendl = React.useCallback((id: string) => dispatch(removeItem(id)), []);
-  return (
-    <div>
-      <Grid container direction="row" justify="center">
-        <Grid item xs={6}>
-          {cart.map((elem) => (
-            <ListCartItem
-              key={elem._id}
-              elem={elem}
-              plusHendl={plusHendl}
-              minusHendl={minusHendl}
-              removeHendl={removeHendl}
-            />
-          ))}
-        </Grid>
-        <div>
-          <div>All Price </div>$ {totalCartPrice}
-        </div>
-      </Grid>
-    </div>
-  );
-}
-
-function StepperForm({
-  hendleSubmitClick,
-  handleSetStateCallback,
-  register,
-  handleSubmit,
-  errors,
-  control,
-  formState: { isDirty, isValid },
-}) {
-  console.log(errors, 'errors', isDirty, 'isDirty', isValid, 'isValid');
-  const ref = React.useRef(undefined);
-  const style = useStyles();
-  React.useEffect(() => {
-    hendleSubmitClick(ref);
-  }, [ref]);
-  console.log(errors);
-  return (
-    <form onSubmit={handleSubmit((data) => handleSetStateCallback(data))}>
-      <Grid container direction="column">
-        <Grid item xs={4}>
-          <FormControl className={style.inpunFields} error={!!errors.email}>
-            <InputLabel htmlFor="component-error">Email</InputLabel>
-            <Controller
-              className={style.inpunFields}
-              as={Input}
-              name="email"
-              control={control}
-              defaultValue=""
-            />
-
-            <FormHelperText id="component-error-text">
-              {errors.email && errors.email.message}
-            </FormHelperText>
-          </FormControl>
-        </Grid>
-        <Grid item xs={4}>
-          <FormControl className={style.inpunFields} error={!!errors.phone}>
-            <InputLabel htmlFor="component-error">Phone</InputLabel>
-            <Controller
-              as={
-                <NumberFormat
-                  customInput={Input}
-                  format="+7 (###) ###-####"
-                  allowEmptyFormatting
-                  mask="_"
-                />
-              }
-              name="phone"
-              type="phone"
-              control={control}
-              defaultValue=""
-            />
-
-            <FormHelperText id="component-error-text">
-              {errors.phone && errors.phone.message}
-            </FormHelperText>
-          </FormControl>
-        </Grid>
-        <Grid item xs={4}>
-          <FormControl className={style.inpunFields} error={!!errors.name}>
-            <InputLabel htmlFor="component-error">Name</InputLabel>
-            <Controller
-              className={style.inpunFields}
-              as={Input}
-              name="name"
-              control={control}
-              defaultValue=""
-            />
-
-            <FormHelperText id="component-error-text">
-              {errors.name && errors.name.message}
-            </FormHelperText>
-          </FormControl>
-        </Grid>
-      </Grid>
-      <button style={{ display: 'none' }} ref={ref} type="submit"></button>
-    </form>
-  );
-}
-
 function HorizontalLabelPositionBelowStepper() {
+  const buttonFinishref = React.useRef(undefined);
   const style = useStyles();
-
+  console.log(buttonFinishref.current && buttonFinishref.current.children[0].innerText);
   const [validate, setvalidate] = React.useState(false);
-  const [userData, setUserData] = React.useState([]);
+  const [userData, setUserData] = React.useState<formUserdataI>(null);
 
   const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
-  const { register, handleSubmit, errors, formState, control } = useForm({
+  const { handleSubmit, errors, control, formState } = useForm<formUserdataI>({
     mode: 'all',
     reValidateMode: 'onChange',
 
     resolver: yupResolver(schema),
   });
   const { isDirty, isValid } = formState;
+
+  const postRder = async () => {
+    const data = {
+      person: {
+        ...userData,
+      },
+      order: cart.map((elem) => ({
+        title: elem.title,
+        price: elem.price,
+        count: elem.count,
+        totalPrice: elem.totalPrice,
+        artikul: elem.artikul,
+      })),
+    };
+    const response = await fetch('http://localhost:3000/api/orders', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      method: 'POST',
+    });
+    let dats = await response.json();
+    console.log(dats);
+  };
+
   const refer = React.useRef(undefined);
   function getSteps() {
     return ['Select master blaster campaign settings', 'Create an ad group', 'Create an ad'];
@@ -187,12 +99,12 @@ function HorizontalLabelPositionBelowStepper() {
   const handleSetStateCallback = React.useCallback((data) => {
     setUserData(data);
   }, []);
-  console.log(userData, 'userData');
+
   const hendleSubmitClick = React.useCallback((ref) => {
     refer.current = ref.current;
   }, []);
+
   const hendleSubmitClickSimular = () => {
-    console.log(refer.current);
     if (refer.current === undefined) {
       return;
     } else refer.current.click();
@@ -207,10 +119,8 @@ function HorizontalLabelPositionBelowStepper() {
             control={control}
             hendleSubmitClick={hendleSubmitClick}
             handleSetStateCallback={handleSetStateCallback}
-            register={register}
             handleSubmit={handleSubmit}
             errors={errors}
-            formState={{ isDirty, isValid }}
           />
         );
       case 2:
@@ -225,6 +135,9 @@ function HorizontalLabelPositionBelowStepper() {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     hendleSubmitClickSimular();
+    if (buttonFinishref.current && buttonFinishref.current.children[0].innerText === 'FINISH') {
+      postRder();
+    }
   };
 
   const handleBack = () => {
@@ -283,7 +196,12 @@ function HorizontalLabelPositionBelowStepper() {
               <Button disabled={activeStep === 0} onClick={handleBack} className={style.backButton}>
                 Back
               </Button>
-              <Button disabled={!validate} variant="contained" color="primary" onClick={handleNext}>
+              <Button
+                ref={buttonFinishref}
+                disabled={!validate}
+                variant="contained"
+                color="primary"
+                onClick={handleNext}>
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </div>

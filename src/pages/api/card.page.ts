@@ -1,7 +1,7 @@
 import connect from './core/connect';
 import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Card } from './models/cardScema';
+import Card from './models/cardScema';
 import dbConnect from './core/db';
 
 dbConnect();
@@ -16,6 +16,7 @@ apiRoute.post(
         category: req.body.category,
         images: req.body.images,
         slug: req.body.slug,
+        artikul: req.body.artikul,
         detail: req.body.detail,
         categoryslug: req.body.categoryslug,
         price: req.body.price,
@@ -42,7 +43,7 @@ apiRoute.get(
       const pageOptions = {
         page: parseInt(req.query.page as string, 10) || 0,
         limit: parseInt(req.query.limit as string, 10) || 10,
-        category: req.query.category ? { category: req.query.category } : {},
+        category: req.query.category ? { category: req.query.category.toString() } : {},
       };
       const numberOfCards = await Card.find(pageOptions.category).countDocuments();
       let card = await Card.find(pageOptions.category)

@@ -1,14 +1,20 @@
-import { model, Schema, Document, models } from 'mongoose';
+import { model, Schema, Document, models, Model } from 'mongoose';
 
-export interface CardScemaInterface {
+export interface CardScemaInterface extends Document {
+  _id: string;
   title: string;
   subtitle: string;
   description: string;
   category: string;
   images?: Array<string>;
   price: number;
+  artikul: string;
+  slug: string;
+  detail?: string;
+  categoryslug: string;
 }
 
+export interface ContactModel extends Model<CardScemaInterface> {}
 const CardScema = new Schema(
   {
     title: {
@@ -43,6 +49,9 @@ const CardScema = new Schema(
       type: String,
       required: [true, 'Please choise category'],
     },
+    artikul: {
+      type: String,
+    },
 
     images: [
       {
@@ -56,4 +65,6 @@ const CardScema = new Schema(
   },
 );
 
-export const Card = models.Card || model<CardScemaInterface | any>('Card', CardScema);
+const Card: ContactModel = models.Card || model<CardScemaInterface>('Card', CardScema);
+
+export default Card;
