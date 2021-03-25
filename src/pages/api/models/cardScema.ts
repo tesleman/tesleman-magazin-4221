@@ -64,7 +64,7 @@ const CardScema = new Schema(
     timestamps: true,
   },
 );
-
+CardScema.index({ '$**': 'text' });
 const Card: ContactModel = models.Card || model<CardScemaInterface>('Card', CardScema);
 
 export default Card;

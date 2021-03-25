@@ -15,13 +15,15 @@ export const ModalCard: React.FC<cardInterface> = ({
   return (
     <Grid container direction="row">
       <Grid xs={4}>
-        <Image
-          src={images[0]}
-          alt="Picture of the author"
-          width={150}
-          height={150}
-          layout="responsive"
-        />
+        {images.length > 0 && (
+          <Image
+            src={images[0]}
+            alt="Picture of the author"
+            width={150}
+            height={150}
+            layout="responsive"
+          />
+        )}
       </Grid>
 
       <Grid className={style.modaContent} xs={6}>

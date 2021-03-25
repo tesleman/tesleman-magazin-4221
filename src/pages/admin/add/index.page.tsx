@@ -16,37 +16,43 @@ export interface responsIntrfaceInput {
 }
 
 const AddCard = () => {
-  const { register, handleSubmit, setValue, getValues } = useForm();
-  const [stateImg, setstateImg] = React.useState();
+  const { register, handleSubmit, setValue, getValues, reset } = useForm();
+  const [stateError, setstateError] = React.useState(null);
   const [stateCat, setCat] = React.useState([]);
   const [togleChecbox, setstogleChecbox] = React.useState(false);
 
-  const onSubmit = async (data: responsIntrfaceInput) => {
+  const onSubmit = async (data: responsIntrfaceInput, e) => {
     // create a card
-    const formData = new FormData();
-    // appending images to form data
-    Array.from(data.images).forEach((file: any) => {
-      formData.append('avatar', file);
-    });
+    try {
+      const formData = new FormData();
+      // appending images to form data
+      Array.from(data.images).forEach((file: any) => {
+        formData.append('avatar', file);
+      });
 
-    const response = await fetch(`http://${process.env.domein}/api/file`, {
-      body: formData,
-      method: 'post',
-    }); // posting file to file system
-    let images = await response.json(); // array with image link
-    data.images = images; // appenh array with image link to react-hook-form
+      const response = await fetch(`http://${process.env.domein}/api/file`, {
+        body: formData,
+        method: 'post',
+      }); // posting file to file system
+      let images = await response.json(); // array with image link
+      data.images = images; // appenh array with image link to react-hook-form
 
-    // posting card  with image to DB
-    const responseS = await fetch(`http://${process.env.domein}/api/card`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-      method: 'post',
-    });
-    let responseSs = await responseS.json();
-
-    setstateImg(responseSs.data.images);
+      // posting card  with image to DB
+      const responseS = await fetch(`http://${process.env.domein}/api/card`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        method: 'post',
+      });
+      let responseSs = await responseS.json();
+      console.log(responseSs);
+      if (responseSs.message === 'succes') e.target.reset();
+      if (responseSs.message.keyValue && responseSs.message.keyValue.slug)
+        setstateError(responseSs.message.keyValue);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   React.useEffect(() => {
@@ -102,7 +108,8 @@ const AddCard = () => {
     setValue('category', parseEventCategorySlug.title.trim());
     setValue('categoryslug', parseEventCategorySlug.slug);
   };
-  console.log(stateCat.length > 0 && stateCat[0].title);
+
+  console.log(stateError);
   return (
     <div>
       <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit(onSubmit)}>
@@ -132,6 +139,9 @@ const AddCard = () => {
           </Button>
           <input onClick={titleCheng} onChange={checBox} name="checkbox" type="checkbox" />
           slug
+          {stateError !== null && stateError.slug && (
+            <div>same slug already exist {stateError.slug}</div>
+          )}
         </label>
         <label htmlFor="subtitle">
           <input ref={register} type="text" name="subtitle" multiple />
@@ -140,6 +150,10 @@ const AddCard = () => {
         <label htmlFor="description">
           <input ref={register} type="text" name="description" multiple />
           description
+        </label>
+        <label htmlFor="description">
+          <input ref={register} type="text" name="artikul" multiple />
+          artikul
         </label>
         <label htmlFor="detail">
           <textarea ref={register} name="detail" />

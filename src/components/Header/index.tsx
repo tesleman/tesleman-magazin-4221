@@ -17,6 +17,7 @@ interface props {
 
 const Header: React.FC<{ category: Array<props> }> = ({ category }) => {
   const style: useStylesType = useStyles();
+  console.log(category);
   return (
     <nav className={style.nav}>
       <Grid container direction="row">

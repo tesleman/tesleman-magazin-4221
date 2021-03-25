@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Grid, Modal } from '@material-ui/core';
+import { Grid, GridSize, Modal } from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
@@ -13,7 +13,10 @@ export const Card: React.FC<{
   card: cardInterface;
   cart: Array<cardInterface>;
   addTooCartHendl: (payload: cardInterface) => void;
-}> = ({ card, addTooCartHendl, cart }) => {
+  gridxs?: GridSize;
+  gridsm?: GridSize;
+  gridmd?: GridSize;
+}> = ({ card, addTooCartHendl, cart, gridxs = 12, gridsm = 8, gridmd = 3 }) => {
   const style: useStylesType = useStyles();
   const [open, setOpen] = React.useState<boolean>(false);
   const [imgIndex, setImgIndex] = React.useState<number>(0);
@@ -35,29 +38,33 @@ export const Card: React.FC<{
 
   if (!card) return <div></div>;
   return (
-    <Grid className={style.constainer} item xs={12} sm={8} md={3}>
+    <Grid className={style.constainer} item xs={gridxs} sm={gridsm} md={gridmd}>
       <div>
         <Link href={link}>
           <div>
             <h1>{card.title}</h1>
             <h3>{card.description}</h3>
+            <div>{card.price}</div>
             <span>{card.category}</span>
-            <Image
-              src={card.images[imgIndex]}
-              alt="Picture of the author"
-              width={150}
-              height={150}
-              layout="responsive"
-            />
+            {card.images.length > 0 && (
+              <Image
+                src={card.images[imgIndex]}
+                alt="Picture of the author"
+                width={150}
+                height={150}
+                layout="responsive"
+              />
+            )}
           </div>
         </Link>
         <div className={style.dots}>
-          {card.images.map((e, i) => (
-            <div
-              className={i === imgIndex ? style.dotActyve : style.dot}
-              key={i}
-              onClick={() => hendlSetIndex(i)}></div>
-          ))}
+          {card.images.length > 0 &&
+            card.images.map((e, i) => (
+              <div
+                className={i === imgIndex ? style.dotActyve : style.dot}
+                key={i}
+                onClick={() => hendlSetIndex(i)}></div>
+            ))}
         </div>
         <p>{card.subtitle}</p>
       </div>

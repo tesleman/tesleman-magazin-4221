@@ -1,35 +1,21 @@
-import {
-  Button,
-  Container,
-  FormControl,
-  FormHelperText,
-  Grid,
-  Input,
-  InputLabel,
-  Paper,
-  Step,
-  StepLabel,
-  Stepper,
-  Typography,
-} from '@material-ui/core';
+import { Button, Container, Step, StepLabel, Stepper, Typography } from '@material-ui/core';
 
 import React from 'react';
-import NumberFormat from 'react-number-format';
-import { Controller, useForm } from 'react-hook-form';
+
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { ListCartItem } from '../../components/AlignItemsList';
+
 import { Layuot } from '../../components/import-export';
-import { RootState, plussItmCount, minusItmCount, removeItem } from '../pages_import_export';
+import { RootState } from '../pages_import_export';
 import { formUserdataI } from '../pages_type';
 
 import { useStyles } from './style.cart';
 import FinailStage from './FinailStage';
 import CartStepperItem from './CartStepperItem';
 import StepperForm from './StepperForm';
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const schema = yup.object().shape({
   email: yup.string().email('NoEmail').required('Pusto'),

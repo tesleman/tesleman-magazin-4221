@@ -7,6 +7,8 @@ import { useStyles, useStylesType } from './style.layout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import Filters from './Filters';
+
 const Layuot = (props) => {
   const {
     breadcrumbsCard = '',
@@ -14,13 +16,16 @@ const Layuot = (props) => {
     src = '/shop-1.jpg',
     category = '',
     baseCategory = { category: '', link: '' },
+    frome = '1',
+    too = '3',
+    all = '3',
   } = props;
   const style: useStylesType = useStyles();
   const routwr = useRouter();
   const breadcrumbsCatregory =
     routwr.query.slug && routwr.query.slug.toString().split('_').join(' ');
 
-  console.log();
+  console.log(routwr.query);
   return (
     <div>
       <div className={style.imagin}>
@@ -41,6 +46,7 @@ const Layuot = (props) => {
           </div>
         </div>
 
+        {!routwr.query.card && <Filters frome={frome} too={too} all={all} />}
         {children}
       </Container>
     </div>

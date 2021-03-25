@@ -8,11 +8,13 @@ import { useStyles, useStylesType } from './styles/shop.style';
 import { RootState } from '../../redux/store';
 import { Card } from '../../components/Card';
 import { addTooCart } from '../../redux/slicers/cartSlicer';
-import ShopLayuot from './shop.layuot';
+
 import Pagin from '../../components/Pagination';
 
 import { useRouter } from 'next/router';
 import { cardProps } from './dbSSprops';
+import { Layuot } from './shop.import-export';
+import { propsI } from './[slug]/index.page';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   const props = await cardProps(query);
@@ -24,8 +26,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
   // if (req) {
   //   const cardsApiFetch = await apiFetch({ table: 'card', limit: 3, page: 0, all: true });
 };
-const Shpo = ({ json }) => {
-  const { card, totalCount: totalCounts, client } = JSON.parse(json);
+const Shpo: React.FC<{ json: string }> = ({ json }) => {
+  const { card, totalCount: totalCounts }: propsI = JSON.parse(json);
   const router = useRouter();
 
   const style: useStylesType = useStyles();
@@ -41,21 +43,36 @@ const Shpo = ({ json }) => {
       query: { page: value },
     });
   }, []);
+  console.log(router.query);
 
   const limitLocal = 3;
-  const count = Math.round(totalCounts / limitLocal);
-
+  const count = Math.ceil(totalCounts / limitLocal);
+  const fromeCount = page * limitLocal - limitLocal + 1;
+  const tooCount = fromeCount + card.length - 1;
   return (
-    <ShopLayuot>
+    <Layuot
+      category="Shop"
+      frome={fromeCount}
+      too={tooCount}
+      all={totalCounts}
+      baseCategory={{ category: 'Shop', link: '/shop' }}>
       <Grid container direction="row">
         {card.map((e) => (
-          <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />
+          <Card
+            gridxs={4}
+            gridsm={3}
+            gridmd={3}
+            cart={cart}
+            key={e._id}
+            card={e}
+            addTooCartHendl={addTooCartHendl}
+          />
         ))}
       </Grid>
       <Grid container direction="row" justify="center" alignContent="center">
         <Pagin page={page} handleChange={handleChange} count={count} />
       </Grid>
-    </ShopLayuot>
+    </Layuot>
   );
 };
 

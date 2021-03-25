@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Image from 'next/image';
-import ShopLayuot from '../shop.layuot';
+
 import { PropsSingleCard } from '../shop-types';
 import { useStyles, useStylesType } from '../styles/shop.style';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,7 +29,6 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
 
   let cartIncludesItem = cart.some((item: cardInterface) => item._id === data._id);
 
-  console.log(cartIncludesItem);
   const handleCartPlus = () => {
     setcartItemCount(cartItemCount + 1);
   };
@@ -56,23 +55,27 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
       <Container>
         <Grid container direction="row">
           <Grid item xs={6}>
-            <Image
-              layout="responsive"
-              alt={data.title}
-              width={350}
-              height={350}
-              src={data.images[index]}
-            />
+            {data.images.length > 0 && (
+              <Image
+                layout="responsive"
+                alt={data.title}
+                width={350}
+                height={350}
+                src={data.images[index]}
+              />
+            )}
             <Grid container direction="row" alignItems="flex-start">
               {data.images.map((elem: string, index: number) => (
                 <Grid item xs={4} key={index} className={style.imagePagination}>
-                  <Image
-                    width={75}
-                    height={75}
-                    src={elem}
-                    onClick={() => setIndexForImgNavSliderHendl(index)}
-                    alt=""
-                  />
+                  {data.images.length > 0 && (
+                    <Image
+                      width={75}
+                      height={75}
+                      src={elem}
+                      onClick={() => setIndexForImgNavSliderHendl(index)}
+                      alt=""
+                    />
+                  )}
                 </Grid>
               ))}
             </Grid>
