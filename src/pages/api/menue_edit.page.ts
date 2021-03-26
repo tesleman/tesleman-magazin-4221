@@ -26,7 +26,7 @@ menuesEdit.post(
         active: req.body.active,
         subcat: ass,
       };
-      console.log(data);
+
       const categoryFind = await Menue.findByIdAndUpdate(req.query, data).exec();
 
       res.status(200).json({

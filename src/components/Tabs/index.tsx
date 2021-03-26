@@ -31,7 +31,6 @@ const TabsCentr: React.FC<{
     };
 
     dispatch(getCard(payload));
-    console.log(entities);
   }, [category]);
   return (
     <div>

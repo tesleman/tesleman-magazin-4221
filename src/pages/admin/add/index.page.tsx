@@ -46,7 +46,7 @@ const AddCard = () => {
         method: 'post',
       });
       let responseSs = await responseS.json();
-      console.log(responseSs);
+
       if (responseSs.message === 'succes') e.target.reset();
       if (responseSs.message.keyValue && responseSs.message.keyValue.slug)
         setstateError(responseSs.message.keyValue);
@@ -66,7 +66,6 @@ const AddCard = () => {
         table: 'category',
       };
       const category = await apiFetch(apiFetchCategoryParams);
-      console.log(category);
       setCat(category);
     };
     fech();
@@ -104,12 +103,11 @@ const AddCard = () => {
 
   const categoryHandlChang = (event) => {
     const parseEventCategorySlug = JSON.parse(event.target.value);
-    console.log(parseEventCategorySlug.title);
+
     setValue('category', parseEventCategorySlug.title.trim());
     setValue('categoryslug', parseEventCategorySlug.slug);
   };
 
-  console.log(stateError);
   return (
     <div>
       <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit(onSubmit)}>

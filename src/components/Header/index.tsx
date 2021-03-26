@@ -17,7 +17,7 @@ interface props {
 
 const Header: React.FC<{ category: Array<props> }> = ({ category }) => {
   const style: useStylesType = useStyles();
-  console.log(category);
+
   return (
     <nav className={style.nav}>
       <Grid container direction="row">
@@ -28,23 +28,27 @@ const Header: React.FC<{ category: Array<props> }> = ({ category }) => {
           <ul className={style.ulRoot}>
             {category &&
               category.map((el, i) => (
-                <Link key={el._id} href={`${el.slug}`}>
-                  <li className={style.ulli}>
-                    {el.title}
+                <li className={style.ulli}>
+                  <Link key={el._id} href={`${el.slug}`}>
+                    <a>
+                      {el.title}
 
-                    {el.subcat && (
-                      <ul className={style.navulliul}>
-                        {el.subcat.map((elem) => (
-                          <Link
-                            key={elem._id}
-                            href={el.title === 'Shop' ? `/shop/${elem.slug}` : `${elem.slug}`}>
-                            <li className={style.li}>{elem.title}</li>
-                          </Link>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                </Link>
+                      {el.subcat && (
+                        <ul className={style.navulliul}>
+                          {el.subcat.map((elem) => (
+                            <li className={style.li}>
+                              <Link
+                                key={elem._id}
+                                href={el.title === 'Shop' ? `/shop/${elem.slug}` : `${elem.slug}`}>
+                                <a>{elem.title}</a>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </a>
+                  </Link>
+                </li>
               ))}
           </ul>
         </Grid>

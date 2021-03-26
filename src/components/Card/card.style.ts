@@ -10,6 +10,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     cursor: 'pointer',
     boxShadow: '2px 3px 15px rgb(0 0 0 / 40%)',
+    '& a': {
+      color: 'black',
+      textDecoration: 'none',
+    },
     '&:hover': {
       boxShadow: '0px 6px 20px rgb(0 0 0 / 65%)',
       '& $sideItem': {

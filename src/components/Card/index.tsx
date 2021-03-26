@@ -41,7 +41,7 @@ export const Card: React.FC<{
     <Grid className={style.constainer} item xs={gridxs} sm={gridsm} md={gridmd}>
       <div>
         <Link href={link}>
-          <div>
+          <a>
             <h1>{card.title}</h1>
             <h3>{card.description}</h3>
             <div>{card.price}</div>
@@ -55,7 +55,7 @@ export const Card: React.FC<{
                 layout="responsive"
               />
             )}
-          </div>
+          </a>
         </Link>
         <div className={style.dots}>
           {card.images.length > 0 &&

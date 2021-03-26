@@ -12,14 +12,6 @@ const order = connect();
 order.post(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-      const data = {
-        title: req.body.title,
-        meta: req.body.meta ? req.body.meta : '',
-        slug: `/${req.body.slug}`,
-        active: req.body.active,
-        subcat: req.body.id ? req.body.id : null,
-      };
-      console.log(req.body);
       const orderCreate = await Order.create(req.body);
 
       res.status(200).json({

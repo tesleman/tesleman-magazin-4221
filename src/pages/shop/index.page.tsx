@@ -43,7 +43,6 @@ const Shpo: React.FC<{ json: string }> = ({ json }) => {
       query: { page: value },
     });
   }, []);
-  console.log(router.query);
 
   const limitLocal = 3;
   const count = Math.ceil(totalCounts / limitLocal);

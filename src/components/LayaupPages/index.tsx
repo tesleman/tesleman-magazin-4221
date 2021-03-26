@@ -36,10 +36,16 @@ const Layuot = (props) => {
           <div className={style.wrapper}>
             <h1>{category}</h1>
             <Breadcrumbs aria-label="breadcrumb">
-              <Link href="/">Home</Link>
-              <Link href={baseCategory.link}>{baseCategory.category}</Link>
+              <Link href="/">
+                <a>Home</a>
+              </Link>
+              <Link href={baseCategory.link}>
+                <a>{baseCategory.category}</a>
+              </Link>
               {routwr.query.slug && (
-                <Link href={`/shop/${routwr.query.slug}`}>{breadcrumbsCatregory}</Link>
+                <Link href={`/shop/${routwr.query.slug}`}>
+                  <a>{breadcrumbsCatregory}</a>
+                </Link>
               )}
               {routwr.query.card && <Typography color="textPrimary">{breadcrumbsCard}</Typography>}
             </Breadcrumbs>

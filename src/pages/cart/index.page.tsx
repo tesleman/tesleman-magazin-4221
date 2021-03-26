@@ -40,7 +40,7 @@ export default Cart;
 function HorizontalLabelPositionBelowStepper() {
   const buttonFinishref = React.useRef(undefined);
   const style = useStyles();
-  console.log(buttonFinishref.current && buttonFinishref.current.children[0].innerText);
+
   const [validate, setvalidate] = React.useState(false);
   const [userData, setUserData] = React.useState<formUserdataI>(null);
 
@@ -74,7 +74,6 @@ function HorizontalLabelPositionBelowStepper() {
       method: 'POST',
     });
     let dats = await response.json();
-    console.log(dats);
   };
 
   const refer = React.useRef(undefined);
