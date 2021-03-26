@@ -66,7 +66,11 @@ const FinailStage: React.FC<{ userData: formUserdataI; cart: Array<cartInterface
                 <TableCell align="right">{row.totalPrice}</TableCell>
                 <TableCell align="right">{row.artikul}</TableCell>
                 <TableCell align="right">
-                  <Image src={row.images[0]} width={50} height={50} />
+                  {row.images.length > 0 ? (
+                    <Image src={row.images[0]} width={50} height={50} />
+                  ) : (
+                    ''
+                  )}
                 </TableCell>
               </TableRow>
             ))}

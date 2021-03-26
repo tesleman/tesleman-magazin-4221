@@ -42,10 +42,10 @@ export const Card: React.FC<{
       <div>
         <Link href={link}>
           <a>
-            <h1>{card.title}</h1>
-            <h3>{card.description}</h3>
-            <div>{card.price}</div>
-            <span>{card.category}</span>
+            <h1>Title: {card.title}</h1>
+            <h3>Description: {card.description}</h3>
+            <div>Price: {card.price} $</div>
+            <span>Category: {card.category}</span>
             {card.images.length > 0 && (
               <Image
                 src={card.images[imgIndex]}
@@ -66,7 +66,6 @@ export const Card: React.FC<{
                 onClick={() => hendlSetIndex(i)}></div>
             ))}
         </div>
-        <p>{card.subtitle}</p>
       </div>
       <div className={style.sideItem}>
         {cart.some((elem) => elem._id === card._id) ? (

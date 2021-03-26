@@ -44,13 +44,18 @@ const SingleCategory: React.FC<{ json: string }> = ({ json }) => {
   const dispatch = useDispatch();
   const handleChange = React.useCallback((event, value) => {
     setPage(value);
-    router.push({
-      pathname: '/shop/[slug]',
-      query: {
-        slug: router.query.slug,
-        page: value,
+    router.push(
+      {
+        pathname: '/shop/[slug]',
+
+        query: {
+          slug: router.query.slug,
+          page: value,
+        },
       },
-    });
+      undefined,
+      { scroll: false },
+    );
   }, []);
   const addTooCartHendl = React.useCallback((props) => dispatch(addTooCart(props)), []);
 

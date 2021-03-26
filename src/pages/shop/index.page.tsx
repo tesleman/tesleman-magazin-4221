@@ -39,9 +39,13 @@ const Shpo: React.FC<{ json: string }> = ({ json }) => {
 
   const handleChange = React.useCallback((event, value) => {
     setPage(value);
-    router.push({
-      query: { page: value },
-    });
+    router.push(
+      {
+        query: { page: value },
+      },
+      undefined,
+      { scroll: false },
+    );
   }, []);
 
   const limitLocal = 3;

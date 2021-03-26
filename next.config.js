@@ -3,4 +3,5 @@ module.exports = {
   env: {
     domein: 'localhost:3000',
   },
+
 };

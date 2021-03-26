@@ -28,26 +28,21 @@ const Header: React.FC<{ category: Array<props> }> = ({ category }) => {
           <ul className={style.ulRoot}>
             {category &&
               category.map((el, i) => (
-                <li className={style.ulli}>
-                  <Link key={el._id} href={`${el.slug}`}>
-                    <a>
-                      {el.title}
-
-                      {el.subcat && (
-                        <ul className={style.navulliul}>
-                          {el.subcat.map((elem) => (
-                            <li className={style.li}>
-                              <Link
-                                key={elem._id}
-                                href={el.title === 'Shop' ? `/shop/${elem.slug}` : `${elem.slug}`}>
-                                <a>{elem.title}</a>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </a>
+                <li key={el._id} className={style.ulli}>
+                  <Link href={`${el.slug}`}>
+                    <a>{el.title}</a>
                   </Link>
+                  {el.subcat && (
+                    <ul className={style.navulliul}>
+                      {el.subcat.map((elem) => (
+                        <li key={elem._id} className={style.li}>
+                          <Link href={el.title === 'Shop' ? `/shop/${elem.slug}` : `${elem.slug}`}>
+                            <a>{elem.title}</a>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
           </ul>

@@ -38,15 +38,19 @@ const Filters = ({ frome, too, all }) => {
     const pages = page(router);
     const slugs = slug(router);
     const text = textPageSearch(qeryState);
-    router.push({
-      pathname: `/shop/${router.query.slug ? '[slug]' : ''}`,
-      query: {
-        ...pages,
-        ...sort,
-        ...slugs,
-        ...text,
+    router.push(
+      {
+        pathname: `/shop/${router.query.slug ? '[slug]' : ''}`,
+        query: {
+          ...pages,
+          ...sort,
+          ...slugs,
+          ...text,
+        },
       },
-    });
+      undefined,
+      { scroll: false },
+    );
   };
   const onHandleChang = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setQeryFunctyon(event.target.value);

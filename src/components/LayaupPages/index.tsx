@@ -25,7 +25,7 @@ const Layuot = (props) => {
   const breadcrumbsCatregory =
     routwr.query.slug && routwr.query.slug.toString().split('_').join(' ');
 
-  console.log(routwr.query);
+ 
   return (
     <div>
       <div className={style.imagin}>

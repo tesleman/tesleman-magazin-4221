@@ -82,42 +82,43 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
           </Grid>
           <Grid item xs={6}>
             <div className={style.cardDetails}>
-              <h2>{data.title}</h2>
-              <p>{data.artikul}</p>
-              <h1>$ {data.price}</h1>
+              <h2>Title: {data.title}</h2>
+              <p>Artikul: {data.artikul}</p>
+              <div className={style.price}>
+                Price: <h1> {data.price} $</h1>
+              </div>
               <h3>{data.category}</h3>
-
               <h4>{data.description}</h4>
-
               <br />
-              <h3>DeatailInfo</h3>
+              <Grid container direction="row" justify="center">
+                <Button disabled={cartItemCount <= 0} onClick={handleCartminus}>
+                  -
+                </Button>
+                <TextField
+                  onChange={onHandleCardItemArrowChang}
+                  className={style.input}
+                  id="standard-number"
+                  type="number"
+                  color="secondary"
+                  value={cartItemCount}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <Button onClick={handleCartPlus}>+</Button>
+
+                <Button
+                  disabled={cartIncludesItem}
+                  onClick={hensdlAddCartDispatchItem}
+                  variant="contained"
+                  color="secondary">
+                  Add To Cart
+                </Button>
+              </Grid>
+
+              <h3>Deatail Info</h3>
               <p>{data.detail}</p>
             </div>
-            <Grid container direction="row" justify="center">
-              <Button disabled={cartItemCount <= 0} onClick={handleCartminus}>
-                -
-              </Button>
-              <TextField
-                onChange={onHandleCardItemArrowChang}
-                className={style.input}
-                id="standard-number"
-                type="number"
-                color="secondary"
-                value={cartItemCount}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <Button onClick={handleCartPlus}>+</Button>
-
-              <Button
-                disabled={cartIncludesItem}
-                onClick={hensdlAddCartDispatchItem}
-                variant="contained"
-                color="secondary">
-                Add To Cart
-              </Button>
-            </Grid>
           </Grid>
         </Grid>
       </Container>

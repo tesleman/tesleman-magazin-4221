@@ -24,6 +24,15 @@ export const useStyles = makeStyles((theme: Theme) => ({
     height: 450,
     flex: 1,
   },
+  price: {
+    display: 'flex',
+    alignItems: 'center',
+    height: 35,
+    '& h1': {
+      paddingLeft: 15,
+      margin: 0,
+    },
+  },
   wrapper: {
     color: 'white',
     margin: 'auto',

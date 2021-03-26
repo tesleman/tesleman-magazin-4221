@@ -73,7 +73,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    margin: 5,
+    margin: '25px 0px ',
   },
   dot: {
     background: 'white',
