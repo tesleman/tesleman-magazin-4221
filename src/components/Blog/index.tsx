@@ -35,15 +35,14 @@ const BlogItem: React.FC<{ style: useStylesType; cards: cardInterface; index: nu
       container
       direction={index == 0 || Math.floor(index / 2) ? 'row-reverse' : 'row'}>
       <Grid className={style.root} item xs={4}>
-        {cards.images.length > 0   && (
-          <Image
-            src={cards.images[0]}
-            alt="Picture of the author"
-            width={480}
-            height={350}
-            layout="responsive"
-          />
-        )}
+        <Image
+          src={cards.images.length > 0 ? cards.images[0] : '/img_no_found.jpg'}
+          alt="Picture of the author"
+          width={480}
+          height={350}
+          layout="responsive"
+        />
+
         <span className={style.span}></span>
       </Grid>
       <Grid

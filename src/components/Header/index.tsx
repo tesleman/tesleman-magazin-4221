@@ -3,6 +3,7 @@ import { useStyles, useStylesType } from './header.style';
 import Link from 'next/link';
 import { Grid } from '@material-ui/core';
 import Headercart from './Headercart';
+import TemporaryDrawer from './SideMenue';
 
 interface props {
   _id: string;
@@ -15,16 +16,25 @@ interface props {
   }>;
 }
 
-const Header: React.FC<{ category: Array<props> }> = ({ category }) => {
+export interface menueI {
+  slug: string;
+  title: string;
+  _id: string;
+  meta?: string;
+}
+const Header: React.FC<{ category: Array<props>; menue: Array<menueI> }> = ({
+  category,
+  menue,
+}) => {
   const style: useStylesType = useStyles();
 
   return (
     <nav className={style.nav}>
-      <Grid container direction="row">
-        <Grid item xs={2}>
-          Logo
+      <Grid container direction="row" alignItems="center">
+        <Grid item xs={1}>
+          <TemporaryDrawer menue={menue} />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <ul className={style.ulRoot}>
             {category &&
               category.map((el, i) => (

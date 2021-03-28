@@ -46,15 +46,14 @@ export const Card: React.FC<{
             <h3>Description: {card.description}</h3>
             <div>Price: {card.price} $</div>
             <span>Category: {card.category}</span>
-            {card.images.length > 0 && (
-              <Image
-                src={card.images[imgIndex]}
-                alt="Picture of the author"
-                width={150}
-                height={150}
-                layout="responsive"
-              />
-            )}
+
+            <Image
+              src={card.images.length > 0 ? card.images[imgIndex] : '/img_no_found.jpg'}
+              alt="Picture of the author"
+              width={150}
+              height={150}
+              layout="responsive"
+            />
           </a>
         </Link>
         <div className={style.dots}>

@@ -79,4 +79,17 @@ export const useStyles = makeStyles((theme: Theme) => ({
       color: theme.palette.secondary.main,
     },
   },
+  sideMenueLink: {
+    color: 'black',
+    textDecoration: 'none',
+  },
+  buttonNav: {
+    position: 'absolute',
+
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: 100,
+  },
 }));

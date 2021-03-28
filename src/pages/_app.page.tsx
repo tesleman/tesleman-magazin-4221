@@ -26,7 +26,7 @@ Router.events.on('routeChangeError', () => {
 });
 
 export default function MyApp(props) {
-  const { Component, pageProps, categoryes } = props;
+  const { Component, pageProps, categoryes, sideMenue } = props;
 
   const router = useRouter();
 
@@ -48,7 +48,11 @@ export default function MyApp(props) {
         <Provider store={store}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {!router.pathname.includes('/admin') ? <Header category={categoryes} /> : <Admin />}
+          {!router.pathname.includes('/admin') ? (
+            <Header category={categoryes} menue={sideMenue} />
+          ) : (
+            <Admin />
+          )}
           <Component {...pageProps} />
           <Footer />
         </Provider>
@@ -62,13 +66,14 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 
   // Make any initial calls we need to fetch data required for SSR
   const categoryes = await apiFetch({ table: 'menue' });
+  const sideMenue = await apiFetch({ table: 'category' });
 
   // Load the page getInitiaProps
   if (Component.getInitialProps) {
-    pageProps = await Component.getInitialProps({ categoryes, ...ctx });
+    pageProps = await Component.getInitialProps({ sideMenue, categoryes, ...ctx });
   }
 
-  return { pageProps, categoryes };
+  return { pageProps, categoryes, sideMenue };
   // Or, if the async data is separate from your page props:
   // { pageProps, data: { categoryes } };
 };

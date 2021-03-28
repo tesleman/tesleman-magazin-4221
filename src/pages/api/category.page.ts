@@ -79,7 +79,13 @@ category.get(
         totalCount: numberOfCats,
         data: categorys,
       });
-    } catch (error) {}
+    } catch (error) {
+      res.status(401).json({
+        message: 'error',
+        error: error,
+      });
+      throw error;
+    }
   },
 );
 

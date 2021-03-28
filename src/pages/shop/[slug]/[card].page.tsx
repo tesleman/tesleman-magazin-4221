@@ -55,15 +55,14 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
       <Container>
         <Grid container direction="row">
           <Grid item xs={6}>
-            {data.images.length > 0 && (
-              <Image
-                layout="responsive"
-                alt={data.title}
-                width={350}
-                height={350}
-                src={data.images[index]}
-              />
-            )}
+            <Image
+              layout="responsive"
+              alt={data.title}
+              width={350}
+              height={350}
+              src={data.images.length > 0 ? data.images[index] : '/img_no_found.jpg'}
+            />
+
             <Grid container direction="row" alignItems="flex-start">
               {data.images.map((elem: string, index: number) => (
                 <Grid item xs={4} key={index} className={style.imagePagination}>
@@ -115,12 +114,19 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
                   Add To Cart
                 </Button>
               </Grid>
-
-              <h3>Deatail Info</h3>
-              <p>{data.detail}</p>
             </div>
           </Grid>
         </Grid>
+        <Container>
+          <Grid container direction="row">
+            <Grid item xs={6}>
+              <h3 style={{ float: 'right' }}>Deatail Info:</h3>
+            </Grid>
+            <Grid item xs={6}>
+              <p style={{ textAlign: 'left', paddingLeft: 23 }}>{data.detail}</p>
+            </Grid>
+          </Grid>
+        </Container>
       </Container>
     </Layuot>
   );
