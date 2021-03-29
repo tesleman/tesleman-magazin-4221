@@ -40,7 +40,6 @@ const Filters = ({ frome, too, all }) => {
     const text = textPageSearch(qeryState);
     router.push(
       {
-        pathname: `/shop/${router.query.slug ? '[slug]' : ''}`,
         query: {
           ...pages,
           ...sort,
@@ -55,6 +54,16 @@ const Filters = ({ frome, too, all }) => {
   const onHandleChang = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setQeryFunctyon(event.target.value);
   };
+  const sortConst = [
+    {
+      value: 'price ascending',
+      text: 'price ascending ',
+    },
+    {
+      value: 'price descending',
+      text: 'price descending',
+    },
+  ];
   return (
     <Container>
       <Grid container direction="row">
@@ -63,7 +72,7 @@ const Filters = ({ frome, too, all }) => {
         </Grid>
         <Grid item xs={6}>
           <select onChange={onHandleChang} name="price">
-            <option value="price ascending">Price ascending </option>
+            <option value="price ascending">Price &and; </option>
             <option value="price descending">Price descending</option>
             <option value="data descending">data descending</option>
             <option value="data ascending">data ascending</option>
