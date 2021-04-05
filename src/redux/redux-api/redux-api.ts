@@ -10,8 +10,6 @@ export const apiFetch = async ({ category, page, limit, table, all = false }: ap
 
   if (!all) {
     return data.data;
-  } else {
-    return data;
   }
+  return data;
 };
-

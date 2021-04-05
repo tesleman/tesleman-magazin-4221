@@ -4,20 +4,22 @@ import connect from './core/connect';
 import dbConnect from './core/db';
 import Menue from './models/menueScema';
 
-
 mongoose.Promise = global.Promise;
+
 dbConnect();
 const menues = connect();
 
 menues.post(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
+      console.log(req.body);
       const data = {
         title: req.body.title,
-        meta: req.body.meta ? req.body.meta : '',
+        meta: req.body.meta || '',
         slug: `/${req.body.slug}`,
         active: req.body.active,
-        subcat: req.body.id ? req.body.id : null,
+        subcat: req.body.id || null,
+        sort: req.body.sort || 500,
       };
       const categoryCreate = await Menue.create(data);
 
@@ -26,9 +28,7 @@ menues.post(
         data: categoryCreate,
       });
     } catch (error) {
-      res.status(400).json({
-        message: error,
-      });
+      console.log(error);
     }
   },
 );
@@ -75,9 +75,7 @@ menues.get(
         data: [...categoryFindShop, ...categoryFindNoShop].sort((a, b) => a.sort - b.sort),
       });
     } catch (error) {
-      res.status(400).json({
-        message: error,
-      });
+      console.log(error);
     }
   },
 );

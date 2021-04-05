@@ -33,17 +33,20 @@ export default function Home({ category, cards }) {
 }
 
 export async function getStaticProps(ctx: NextPageContext) {
-  const apiFetchCategoryParams: apiFechInterface = {
-    table: 'category',
-  };
-  const category = await apiFetch(apiFetchCategoryParams);
+  try {
+    const apiFetchCategoryParams: apiFechInterface = {
+      table: 'category',
+    };
+    const category = await apiFetch(apiFetchCategoryParams);
 
-  const cardsApiFetchParams: apiFechInterface = {
-    page: 0,
-    limit: 3,
-    table: 'card',
-  };
-  const cardsApiFetch: Array<cardInterface> = await apiFetch(cardsApiFetchParams);
-
-  return { props: { category: category, cards: cardsApiFetch } };
+    const cardsApiFetchParams: apiFechInterface = {
+      page: 0,
+      limit: 3,
+      table: 'card',
+    };
+    const cardsApiFetch: Array<cardInterface> = await apiFetch(cardsApiFetchParams);
+    return { props: { category: category, cards: cardsApiFetch } };
+  } catch (error) {
+    return { props: {} };
+  }
 }

@@ -7,53 +7,53 @@ import Menue, { MenueScemaInterface } from './models/menueScema';
 import { TopMenueIItemI } from '../../components/component-types';
 
 mongoose.Promise = global.Promise;
-dbConnect();
+
 const category = connect();
 
 category.post(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
+      dbConnect();
       const data = {
         title: req.body.title,
         meta: req.body.meta ? req.body.meta : '',
         slug: req.body.slug,
+        sort: req.body.sort ? req.body.sort : 500,
       };
       const categoryCreate = await Category.create(data);
 
-      const idForUpdatingSubcatShop = await Category.aggregate([
-        {
-          $project: {
-            _id: 1,
-          },
-        },
-      ]);
+      // const idForUpdatingSubcatShop = await Category.aggregate([
+      //   {
+      //     $project: {
+      //       _id: 1,
+      //     },
+      //   },
+      // ]);
 
-      const test = await Menue.aggregate([
-        {
-          $match: {
-            title: 'Shop',
-          },
-        },
-      ]);
+      // const test = await Menue.aggregate([
+      //   {
+      //     $match: {
+      //       title: 'Shop',
+      //     },
+      //   },
+      // ]);
 
-      const dataUpdatedCategory = {
-        ...test[0],
-        subcat: idForUpdatingSubcatShop.map((item) => item._id),
-      };
+      // const dataUpdatedCategory = {
+      //   ...test[0],
+      //   subcat: idForUpdatingSubcatShop.map((item) => item._id),
+      // };
 
-      const dataUpdatedCategorycategoryFind = await Menue.findByIdAndUpdate(
-        dataUpdatedCategory._id,
-        dataUpdatedCategory,
-      ).exec();
+      // const dataUpdatedCategorycategoryFind = await Menue.findByIdAndUpdate(
+      //   dataUpdatedCategory._id,
+      //   dataUpdatedCategory,
+      // ).exec();
 
       res.status(200).json({
         message: 'succes',
-        data: dataUpdatedCategorycategoryFind,
+        data: categoryCreate,
       });
     } catch (error) {
-      res.status(400).json({
-        message: error,
-      });
+      // console.log(error);
     }
   },
 );
@@ -61,6 +61,7 @@ category.post(
 category.get(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
+      dbConnect();
       /// api/category?page=0&limit=2
       const numberOfCats = await Category.countDocuments();
       const pageOptions = {
@@ -80,11 +81,7 @@ category.get(
         data: categorys,
       });
     } catch (error) {
-      res.status(401).json({
-        message: 'error',
-        error: error,
-      });
-      throw error;
+      console.log(error);
     }
   },
 );

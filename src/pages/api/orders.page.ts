@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import connect from './core/connect';
 import dbConnect from './core/db';
 
-import Order from './models/ ordersScema';
+import Order from './models/ordersScema';
 
 mongoose.Promise = global.Promise;
 dbConnect();

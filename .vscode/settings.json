@@ -1,0 +1,6 @@
+{
+    "npm.enableRunFromFolder": true,
+    "prettier.resolveGlobalModules": true,
+    "npm.packageManager": "npm",
+    "npm.runSilent": true
+}

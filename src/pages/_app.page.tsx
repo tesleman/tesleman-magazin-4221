@@ -75,5 +75,4 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
 
   return { pageProps, categoryes, sideMenue };
   // Or, if the async data is separate from your page props:
-  // { pageProps, data: { categoryes } };
 };

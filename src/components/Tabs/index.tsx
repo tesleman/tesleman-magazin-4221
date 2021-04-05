@@ -14,7 +14,7 @@ const TabsCentr: React.FC<{
   cart: Array<cardInterface>;
 }> = ({ categorys, cards, addTooCartHendl, cart }) => {
   const style: useStylesType = useStyles();
-  const [category, seCategory] = React.useState(categorys[0].title);
+  const [category, seCategory] = React.useState(categorys[0]?.title);
   const { entities, error, loading } = useSelector((state: RootState) => state.card);
   const dispatch: AppDispatch = useDispatch();
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
@@ -52,7 +52,7 @@ const TabsCentr: React.FC<{
       </Paper>
       <Container>
         <Grid container justify="center" direction="row">
-          {entities && categorys[0].title !== category
+          {entities && categorys[0]?.title !== category
             ? entities.map((e: cardInterface) => (
                 <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />
               ))
