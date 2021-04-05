@@ -12,6 +12,7 @@
 /.next/
 /out/
 /public/uploads/
+next.config.js
 
 # production
 /build
