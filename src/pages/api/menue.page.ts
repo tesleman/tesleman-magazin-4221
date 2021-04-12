@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-
 import connect from './core/connect';
-
 import Menue from './models/menueScema';
-import nextConnect from 'next-connect';
 
 const menues = connect();
 
