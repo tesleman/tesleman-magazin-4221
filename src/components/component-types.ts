@@ -12,7 +12,7 @@ export interface cardInterface {
   categoryslug: string;
   detail?: string;
   slug: string;
-  meta: string;
+  meta?: string;
   updatedAt: string;
   __v: number;
   _id: string;

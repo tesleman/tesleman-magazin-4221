@@ -6,7 +6,7 @@ const db = mongoose.connection;
 
 async function dbConnect() {
   try {
-    if (db.readyState === 1) {
+    if (db.readyState >= 1) {
       return;
     }
 

@@ -1,16 +1,41 @@
 import React from 'react';
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Container, FormControl, Grid, InputLabel, Select, TextField } from '@material-ui/core';
 import { NextRouter, useRouter } from 'next/router';
 
+const sekectArray = [
+  {
+    value: 'price ascending',
+    text: 'Price ↑',
+  },
+  {
+    value: 'price descending',
+    text: 'Price ↓',
+  },
+  {
+    value: 'data ascending',
+    text: 'Data  ↑',
+  },
+  {
+    value: 'data descending',
+    text: 'Data ↓',
+  },
+];
 const Filters = ({ frome, too, all }) => {
   const router = useRouter();
-  const [qeryState, setQeryState] = React.useState('');
-  const sorting = (value) => {
+
+  const [qeryState, setQeryState] = React.useState(
+    router.query.price || router.query.data ? Object.entries(router.query)[0].join(' ') : '',
+  );
+  const [stateText, setstateText] = React.useState(
+    router.query.q ? (router.query.q as string) : '',
+  );
+
+  const sorting = (value: string) => {
+    console.log(value);
     if (!value) return;
-    if (value === 'price ascending') return { pricesort: 'ascending' };
-    if (value === 'price descending') return { pricesort: 'descending' };
-    if (value === 'data descending') return { data: 'descending' };
-    if (value === 'data ascending') return { data: 'ascending' };
+    //разбивка значения инпута для формата чтоб запушить в qery
+    const splitedValue = value.split(' ');
+    return { [splitedValue[0]]: splitedValue[1] };
   };
 
   const slug = (router: NextRouter) => {
@@ -21,23 +46,24 @@ const Filters = ({ frome, too, all }) => {
     if (!router.query.page) return;
     return { page: router.query.page };
   };
-  const textPageSearch = (value) => {
+  const textPageSearch = (value: string) => {
     if (!value) return;
     return { q: value };
   };
   const onTextHandleChang = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQeryState(event.target.value);
+    setstateText(event.target.value);
   };
   React.useEffect(() => {
     if (router.pathname.split('/').includes('shop')) setQeryFunctyon();
-    return () => {};
-  }, [qeryState]);
 
-  const setQeryFunctyon = (value = '') => {
-    const sort = sorting(value);
+    return () => {};
+  }, [qeryState, stateText]);
+
+  const setQeryFunctyon = () => {
+    const sort = sorting(qeryState);
     const pages = page(router);
     const slugs = slug(router);
-    const text = textPageSearch(qeryState);
+    const text = textPageSearch(stateText);
     router.push(
       {
         query: {
@@ -52,18 +78,9 @@ const Filters = ({ frome, too, all }) => {
     );
   };
   const onHandleChang = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setQeryFunctyon(event.target.value);
+    setQeryState(event.target.value);
   };
-  const sortConst = [
-    {
-      value: 'price ascending',
-      text: 'price ascending ',
-    },
-    {
-      value: 'price descending',
-      text: 'price descending',
-    },
-  ];
+
   return (
     <Container>
       <Grid container direction="row">
@@ -71,19 +88,37 @@ const Filters = ({ frome, too, all }) => {
           Showing {frome}–{too} of {all} results
         </Grid>
         <Grid item xs={6}>
-          <select onChange={onHandleChang} name="price">
-            <option value="price ascending">Price &and; </option>
-            <option value="price descending">Price descending</option>
-            <option value="data descending">data descending</option>
-            <option value="data ascending">data ascending</option>
-          </select>
+          <FormControl variant="filled">
+            <Grid container direction="row">
+              <Grid item xs={6}>
+                <InputLabel htmlFor="filled-age-native-simple">Sorting</InputLabel>
+                <Select defaultValue={qeryState} native onChange={onHandleChang}>
+                  {/* <select onChange={onHandleChang} name="price"> */}
+                  {sekectArray.map((element) => (
+                    <option key={element.value} value={element.value}>
+                      {element.text}
+                    </option>
+                  ))}
+                  {/* <option value="price ascending">Price &#8593; </option> */}
+                  {/* <option value="price descending">Price &#8595;</option>
+                  <option value="data ascending">Data &#8593; </option>
+                  <option value="data descending">Data &#8595;</option> */}
+                  {/* </select> */}
+                </Select>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  defaultValue={stateText}
+                  id="outlined-basic"
+                  label="search"
+                  variant="filled"
+                  onChange={onTextHandleChang}
+                  name="search"
+                />
+              </Grid>
+            </Grid>
+          </FormControl>
         </Grid>
-      </Grid>
-      <Grid container direction="row" justify="flex-end">
-        <label htmlFor="search">
-          search
-          <input onChange={onTextHandleChang} name="search" type="text" />
-        </label>
       </Grid>
     </Container>
   );
