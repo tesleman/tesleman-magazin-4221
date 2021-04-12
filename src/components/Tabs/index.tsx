@@ -3,27 +3,27 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Card } from '../Card';
-import { cardInterface, TabsCentrType } from '../component-types';
+import { cardInterface, categoryI, TabsCentrType } from '../component-types';
 import { apiFechInterface, AppDispatch, getCard, RootState } from '../import-export';
 import { useStyles, useStylesType } from './tabs.style';
 
 const TabsCentr: React.FC<{
   addTooCartHendl: (payload: cardInterface) => void;
-  categorys: Array<TabsCentrType>;
+  categorys: Array<categoryI>;
   cards: Array<cardInterface>;
   cart: Array<cardInterface>;
 }> = ({ categorys, cards, addTooCartHendl, cart }) => {
   const style: useStylesType = useStyles();
   const [category, seCategory] = React.useState(categorys[0]?.title);
-  const { entities, error, loading } = useSelector((state: RootState) => state.card);
+  const { entities } = useSelector((state: RootState) => state.card);
   const dispatch: AppDispatch = useDispatch();
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const handleChange = (event: React.ChangeEvent<{ any }>, newValue: string): void => {
     seCategory(newValue);
   };
 
   React.useEffect(() => {
     const payload: apiFechInterface = {
-      category: category,
+      category,
       page: 0,
       limit: 3,
       table: 'card',
@@ -31,7 +31,7 @@ const TabsCentr: React.FC<{
     };
 
     dispatch(getCard(payload));
-  }, [category]);
+  }, [category, dispatch]);
   return (
     <div>
       <Container className={style.constainer}>asd</Container>
@@ -41,13 +41,13 @@ const TabsCentr: React.FC<{
           onChange={handleChange}
           indicatorColor="secondary"
           textColor="primary"
-          centered>
+          centered
+        >
           {categorys &&
-            categorys
-              .slice(0, 3)
-              .map((cat: TabsCentrType, i: number) => (
-                <Tab key={cat._id} value={cat.title} label={cat.title} />
-              ))}
+            categorys.slice(0, 3).map((cat: TabsCentrType) => (
+              // eslint-disable-next-line no-underscore-dangle
+              <Tab key={cat._id} value={cat.title} label={cat.title} />
+            ))}
         </Tabs>
       </Paper>
       <Container>

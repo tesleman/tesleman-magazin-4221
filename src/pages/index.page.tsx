@@ -1,7 +1,7 @@
-import { NextPageContext } from 'next';
+import { useMediaQuery } from '@material-ui/core';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { cardInterface } from '../components/component-types';
+import { cardInterface, categoryI } from '../components/component-types';
 import {
   CountDown,
   Blog,
@@ -13,40 +13,68 @@ import {
   apiFechInterface,
 } from '../components/import-export';
 import { apiFetch } from '../redux/redux-api/redux-api';
+import theme from '../theme';
 
-export default function Home({ category, cards }) {
-  const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
+interface propFcI {
+  category: categoryI[];
+  cards: cardInterface[];
+}
+const Home: React.FC<propFcI> = ({ category, cards }) => {
+  const { cart } = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
-
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
   const addTooCartHendl = React.useCallback((props) => dispatch(addTooCart(props)), []);
+
   if (!category && !cards) return <div> no data</div>;
 
   return (
     <div>
       <Slider />
       <TabsCentr addTooCartHendl={addTooCartHendl} cart={cart} categorys={category} cards={cards} />
-      <CountDown addTooCartHendl={addTooCartHendl} cart={cart} card={cards[0]} />
+      {!matches && <CountDown addTooCartHendl={addTooCartHendl} cart={cart} card={cards[0]} />}
       <Blog cards={cards} />
       <Advantages />
     </div>
   );
+};
+
+export default Home;
+interface propsI {
+  props: {
+    category: categoryI[];
+    cards: cardInterface[];
+  };
 }
 
-export async function getStaticProps(ctx: NextPageContext) {
+export async function getStaticProps(): Promise<propsI> {
   try {
     const apiFetchCategoryParams: apiFechInterface = {
       table: 'category',
     };
-    const category = await apiFetch(apiFetchCategoryParams);
-
+    const categorys: cardInterface[] = await apiFetch(apiFetchCategoryParams);
+    console.log(categorys);
     const cardsApiFetchParams: apiFechInterface = {
       page: 0,
       limit: 3,
       table: 'card',
     };
-    const cardsApiFetch: Array<cardInterface> = await apiFetch(cardsApiFetchParams);
-    return { props: { category: category, cards: cardsApiFetch } };
+    const cardsApiFetch: cardInterface[] = await apiFetch(cardsApiFetchParams);
+    if (!cardsApiFetch || !categorys) {
+      return {
+        props: {
+          category: [],
+          cards: [],
+        },
+      };
+    }
+
+    return { props: { category: categorys, cards: cardsApiFetch } };
   } catch (error) {
-    return { props: {} };
+    return {
+      props: {
+        category: null,
+        cards: null,
+      },
+    };
   }
 }

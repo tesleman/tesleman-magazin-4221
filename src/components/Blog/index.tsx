@@ -33,8 +33,10 @@ const BlogItem: React.FC<{ style: useStylesType; cards: cardInterface; index: nu
           : { transform: 'translateX(1%)' }
       }
       container
-      direction={index == 0 || Math.floor(index / 2) ? 'row-reverse' : 'row'}>
-      <Grid className={style.root} item xs={4}>
+      alignItems="center"
+      direction={index == 0 || Math.floor(index / 2) ? 'row-reverse' : 'row'}
+    >
+      <Grid className={style.root} item md={4} xs={6}>
         <Image
           src={cards.images.length > 0 ? cards.images[0] : '/img_no_found.jpg'}
           alt="Picture of the author"
@@ -53,7 +55,9 @@ const BlogItem: React.FC<{ style: useStylesType; cards: cardInterface; index: nu
         }
         className={style.postAnons}
         item
-        xs={8}>
+        md={8}
+        xs={6}
+      >
         <h3>Summer is Calling: Sophie Hulme Citrus Fruit Tote</h3>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi malesuada malesuada

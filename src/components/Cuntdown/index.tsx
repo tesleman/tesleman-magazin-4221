@@ -27,7 +27,8 @@ const CountDown: React.FC<{
             alignItems="center"
             className={style.rootContduwnContiner}
             container
-            direction="row">
+            direction="row"
+          >
             <Card cart={cart} card={card} addTooCartHendl={addTooCartHendl} />
             <Countdown style={style} />
           </Grid>
@@ -47,7 +48,7 @@ const Countdown: React.FC<{ style: useStylesType }> = ({ style }) => {
     seconds: null,
   });
   React.useEffect(() => {
-    const timeTillDate = '04 3 2021, 6:00 am';
+    const timeTillDate = '04 3 2022, 6:00 am';
     const timeFormat = 'MM DD YYYY, h:mm a';
     const interval = setInterval(() => {
       const then = moment(timeTillDate, timeFormat);

@@ -1,18 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import mongoose from 'mongoose';
+
 import connect from './core/connect';
-import dbConnect from './core/db';
+
 import Menue from './models/menueScema';
+import nextConnect from 'next-connect';
 
-mongoose.Promise = global.Promise;
-
-dbConnect();
 const menues = connect();
 
 menues.post(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-      console.log(req.body);
       const data = {
         title: req.body.title,
         meta: req.body.meta || '',
@@ -22,12 +19,12 @@ menues.post(
         sort: req.body.sort || 500,
       };
       const categoryCreate = await Menue.create(data);
-
       res.status(200).json({
         message: 'succes',
         data: categoryCreate,
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   },
@@ -75,7 +72,10 @@ menues.get(
         data: [...categoryFindShop, ...categoryFindNoShop].sort((a, b) => a.sort - b.sort),
       });
     } catch (error) {
-      console.log(error);
+      res.status(400).json({
+        message: 'err',
+        data: error,
+      });
     }
   },
 );

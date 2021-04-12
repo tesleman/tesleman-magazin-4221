@@ -3,17 +3,14 @@ import mongoose from 'mongoose';
 import connect from './core/connect';
 import dbConnect from './core/db';
 import Category from './models/categoryScema';
-import Menue, { MenueScemaInterface } from './models/menueScema';
-import { TopMenueIItemI } from '../../components/component-types';
-
-mongoose.Promise = global.Promise;
+// import Menue, { MenueScemaInterface } from './models/menueScema';
+// import { TopMenueIItemI } from '../../components/component-types';
 
 const category = connect();
 
 category.post(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-      dbConnect();
       const data = {
         title: req.body.title,
         meta: req.body.meta ? req.body.meta : '',
@@ -61,7 +58,6 @@ category.post(
 category.get(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-      dbConnect();
       /// api/category?page=0&limit=2
       const numberOfCats = await Category.countDocuments();
       const pageOptions = {
@@ -70,7 +66,7 @@ category.get(
         category: req.query.category ? { category: req.query.category } : {},
       };
 
-      let categorys = await Category.find(pageOptions.category)
+      const categorys = await Category.find(pageOptions.category)
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
 
@@ -81,6 +77,7 @@ category.get(
         data: categorys,
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   },

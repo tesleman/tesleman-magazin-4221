@@ -1,6 +1,12 @@
 import { apiFechInterface } from '../redux-type';
 
-export const apiFetch = async ({ category, page, limit, table, all = false }: apiFechInterface) => {
+export const apiFetch = async ({
+  category,
+  page,
+  limit,
+  table,
+  all = false,
+}: apiFechInterface): Promise<any> => {
   const str = `http://${process.env.domein}/api/${table}?${page && `page=${page}`}&${
     limit && `limit=${limit}`
   }&${category && `category=${category}`}`;

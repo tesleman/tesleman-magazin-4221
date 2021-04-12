@@ -12,6 +12,7 @@ export interface cardInterface {
   categoryslug: string;
   detail?: string;
   slug: string;
+  meta: string;
   updatedAt: string;
   __v: number;
   _id: string;
@@ -30,12 +31,20 @@ export interface AlignItemsListInterface {
 export interface TabsCentrType {
   _id: string;
   title: string;
-  meta: string;
+  meta?: string;
   slug: string;
   createdAt: string;
   updatedAt: string;
 }
 
+export interface categoryI {
+  _id: string;
+  title: string;
+  meta: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+}
 export interface TopMenueIItemI {
   _id: string;
   subcat: Array<string>;

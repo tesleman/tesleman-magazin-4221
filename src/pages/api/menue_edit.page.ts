@@ -1,12 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import mongoose from 'mongoose';
-import connect from './core/connect';
-import dbConnect from './core/db';
+
 import Menue from './models/menueScema';
 import Category from './models/categoryScema';
+import connect from './core/connect';
+import nextConnect from 'next-connect';
 
-mongoose.Promise = global.Promise;
-dbConnect();
 const menuesEdit = connect();
 
 menuesEdit.post(

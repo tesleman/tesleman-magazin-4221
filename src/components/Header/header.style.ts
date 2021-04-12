@@ -25,7 +25,6 @@ export const useStyles = makeStyles((theme: Theme) => ({
     background: 'white',
   },
   ulli: {
-    padding: 15,
     position: 'relative',
     listStyle: 'none',
     background: 'white',
@@ -85,11 +84,23 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   buttonNav: {
     position: 'absolute',
-
     left: 0,
     right: 0,
     top: 0,
     bottom: 0,
-    width: 100,
+    padding: 0,
+  },
+  button: {
+    padding: 15,
+  },
+  catalogText: {
+    textAlign: 'left',
+    padding: 5,
+    [theme.breakpoints.only('xs')]: {
+      fontSize: '10px',
+    },
+  },
+  ListItem: {
+    padding: '10px 15px',
   },
 }));

@@ -1,18 +1,10 @@
 import React from 'react';
 
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import { menueI } from '.';
 import Link from 'next/link';
 import { useStyles } from './header.style';
+import { List, ListItem, ListItemText, Button, Drawer, Grid } from '@material-ui/core';
 
 const TemporaryDrawer: React.FC<{ menue: Array<menueI> }> = ({ menue }) => {
   const style = useStyles();
@@ -26,19 +18,19 @@ const TemporaryDrawer: React.FC<{ menue: Array<menueI> }> = ({ menue }) => {
     <div
       role="presentation"
       onClick={() => toggleDrawer(false)}
-      onKeyDown={() => toggleDrawer(false)}>
+      onKeyDown={() => toggleDrawer(false)}
+    >
       <List>
-        {menue.map((item: menueI, index: number) => (
-          <Link href={`/shop/${item.slug}`} key={item._id}>
-            <a className={style.sideMenueLink}>
-              <ListItem button>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-
-                <ListItemText primary={item.title} />
-              </ListItem>
-            </a>
-          </Link>
-        ))}
+        {menue &&
+          menue.map((item: menueI) => (
+            <Link href={`/shop/${item.slug}`} key={item._id}>
+              <a className={style.sideMenueLink}>
+                <ListItem className={style.ListItem} button>
+                  <ListItemText primary={item.title} />
+                </ListItem>
+              </a>
+            </Link>
+          ))}
       </List>
     </div>
   );
@@ -46,9 +38,16 @@ const TemporaryDrawer: React.FC<{ menue: Array<menueI> }> = ({ menue }) => {
   return (
     <div>
       <React.Fragment>
-        <Button className={style.buttonNav} size="large" onClick={() => toggleDrawer(true)}>
-          <MenuIcon />
-        </Button>
+        <Grid container direction="row" alignItems="center">
+          <Grid item xs={6}>
+            <Button className={style.buttonNav} size="large" onClick={() => toggleDrawer(true)}>
+              <MenuIcon />
+            </Button>
+          </Grid>
+          <Grid className={style.catalogText} item xs={6}>
+            Каталог товаров
+          </Grid>
+        </Grid>
         <Drawer anchor="left" open={state} onClose={() => toggleDrawer(false)}>
           {list()}
         </Drawer>
