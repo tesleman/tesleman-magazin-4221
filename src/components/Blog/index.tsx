@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { useStyles, useStylesType } from './blog.style';
 import { cardInterface } from '../component-types';
+import Link from 'next/link';
 
 const Blog: React.FC<{ cards: Array<cardInterface> }> = ({ cards }) => {
   const style: useStylesType = useStyles();
@@ -11,7 +12,7 @@ const Blog: React.FC<{ cards: Array<cardInterface> }> = ({ cards }) => {
     <div className={style.rootroot}>
       <Container>
         {cards.map((item: cardInterface, index: number) => (
-          <BlogItem key={item._id} style={style} cards={item} index={index} />
+          <BlogItem key={item._id} cards={item} index={index} />
         ))}
       </Container>
     </div>
@@ -20,11 +21,8 @@ const Blog: React.FC<{ cards: Array<cardInterface> }> = ({ cards }) => {
 
 export default Blog;
 
-const BlogItem: React.FC<{ style: useStylesType; cards: cardInterface; index: number }> = ({
-  style,
-  cards,
-  index,
-}) => {
+export const BlogItem: React.FC<{ cards: any; index: number }> = ({ cards, index }) => {
+  const style: useStylesType = useStyles();
   return (
     <Grid
       style={
@@ -64,9 +62,13 @@ const BlogItem: React.FC<{ style: useStylesType; cards: cardInterface; index: nu
           feugiat. Aenean magna enim, scelerisque quis augue vulputate, accumsan pharetra diam. Sed
           vehicula nibh quis mi venenatis scelerisque. Nullam...
         </p>
-        <Button color="default" className={style.button}>
-          More...
-        </Button>
+        <Link href={`/blog/${cards._id}`}>
+          <a>
+            <Button color="default" className={style.button}>
+              More...
+            </Button>
+          </a>
+        </Link>
       </Grid>
     </Grid>
   );

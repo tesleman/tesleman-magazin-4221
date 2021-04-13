@@ -51,10 +51,11 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
     <Layuot
       baseCategory={{ category: 'Shop', link: '/shop' }}
       src={'/shop-1.jpg'}
-      breadcrumbsCard={data.title}>
+      breadcrumbsCard={data.title}
+    >
       <Container>
         <Grid container direction="row">
-          <Grid item xs={6}>
+          <Grid item md={6} xs={12}>
             <Image
               layout="responsive"
               alt={data.title}
@@ -79,7 +80,7 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
               ))}
             </Grid>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item md={6} xs={12}>
             <div className={style.cardDetails}>
               <h2>Title: {data.title}</h2>
               <p>Artikul: {data.artikul}</p>
@@ -110,7 +111,8 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
                   disabled={cartIncludesItem}
                   onClick={hensdlAddCartDispatchItem}
                   variant="contained"
-                  color="secondary">
+                  color="secondary"
+                >
                   Add To Cart
                 </Button>
               </Grid>
@@ -119,10 +121,10 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
         </Grid>
         <Container>
           <Grid container direction="row">
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <h3 style={{ float: 'right' }}>Deatail Info:</h3>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item md={6} xs={12}>
               <p style={{ textAlign: 'left', paddingLeft: 23 }}>{data.detail}</p>
             </Grid>
           </Grid>
