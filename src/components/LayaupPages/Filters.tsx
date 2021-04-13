@@ -31,7 +31,6 @@ const Filters = ({ frome, too, all }) => {
   );
 
   const sorting = (value: string) => {
-    console.log(value);
     if (!value) return;
     //разбивка значения инпута для формата чтоб запушить в qery
     const splitedValue = value.split(' ');

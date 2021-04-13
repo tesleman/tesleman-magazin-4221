@@ -4,6 +4,8 @@ export type useStylesType = ReturnType<typeof useStyles>;
 export const useStyles = makeStyles((theme: Theme) => ({
   root: {
     float: 'left',
+    fontFamily: 'Dosis',
+
     '& p': {
       paddingRight: 30,
     },

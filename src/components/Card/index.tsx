@@ -16,7 +16,8 @@ export const Card: React.FC<{
   gridxs?: GridSize;
   gridsm?: GridSize;
   gridmd?: GridSize;
-}> = ({ card, addTooCartHendl, cart, gridxs = 12, gridsm = 8, gridmd = 3 }) => {
+  gridxl?: GridSize;
+}> = ({ card, addTooCartHendl, cart, gridxs = 12, gridsm = 8, gridmd = 3, gridxl = 3 }) => {
   const style: useStylesType = useStyles();
   const [open, setOpen] = React.useState<boolean>(false);
   const [imgIndex, setImgIndex] = React.useState<number>(0);
@@ -38,14 +39,12 @@ export const Card: React.FC<{
 
   if (!card) return <div></div>;
   return (
-    <Grid className={style.constainer} item xs={gridxs} sm={gridsm} md={gridmd}>
+    <Grid className={style.constainer} item xl={gridxl} xs={gridxs} sm={gridsm} md={gridmd}>
       <div>
         <Link href={link}>
           <a>
-            <h1>Title: {card.title}</h1>
-            <h3>Description: {card.description}</h3>
-            <div>Price: {card.price} $</div>
-            <span>Category: {card.category}</span>
+            <h1 className={style.title}> {card.title}</h1>
+            <h3 className={style.subtitle}> {card.description}</h3>
 
             <Image
               src={card.images.length > 0 ? card.images[imgIndex] : '/img_no_found.jpg'}
@@ -62,7 +61,8 @@ export const Card: React.FC<{
               <div
                 className={i === imgIndex ? style.dotActyve : style.dot}
                 key={i}
-                onClick={() => hendlSetIndex(i)}></div>
+                onClick={() => hendlSetIndex(i)}
+              ></div>
             ))}
         </div>
       </div>
@@ -79,13 +79,18 @@ export const Card: React.FC<{
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description">
+        aria-describedby="simple-modal-description"
+      >
         {
           <div className={style.modal}>
             <ModalCard {...card} style={style} />
           </div>
         }
       </Modal>
+      <span className={style.price}>
+        <span>$ </span>
+        {card.price}
+      </span>
     </Grid>
   );
 };

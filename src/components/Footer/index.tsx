@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
   return (
     <Container>
       <Grid container direction="row" justify="center">
-        <Grid className={style.root} item xs={4}>
+        <Grid className={style.root} item md={4} xs={12}>
           <h2 className={style.itemTytle}>MEBLA FURNITURE</h2>
           <p>
             We are a global housewares product design company. We bring thought and creativity to
@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
             <MailIcon /> <a href="mailto: Contact@Mebla.com"> Contact@Mebla.com</a>
           </span>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item md={4} xs={12}>
           <h2 className={style.itemTytle}>OPENING TIME</h2>
           <ul className={style.workTime}>
             <li>Mon – Fri: 8AM – 10PM</li>
@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
             <li>We Work All The Holidays</li>
           </ul>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item md={4} xs={12}>
           <h2 className={style.itemTytle}>ABOUT</h2>
           <ul className={style.aboute}>
             <li className={style.abouteLi}>

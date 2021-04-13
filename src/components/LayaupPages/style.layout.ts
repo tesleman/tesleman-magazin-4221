@@ -8,6 +8,14 @@ export const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     height: 430,
     zIndex: -1,
+    marginTop: 54,
+    [theme.breakpoints.down('md')]: {
+      height: 300,
+    },
+    [theme.breakpoints.down('xs')]: {
+      visibility: 'hidden',
+    },
+
     '& :after': {
       position: 'absolute',
       content: "''",
@@ -27,6 +35,9 @@ export const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
     color: 'white',
     margin: 'auto',
+    [theme.breakpoints.down('xs')]: {
+      color: 'black',
+    },
     '& h1': {
       textAlign: 'center',
       margin: 0,
@@ -34,6 +45,12 @@ export const useStyles = makeStyles((theme: Theme) => ({
     '& a': {
       textDecoration: 'none',
       color: 'white',
+      [theme.breakpoints.down('xs')]: {
+        color: 'black',
+      },
     },
+  },
+  filterWraapper: {
+    marginTop: 54,
   },
 }));

@@ -4,6 +4,7 @@ export type useStylesType = ReturnType<typeof useStyles>;
 export const useStyles = makeStyles((theme: Theme) => ({
   root: {
     marginBottom: 45,
+    fontFamily: 'Dosis',
   },
   AdvantagesItem: {
     textAlign: 'center',

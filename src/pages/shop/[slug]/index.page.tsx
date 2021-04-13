@@ -67,7 +67,9 @@ const SingleCategory: React.FC<{ json: string }> = ({ json }) => {
       frome={fromeCount}
       too={tooCount}
       all={count}
-      baseCategory={{ category: 'Shop', link: '/shop' }}>
+      filte
+      baseCategory={{ category: 'Shop', link: '/shop' }}
+    >
       <Grid container direction="row">
         {card.map((e) => (
           <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />

@@ -52,7 +52,7 @@ export async function getStaticProps(): Promise<propsI> {
       table: 'category',
     };
     const categorys: cardInterface[] = await apiFetch(apiFetchCategoryParams);
-    console.log(categorys);
+
     const cardsApiFetchParams: apiFechInterface = {
       page: 0,
       limit: 3,

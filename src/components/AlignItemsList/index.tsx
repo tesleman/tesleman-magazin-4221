@@ -8,11 +8,12 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Grid, IconButton } from '@material-ui/core';
+import { Button, Grid, IconButton } from '@material-ui/core';
 import { useStyles } from './AlignItemsList.style';
 import { AlignItemsListInterface } from '../component-types';
 import { useDispatch } from 'react-redux';
 import { plussItmCount, minusItmCount, removeItem } from '../../redux/slicers/cartSlicer';
+import Link from 'next/link';
 
 const AlignItemsList: React.FC<AlignItemsListInterface> = ({
   hendlSetAlignItemsList,
@@ -50,6 +51,13 @@ const AlignItemsList: React.FC<AlignItemsListInterface> = ({
             />
           ))}
           <div className={style.totalPrice}>{totalCartPrice} $</div>
+          <div className={style.cartLink}>
+            <Link href="/cart">
+              <Button>
+                <a>To Cart</a>
+              </Button>
+            </Link>
+          </div>
         </div>
       ) : (
         <EmptyCart />
@@ -101,7 +109,8 @@ export const ListCartItem = ({ elem, plusHendl, minusHendl, removeHendl }) => {
                 component="span"
                 variant="body2"
                 className={style.inline}
-                color="secondary">
+                color="secondary"
+              >
                 {elem.totalPrice} $
               </Typography>
             </React.Fragment>
@@ -112,7 +121,8 @@ export const ListCartItem = ({ elem, plusHendl, minusHendl, removeHendl }) => {
           className={style.container}
           direction="row"
           justify="flex-end"
-          alignItems="center">
+          alignItems="center"
+        >
           <IconButton className={style.button} onClick={() => plusHendl(elem._id)}>
             +
           </IconButton>
@@ -120,7 +130,8 @@ export const ListCartItem = ({ elem, plusHendl, minusHendl, removeHendl }) => {
           <IconButton
             disabled={elem.count <= 0}
             className={style.button}
-            onClick={() => minusHendl(elem._id)}>
+            onClick={() => minusHendl(elem._id)}
+          >
             -
           </IconButton>
         </Grid>

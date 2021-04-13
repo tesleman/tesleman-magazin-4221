@@ -10,17 +10,17 @@ const Advantages: React.FC = () => {
   return (
     <Container className={style.root}>
       <Grid justify="center" alignItems="center" container direction="row">
-        <Grid className={style.AdvantagesItem} item xs={4}>
+        <Grid className={style.AdvantagesItem} item md={4} xs={12}>
           <TelegramIcon />
           <h3>Fast Delivery</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed eiusmod</p>
         </Grid>
-        <Grid className={style.AdvantagesItem} item xs={4}>
+        <Grid className={style.AdvantagesItem} item md={4} xs={12}>
           <SecurityIcon />
           <h3>Fast Delivery</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed eiusmod</p>
         </Grid>
-        <Grid className={style.AdvantagesItem} item xs={4}>
+        <Grid className={style.AdvantagesItem} item md={4} xs={12}>
           <CardGiftcardIcon />
           <h3>Fast Delivery</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed eiusmod</p>

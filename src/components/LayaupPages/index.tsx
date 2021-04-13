@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-import { Breadcrumbs, Container, Grid, Typography } from '@material-ui/core';
+import { Breadcrumbs, Container, Typography } from '@material-ui/core';
 
 import { useStyles, useStylesType } from './style.layout';
 import Link from 'next/link';
@@ -19,17 +19,17 @@ const Layuot = (props) => {
     frome = '1',
     too = '3',
     all = '3',
+    filte = false,
   } = props;
   const style: useStylesType = useStyles();
   const routwr = useRouter();
   const breadcrumbsCatregory =
     routwr.query.slug && routwr.query.slug.toString().split('_').join(' ');
 
- 
   return (
     <div>
       <div className={style.imagin}>
-        <Image src={src} layout="fill" objectFit="fill" objectPosition="top" />
+        <Image src={src} layout="fill" objectFit="fill" objectPosition="50% 100%" />
       </div>
       <Container className={style.root}>
         <div className={style.headerShop}>
@@ -51,9 +51,10 @@ const Layuot = (props) => {
             </Breadcrumbs>
           </div>
         </div>
-
-        {!routwr.query.card && <Filters frome={frome} too={too} all={all} />}
-        {children}
+        <div className={style.filterWraapper}>
+          {filte && <Filters frome={frome} too={too} all={all} />}
+          {children}
+        </div>
       </Container>
     </div>
   );

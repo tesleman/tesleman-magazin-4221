@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme: Theme) => ({
     textAlign: 'center',
 
     margin: 38,
-    padding: '0 40px',
+    padding: '28px 40px',
     position: 'relative',
     cursor: 'pointer',
     boxShadow: '2px 3px 15px rgb(0 0 0 / 40%)',
@@ -89,5 +89,20 @@ export const useStyles = makeStyles((theme: Theme) => ({
     margin: 3,
     borderRadius: '50%',
     background: 'rgb(0 0 0 / 40%)',
+  },
+  title: {
+    fontFamily: 'Dosis',
+    color: '#555',
+    textTransform: 'uppercase',
+  },
+  subtitle: {
+    fontFamily: 'Dosis',
+    color: '#555',
+  },
+  price: {
+    fontFamily: 'Dosis',
+    color: theme.palette.secondary.main,
+    fontWeight: 700,
+    fontSize: '20px',
   },
 }));

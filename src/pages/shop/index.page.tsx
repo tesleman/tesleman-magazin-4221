@@ -54,16 +54,18 @@ const Shpo: React.FC<{ json: string }> = ({ json }) => {
   const tooCount = fromeCount + card.length - 1;
   return (
     <Layuot
+      filte
       category="Shop"
       frome={fromeCount}
       too={tooCount}
       all={totalCounts}
-      baseCategory={{ category: 'Shop', link: '/shop' }}>
+      baseCategory={{ category: 'Shop', link: '/shop' }}
+    >
       <Grid container direction="row">
         {card.map((e) => (
           <Card
-            gridxs={4}
-            gridsm={3}
+            gridxs={12}
+            gridsm={6}
             gridmd={3}
             cart={cart}
             key={e._id}

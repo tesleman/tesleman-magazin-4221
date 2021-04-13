@@ -40,7 +40,7 @@ export interface TabsCentrType {
 export interface categoryI {
   _id: string;
   title: string;
-  meta: string;
+  meta?: string;
   slug: string;
   createdAt: string;
   updatedAt: string;

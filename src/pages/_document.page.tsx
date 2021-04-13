@@ -9,7 +9,12 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Dosis&display=swap"
+            rel="stylesheet"
+          />
           {/* PWA primary color */}
+
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
             rel="stylesheet"
