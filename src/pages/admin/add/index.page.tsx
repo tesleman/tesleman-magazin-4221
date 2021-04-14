@@ -3,9 +3,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import slugify from 'slugify';
 import { apiFetch } from '../../../redux/redux-api/redux-api';
+import { uploatData, cardCreate, CardUpdate } from '../../../utils/fileUploads';
 
 export interface responsIntrfaceInput {
-  images: FormData;
+  images: any;
   title: string;
   subtitle: string;
   description: string;
@@ -24,32 +25,20 @@ const AddCard = () => {
   const onSubmit = async (data: responsIntrfaceInput, e) => {
     // create a card
     try {
-      const formData = new FormData();
-      // appending images to form data
-      Array.from(data.images).forEach((file: any) => {
-        formData.append('avatar', file);
-      });
+      const temporaryImg = data.images;
 
-      const response = await fetch(`http://${process.env.domein}/api/file`, {
-        body: formData,
-        method: 'post',
-      }); // posting file to file system
-      let images = await response.json(); // array with image link
-      data.images = images; // appenh array with image link to react-hook-form
-
+      data.images = [];
       // posting card  with image to DB
-      const responseS = await fetch(`http://${process.env.domein}/api/card`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        method: 'post',
-      });
-      let responseSs = await responseS.json();
+      const cardCreateWithoutImg = await cardCreate(data);
+      console.log(cardCreateWithoutImg, 'cardCreateWithoutImg');
+      const images = await uploatData(temporaryImg);
+      console.log(images, 'images');
+      const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, images });
+      console.log(update);
 
-      if (responseSs.message === 'succes') e.target.reset();
-      if (responseSs.message.keyValue && responseSs.message.keyValue.slug)
-        setstateError(responseSs.message.keyValue);
+      // e.target.reset();
+      if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug)
+        setstateError(cardCreateWithoutImg.message.keyValue);
     } catch (err) {
       console.log(err);
     }
@@ -132,7 +121,8 @@ const AddCard = () => {
             onClick={() => {
               titleCheng();
               checBox();
-            }}>
+            }}
+          >
             {togleChecbox ? 'Slug' : 'noSlug'}
           </Button>
           <input onClick={titleCheng} onChange={checBox} name="checkbox" type="checkbox" />
@@ -165,7 +155,8 @@ const AddCard = () => {
         <select
           style={{ width: 150 }}
           defaultValue={stateCat.length > 0 && stateCat[0].title}
-          onChange={categoryHandlChang}>
+          onChange={categoryHandlChang}
+        >
           <option value=""></option>
           {stateCat.map((e) => (
             <option key={e._id} value={JSON.stringify(e)}>
