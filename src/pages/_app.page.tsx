@@ -64,10 +64,11 @@ export default function MyApp(props) {
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
   let pageProps = {};
+  const cookie = ctx.req?.headers.cookie;
 
   // Make any initial calls we need to fetch data required for SSR
   const categoryes = await apiFetch({ table: 'menue' });
-  const sideMenue = await apiFetch({ table: 'category' });
+  const sideMenue = await apiFetch({ table: 'category', cookie });
 
   // Load the page getInitiaProps
   if (Component.getInitialProps) {

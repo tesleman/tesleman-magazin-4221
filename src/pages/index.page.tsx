@@ -15,6 +15,8 @@ import {
 import { apiFetch } from '../redux/redux-api/redux-api';
 import theme from '../theme';
 import Blogs from './api/models/blogScema';
+import Card, { CardScemaInterface } from './api/models/cardScema';
+import Category, { CategoryBaseDocument } from './api/models/categoryScema';
 
 interface propFcI {
   category: categoryI[];
@@ -43,28 +45,26 @@ const Home: React.FC<propFcI> = ({ category, cards, blogs }) => {
 export default Home;
 interface propsI {
   props: {
-    category: categoryI[];
-    cards: cardInterface[];
+    category: CategoryBaseDocument[];
+    cards: CardScemaInterface[];
     blogs: any;
   };
 }
 
 export async function getServerSideProps(): Promise<propsI> {
   try {
-    const apiFetchCategoryParams: apiFechInterface = {
-      table: 'category',
-    };
-    const categorys: cardInterface[] = await apiFetch(apiFetchCategoryParams);
+    const categorys: CategoryBaseDocument[] = await Category.find().limit(3).exec();
 
-    const cardsApiFetchParams: apiFechInterface = {
-      page: 0,
-      limit: 3,
-      table: 'card',
-    };
     const blogItem = await Blogs.find().limit(3).exec();
-    const cardsApiFetch: cardInterface[] = await apiFetch(cardsApiFetchParams);
+    const cardsApiFetch: CardScemaInterface[] = await Card.find();
 
-    return { props: { category: categorys, cards: cardsApiFetch, blogs: blogItem } };
+    return {
+      props: {
+        category: JSON.parse(JSON.stringify(categorys)),
+        cards: JSON.parse(JSON.stringify(cardsApiFetch)),
+        blogs: JSON.parse(JSON.stringify(blogItem)),
+      },
+    };
   } catch (error) {
     return {
       props: {

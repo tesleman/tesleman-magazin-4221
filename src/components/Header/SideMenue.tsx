@@ -21,7 +21,7 @@ const TemporaryDrawer: React.FC<{ menue: Array<menueI> }> = ({ menue }) => {
       onKeyDown={() => toggleDrawer(false)}
     >
       <List>
-        {menue &&
+        {Array.isArray(menue) &&
           menue.map((item: menueI) => (
             <Link href={`/shop/${item.slug}`} key={item._id}>
               <a className={style.sideMenueLink}>

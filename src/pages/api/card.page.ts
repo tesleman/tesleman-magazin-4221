@@ -65,10 +65,9 @@ apiRoute.get(
 apiRoute.patch(
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-      console.log(req.body);
       const cardId = req.body._id;
       const images = req.body.images;
-      console.log(cardId, 'cardId', images, 'images');
+
       const updateCardBiId = await Card.findByIdAndUpdate(cardId, { images }, { new: true });
       res.status(200).json({
         message: 'succes',

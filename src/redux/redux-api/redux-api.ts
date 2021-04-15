@@ -6,14 +6,23 @@ export const apiFetch = async ({
   limit,
   table,
   all = false,
+  cookie = '',
 }: apiFechInterface): Promise<any> => {
   const str = `http://${process.env.domein}/api/${table}?${page && `page=${page}`}&${
     limit && `limit=${limit}`
   }&${category && `category=${category}`}`;
 
-  const fecdData = await fetch(str);
+  const fecdData = await fetch(str, {
+    headers: {
+      cookie: cookie,
+    },
+    method: 'GET',
+    credentials: 'include',
+  });
   const data = await fecdData.json();
-
+  if (data.message !== 'succes') {
+    return data;
+  }
   if (!all) {
     return data.data;
   }

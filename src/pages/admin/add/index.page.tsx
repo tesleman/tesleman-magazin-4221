@@ -30,11 +30,10 @@ const AddCard = () => {
       data.images = [];
       // posting card  with image to DB
       const cardCreateWithoutImg = await cardCreate(data);
-      console.log(cardCreateWithoutImg, 'cardCreateWithoutImg');
+
       const images = await uploatData(temporaryImg);
-      console.log(images, 'images');
+
       const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, images });
-      console.log(update);
 
       // e.target.reset();
       if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug)

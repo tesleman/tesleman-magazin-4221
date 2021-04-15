@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import connect from './core/connect';
 import dbConnect from './core/db';
 import Category from './models/categoryScema';
+import { authenticated } from './ApiUtils/verificate';
 // import Menue, { MenueScemaInterface } from './models/menueScema';
 // import { TopMenueIItemI } from '../../components/component-types';
 
@@ -56,31 +57,32 @@ category.post(
 );
 
 category.get(
-  async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-    try {
-      /// api/category?page=0&limit=2
-      const numberOfCats = await Category.countDocuments();
-      const pageOptions = {
-        page: parseInt(req.query.page as string, 10) || 0,
-        limit: parseInt(req.query.limit as string, 10) || 10,
-        category: req.query.category ? { category: req.query.category } : {},
-      };
+  authenticated(
+    async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+      try {
+        /// api/category?page=0&limit=2
+        const numberOfCats = await Category.countDocuments();
+        const pageOptions = {
+          page: parseInt(req.query.page as string, 10) || 0,
+          limit: parseInt(req.query.limit as string, 10) || 10,
+          category: req.query.category ? { category: req.query.category } : {},
+        };
 
-      const categorys = await Category.find(pageOptions.category)
-        .skip(pageOptions.page * pageOptions.limit)
-        .limit(pageOptions.limit);
+        const categorys = await Category.find(pageOptions.category)
+          .skip(pageOptions.page * pageOptions.limit)
+          .limit(pageOptions.limit);
 
-      res.status(200).json({
-        message: 'succes',
-        pageLenght: categorys.length,
-        totalCount: numberOfCats,
-        data: categorys,
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  },
+        res.status(200).json({
+          message: 'succes',
+          pageLenght: categorys.length,
+          totalCount: numberOfCats,
+          data: categorys,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  ),
 );
 
 export default category;

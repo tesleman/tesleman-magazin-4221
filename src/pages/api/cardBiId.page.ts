@@ -2,9 +2,7 @@ import connect from './core/connect';
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import Card from './models/cardScema';
-import dbConnect from './core/db';
 
-dbConnect();
 const apiRoute = connect();
 
 apiRoute.get(
