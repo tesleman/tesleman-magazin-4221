@@ -11,8 +11,8 @@ export default function Login() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: emailRef.current?.value,
-        password: passRef.current?.value,
+        name: emailRef.current?.value.trim(),
+        password: passRef.current?.value.trim(),
       }),
     });
     const json = await resp.json();
@@ -20,7 +20,7 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <div style={{ marginTop: 150 }}>
       {JSON.stringify(message)}
       <input type="text" placeholder="email" ref={emailRef} />
       <input type="password" placeholder="password" ref={passRef} />

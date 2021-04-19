@@ -4,7 +4,7 @@ import { compare, hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import connect from './core/connect';
 import cookie from 'cookie';
-
+import { authenticated } from './ApiUtils/verificate';
 import { User } from './models/userScema';
 
 const login = connect();
@@ -36,5 +36,11 @@ login.post(async (req: NextApiRequest, res: NextApiResponse) => {
     console.log(error);
   }
 });
+
+login.get(
+  authenticated(async (req: NextApiRequest, res: NextApiResponse) => {
+    res.status(200).json({ message: 'autentyficated' });
+  }),
+);
 
 export default login;

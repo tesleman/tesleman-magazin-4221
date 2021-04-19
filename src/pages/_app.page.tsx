@@ -3,7 +3,8 @@ import React from 'react';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import { Router, useRouter } from 'next/router';
+import Router, { Router as Rout, useRouter } from 'next/router';
+import type { AppContext, AppProps /*, AppContext */ } from 'next/app';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import theme from '../theme';
@@ -12,16 +13,17 @@ import store from '../redux/store';
 import Admin from './admin/adminNav';
 import { Footer, Header } from '../components/import-export';
 import { apiFetch } from '../redux/redux-api/redux-api';
+import { NextPageContext } from 'next';
 
 NProgress.configure({ showSpinner: false });
 
-Router.events.on('routeChangeStart', () => {
+Rout.events.on('routeChangeStart', () => {
   NProgress.start();
 });
-Router.events.on('routeChangeComplete', () => {
+Rout.events.on('routeChangeComplete', () => {
   NProgress.done();
 });
-Router.events.on('routeChangeError', () => {
+Rout.events.on('routeChangeError', () => {
   console.log('Error');
 });
 
@@ -61,17 +63,38 @@ export default function MyApp(props) {
     </React.Fragment>
   );
 }
+interface AppContextExtends extends AppContext {
+  sideMenue: any;
+}
 
-MyApp.getInitialProps = async ({ Component, ctx }) => {
+MyApp.getInitialProps = async ({ Component, ctx }: AppContextExtends) => {
   let pageProps = {};
   const cookie = ctx.req?.headers.cookie;
-
+  const user = await fetch('http://localhost:3000/api/login', {
+    headers: {
+      cookie: cookie,
+    },
+  });
+  console.log();
+  if (user.status === 401 && ctx.pathname.includes('/admin') && ctx.req) {
+    ctx.res?.writeHead(302, {
+      Location: '/login',
+    });
+    ctx.res?.end();
+  }
+  if (user && ctx.pathname.includes('/login') && ctx.req) {
+    ctx.res?.writeHead(302, {
+      Location: '/admin',
+    });
+    ctx.res?.end();
+  }
   // Make any initial calls we need to fetch data required for SSR
   const categoryes = await apiFetch({ table: 'menue' });
   const sideMenue = await apiFetch({ table: 'category', cookie });
 
   // Load the page getInitiaProps
   if (Component.getInitialProps) {
+    //@ts-ignore
     pageProps = await Component.getInitialProps({ sideMenue, categoryes, ...ctx });
   }
 
