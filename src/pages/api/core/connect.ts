@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 import dbConnect from './db';
-import cors from 'cors';
+import { passport } from './passport';
+
 export default function connect() {
   return nextConnect({
     onError(error, req: NextApiRequest, res: NextApiResponse) {
@@ -15,11 +16,6 @@ export default function connect() {
       dbConnect();
       next();
     })
-    .use((req, res, next) => {
-      cors({
-        origin: true,
-        credentials: true,
-      });
-      next();
-    });
+    .use(passport.initialize())
+    .use(passport.session());
 }

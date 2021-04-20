@@ -14,6 +14,7 @@ import Admin from './admin/adminNav';
 import { Footer, Header } from '../components/import-export';
 import { apiFetch } from '../redux/redux-api/redux-api';
 import { NextPageContext } from 'next';
+import cookie from 'cookie';
 
 NProgress.configure({ showSpinner: false });
 
@@ -69,20 +70,23 @@ interface AppContextExtends extends AppContext {
 
 MyApp.getInitialProps = async ({ Component, ctx }: AppContextExtends) => {
   let pageProps = {};
-  const cookie = ctx.req?.headers.cookie;
+  const cooc = ctx.req?.headers.cookie || 'Bearer=';
+  const cookies = cookie.parse(cooc);
+
   const user = await fetch('http://localhost:3000/api/login', {
     headers: {
-      cookie: cookie,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${cookies.Bearer}`,
     },
   });
-  console.log();
+
   if (user.status === 401 && ctx.pathname.includes('/admin') && ctx.req) {
     ctx.res?.writeHead(302, {
       Location: '/login',
     });
     ctx.res?.end();
   }
-  if (user && ctx.pathname.includes('/login') && ctx.req) {
+  if (user.status === 200 && ctx.pathname.includes('/login') && ctx.req) {
     ctx.res?.writeHead(302, {
       Location: '/admin',
     });
@@ -90,7 +94,7 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContextExtends) => {
   }
   // Make any initial calls we need to fetch data required for SSR
   const categoryes = await apiFetch({ table: 'menue' });
-  const sideMenue = await apiFetch({ table: 'category', cookie });
+  const sideMenue = await apiFetch({ table: 'category' });
 
   // Load the page getInitiaProps
   if (Component.getInitialProps) {
