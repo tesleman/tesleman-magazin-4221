@@ -12,6 +12,7 @@ export interface CardScemaInterface extends Document {
   slug: string;
   detail?: string;
   categoryslug: string;
+  sale: boolean;
 }
 
 export interface ContactModel extends Model<CardScemaInterface> {}
@@ -51,6 +52,10 @@ const CardScema = new Schema(
     },
     artikul: {
       type: String,
+    },
+    sale: {
+      type: Boolean,
+      default: false,
     },
 
     images: [

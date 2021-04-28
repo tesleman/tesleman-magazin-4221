@@ -29,16 +29,26 @@ passport.use(
         if (!user) {
           done(null, false);
         }
-        if (user && (await compare(password + process.env.SECRET, user.password))) {
-          const claims = { id: user._id, name: user.user };
-          const jwt = sign(claims, process.env.SECRET, { expiresIn: '1h' });
-          const userData = user.toJSON();
-          done(null, { ...userData, token: jwt });
-        } else {
-          done(null, false, { message: 'Email or password is incorrect' });
+        if (user) {
+          compare(
+            password + process.env.SECRET,
+            user.password,
+            function (err, result) {
+              if (!err && result) {
+                const claims = { id: user._id, name: user.user };
+                const jwt = sign(claims, process.env.SECRET, { expiresIn: '1h' });
+                const userData = user.toJSON();
+                return done(null, { ...userData, token: jwt });
+              }
+
+              return done(null, false, { message: 'Email or password is incorrect' });
+            },
+            // result == false
+          );
         }
       } catch (error) {
-        // done(error, false);
+        console.log(error);
+        done(error, false);
       }
     },
   ),

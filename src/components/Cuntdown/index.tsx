@@ -29,7 +29,7 @@ const CountDown: React.FC<{
             container
             direction="row"
           >
-            <Card cart={cart} card={card} addTooCartHendl={addTooCartHendl} />
+            {card && <Card cart={cart} card={card} addTooCartHendl={addTooCartHendl} />}
             <Countdown style={style} />
           </Grid>
         </Container>

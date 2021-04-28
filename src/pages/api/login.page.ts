@@ -7,26 +7,30 @@ const login = connect();
 interface NextApiRequestExtendes extends NextApiRequest {
   user: { user: UserScemaInterface; token: string };
 }
-login.post(passport.authenticate('local'), async (req: NextApiRequestExtendes, res) => {
-  try {
-    if (req.user) {
-      res.setHeader(
-        'Set-Cookie',
-        cookie.serialize('Bearer', req.user.token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV !== 'development',
-          sameSite: 'strict',
-          maxAge: 3600,
-          path: '/',
-        }),
-      );
-      res.json({ message: 'Welcome back to the app!' });
+login.post(
+  passport.authenticate('local', { failWithError: true }),
+  async (req: NextApiRequestExtendes, res: NextApiResponse) => {
+    try {
+      if (req.user.token) {
+        res.setHeader(
+          'Set-Cookie',
+          cookie.serialize('Bearer', req.user.token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== 'development',
+            sameSite: 'strict',
+            maxAge: 3600,
+            path: '/',
+          }),
+        );
+
+        return res.json({ message: 'Welcome back to the app!' });
+      }
+      res.json({ message: 'Ups, something went wrong!' });
+    } catch (error) {
+      console.log(error);
     }
-    res.json({ message: 'Ups, something went wrong!' });
-  } catch (error) {
-    console.log(error);
-  }
-});
+  },
+);
 
 login.get(
   passport.authenticate('jwt', { session: false }),

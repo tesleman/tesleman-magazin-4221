@@ -13,7 +13,6 @@ import store from '../redux/store';
 import Admin from './admin/adminNav';
 import { Footer, Header } from '../components/import-export';
 import { apiFetch } from '../redux/redux-api/redux-api';
-import { NextPageContext } from 'next';
 import cookie from 'cookie';
 
 NProgress.configure({ showSpinner: false });

@@ -27,4 +27,4 @@ const SubcatScema = new Schema(
   },
 );
 
-export const Subcat = models.Subcat || model<SubcatScemaInterface | any>('Subcat', SubcatScema);
+export const Subcat = models.Submenue || model<SubcatScemaInterface | any>('Submenue', SubcatScema);

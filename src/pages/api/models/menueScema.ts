@@ -33,7 +33,7 @@ const MenueScema = new Schema(
     subcat: [
       {
         type: [Schema.Types.ObjectId],
-        ref: 'Category' || 'Subcat',
+        ref: 'Submenue',
       },
     ],
   },

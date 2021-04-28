@@ -1,23 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import FileController from './controller/FileController';
 import connect from './core/connect';
 import { upload } from './core/multer';
 
 const apiRoute = connect();
 apiRoute.use(upload.array('avatar', 12));
-interface NextApiRequestExtand extends NextApiRequest {
-  files: Array<Express.Multer.File>;
-}
-apiRoute.post((req: NextApiRequestExtand, res: NextApiResponse) => {
-  const file = req.files;
 
-  if (!file) {
-    const error = new Error('Please choose files');
-  }
-
-  let fileNames = file.map((element) => '/uploads/' + element.filename);
-
-  res.send(fileNames);
-});
+apiRoute.post(FileController.FilePost);
 
 export default apiRoute;
 

@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Menue from './models/menueScema';
 import Category from './models/categoryScema';
 import connect from './core/connect';
-import nextConnect from 'next-connect';
 
 const menuesEdit = connect();
 

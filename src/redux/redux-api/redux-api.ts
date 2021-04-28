@@ -19,7 +19,13 @@ export const apiFetch = async ({
     method: 'GET',
     credentials: 'include',
   });
+
+  if (fecdData.status === 401) {
+    return { data: [] };
+  }
+
   const data = await fecdData.json();
+
   if (data.message !== 'succes') {
     return data;
   }

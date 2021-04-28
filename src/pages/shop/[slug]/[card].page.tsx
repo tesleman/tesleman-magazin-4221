@@ -8,12 +8,14 @@ import { PropsSingleCard } from '../shop-types';
 import { useStyles, useStylesType } from '../styles/shop.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTooCart, cardInterface, Layuot, RootState } from '../shop.import-export';
+import Card from '../../api/models/cardScema';
 
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
-  const card = await fetch(`http://${process.env.domein}/api/cardBiId?card=${query.card}`);
-  const respons = await card.json();
+  const card = await Card.findOne({ slug: query.card as string });
+  // const card = await fetch(`http://${process.env.domein}/api/cardBiId?card=${query.card}`);
+
   return {
-    props: respons, // will be passed to the page component as props
+    props: { data: JSON.parse(JSON.stringify(card)) }, // will be passed to the page component as props
   };
 };
 
