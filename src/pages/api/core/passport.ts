@@ -36,7 +36,7 @@ passport.use(
             function (err, result) {
               if (!err && result) {
                 const claims = { id: user._id, name: user.user };
-                const jwt = sign(claims, process.env.SECRET, { expiresIn: '1h' });
+                const jwt = sign(claims, process.env.SECRET, { expiresIn: '360d' });
                 const userData = user.toJSON();
                 return done(null, { ...userData, token: jwt });
               }

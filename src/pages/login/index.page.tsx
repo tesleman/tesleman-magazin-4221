@@ -1,9 +1,11 @@
+import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 
 export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState<any>(null);
+  const router = useRouter();
   async function handleLogin() {
     const resp = await fetch('http://localhost:3000/api/login', {
       method: 'POST',
@@ -18,6 +20,9 @@ export default function Login() {
     const json = await resp.json();
 
     setMessage(json);
+    if (resp.status === 200) {
+      router.push('/admin');
+    }
   }
 
   return (

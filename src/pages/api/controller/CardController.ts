@@ -56,10 +56,35 @@ class CardController {
   async updateCard(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     try {
       const cardId = req.body._id;
-      const images = req.body.images;
-      const sale = req.body.sale;
-
-      const updateCardBiId = await Card.findByIdAndUpdate(cardId, { images, sale }, { new: true });
+      const {
+        slug,
+        title,
+        category,
+        categoryslug,
+        price,
+        detail,
+        artikul,
+        description,
+        subtitle,
+        images,
+      } = req.body;
+      console.log(req.body, 444);
+      const updateCardBiId = await Card.findByIdAndUpdate(
+        cardId,
+        {
+          slug,
+          title,
+          category,
+          categoryslug,
+          price,
+          detail,
+          artikul,
+          description,
+          subtitle,
+          images,
+        },
+        { new: true },
+      );
       res.status(200).json({
         message: 'succes',
         data: updateCardBiId,

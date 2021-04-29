@@ -18,12 +18,14 @@ login.post(
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
             sameSite: 'strict',
-            maxAge: 3600,
+            maxAge: 36000 * 10000,
             path: '/',
           }),
         );
 
-        return res.json({ message: 'Welcome back to the app!' });
+        return res.status(200).json({
+          message: 'Welcome back to the app!',
+        });
       }
       res.json({ message: 'Ups, something went wrong!' });
     } catch (error) {

@@ -25,12 +25,13 @@ const cardCreate = async (data) => {
   return respons;
 };
 
-const CardUpdate = async ({ _id, images }) => {
+const CardUpdate = async ({ _id, ...args }) => {
+  console.log(args.data, 'args');
   const cardUpdate = await fetch(`http://${process.env.domein}/api/card`, {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ _id, images }),
+    body: JSON.stringify({ _id, ...args.data }),
     method: 'PATCH',
   });
   const returnes = await cardUpdate.json();

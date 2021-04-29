@@ -1,9 +1,12 @@
-import { Button } from '@material-ui/core';
+import { Button, FormControl, FormHelperText, Grid, NativeSelect } from '@material-ui/core';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import slugify from 'slugify';
+import Image from 'next/image';
 import { apiFetch } from '../../../redux/redux-api/redux-api';
 import { uploatData, cardCreate, CardUpdate } from '../../../utils/fileUploads';
+import AdminNav from '../adminNav';
 
 export interface responsIntrfaceInput {
   images: any;
@@ -16,28 +19,70 @@ export interface responsIntrfaceInput {
   slug: string;
 }
 
-const AddCard = () => {
-  const { register, handleSubmit, setValue, getValues, reset } = useForm();
+const AddCard = ({
+  slug = '',
+  title = '',
+  category = '',
+  categoryslug = '',
+  price = '',
+  detail = '',
+  artikul = '',
+  description = '',
+  subtitle = '',
+  images = [],
+  _id = null,
+}) => {
+  const { register, handleSubmit, setValue, getValues, reset } = useForm({
+    defaultValues: {
+      slug,
+      title,
+      category,
+      categoryslug,
+      price,
+      detail,
+      artikul,
+      description,
+      subtitle,
+    },
+  });
   const [stateError, setstateError] = React.useState(null);
   const [stateCat, setCat] = React.useState([]);
+  const [stateLocalImages, setLocalImages] = React.useState(images);
   const [togleChecbox, setstogleChecbox] = React.useState(false);
+  const [selectDefaultValue, setStateDefaultValue] = React.useState(0);
+  const router = useRouter();
 
   const onSubmit = async (data: responsIntrfaceInput, e) => {
     // create a card
+
     try {
+      if (!_id) {
+        const temporaryImg = data.images;
+        data.images = [];
+        // posting card  with image to DB
+        const cardCreateWithoutImg = await cardCreate(data);
+
+        const images = await uploatData(temporaryImg);
+        data.images = images;
+        const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, data });
+        console.log(update);
+        if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug)
+          setstateError(cardCreateWithoutImg.message.keyValue);
+      }
       const temporaryImg = data.images;
-
-      data.images = [];
-      // posting card  with image to DB
-      const cardCreateWithoutImg = await cardCreate(data);
-
-      const images = await uploatData(temporaryImg);
-
-      const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, images });
-
+      if (temporaryImg.length > 0) {
+        const imagesUploda = await uploatData(temporaryImg);
+        data.images = [...stateLocalImages, ...imagesUploda];
+      }
+      if (temporaryImg.length <= 0) {
+        data.images = images;
+      }
+      const update = await CardUpdate({ _id, data });
+      console.log(update.status);
+      if (update.status === 200) {
+        router.reload();
+      }
       // e.target.reset();
-      if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug)
-        setstateError(cardCreateWithoutImg.message.keyValue);
     } catch (err) {
       console.log(err);
     }
@@ -47,18 +92,27 @@ const AddCard = () => {
     titleCheng();
   }, [togleChecbox]);
 
-  React.useEffect(() => {
-    const fech = async () => {
-      //feching categoryes
-      const apiFetchCategoryParams = {
-        table: 'category',
-      };
-      const category = await apiFetch(apiFetchCategoryParams);
-      setCat(category);
+  const fech = async () => {
+    //feching categoryes
+    const apiFetchCategoryParams = {
+      table: 'category',
     };
+    const category = await apiFetch(apiFetchCategoryParams);
+    setCat(category);
+  };
+  React.useEffect(() => {
     fech();
+
     return () => {};
   }, []);
+
+  React.useEffect(() => {
+    const defaultValue = selectedValuseDefault(stateCat, categoryslug, _id);
+
+    if (defaultValue >= 0) {
+      setStateDefaultValue(defaultValue);
+    }
+  }, [stateCat]);
 
   const titleCheng = () => {
     // slug creator
@@ -89,20 +143,25 @@ const AddCard = () => {
     setstogleChecbox(!togleChecbox);
   };
 
-  const categoryHandlChang = (event) => {
-    const parseEventCategorySlug = JSON.parse(event.target.value);
-
-    setValue('category', parseEventCategorySlug.title.trim());
-    setValue('categoryslug', parseEventCategorySlug.slug);
+  const categoryHandlChang = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setStateDefaultValue(+event.target.value);
+    setValue('category', stateCat[+event.target.value].title.trim());
+    setValue('categoryslug', stateCat[+event.target.value].slug);
   };
 
+  const selectedValuseDefault = (slug: any[], categoryslug: string, _id: string) => {
+    if (!_id) {
+      return;
+    }
+    return slug.findIndex((e) => e.slug === categoryslug);
+  };
+
+  const hendleDelleteImage = (elem: number) => {
+    setLocalImages((prevState) => prevState.filter((e) => e !== elem));
+  };
   return (
-    <div>
+    <AdminNav>
       <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="file">
-          <input ref={register} type="file" name="images" multiple />
-          file
-        </label>
         <label htmlFor="title">
           <input
             key={124234535}
@@ -151,27 +210,38 @@ const AddCard = () => {
           price
         </label>
 
-        <select
-          style={{ width: 150 }}
-          defaultValue={stateCat.length > 0 && stateCat[0].title}
-          onChange={categoryHandlChang}
-        >
-          <option value=""></option>
-          {stateCat.map((e) => (
-            <option key={e._id} value={JSON.stringify(e)}>
-              {e.title}
-            </option>
-          ))}
-        </select>
+        <FormControl style={{ width: 150 }}>
+          <NativeSelect value={selectDefaultValue} onChange={categoryHandlChang}>
+            {stateCat.map((e, i: number) => (
+              <option key={i} value={i}>
+                {e.title}
+              </option>
+            ))}
+          </NativeSelect>
+          <FormHelperText>Uncontrolled</FormHelperText>
+        </FormControl>
+
         <input name="categoryslug" ref={register} style={{ display: 'none' }} />
         <input name="category" ref={register} style={{ visibility: 'hidden' }} />
+        <label htmlFor="file">
+          <input ref={register} type="file" name="images" multiple />
+          file
+        </label>
 
         <button style={{ width: 70 }} type="submit">
           submit
         </button>
       </form>
-      {/* {stateImg && stateImg.map((e, i) => <img key={i} src={e} alt="" />)} */}
-    </div>
+      <Grid container direction="row">
+        {stateLocalImages &&
+          stateLocalImages.map((e, i) => (
+            <Grid key={i} item xs={3}>
+              <Image width={200} height={200} src={e} alt="" />
+              <button onClick={() => hendleDelleteImage(e)}>{i}</button>
+            </Grid>
+          ))}
+      </Grid>
+    </AdminNav>
   );
 };
 export default AddCard;

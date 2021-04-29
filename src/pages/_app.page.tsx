@@ -10,7 +10,7 @@ import 'nprogress/nprogress.css';
 import theme from '../theme';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import Admin from './admin/adminNav';
+
 import { Footer, Header } from '../components/import-export';
 import { apiFetch } from '../redux/redux-api/redux-api';
 import cookie from 'cookie';
@@ -51,13 +51,11 @@ export default function MyApp(props) {
         <Provider store={store}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {!router.pathname.includes('/admin') ? (
+          {!router.pathname.includes('/admin') && (
             <Header category={categoryes} menue={sideMenue} />
-          ) : (
-            <Admin />
           )}
           <Component {...pageProps} />
-          <Footer />
+          {!router.pathname.includes('/admin') && <Footer />}
         </Provider>
       </ThemeProvider>
     </React.Fragment>
@@ -72,24 +70,26 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContextExtends) => {
   const cooc = ctx.req?.headers.cookie || 'Bearer=';
   const cookies = cookie.parse(cooc);
 
-  const user = await fetch('http://localhost:3000/api/login', {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${cookies.Bearer}`,
-    },
-  });
+  if (ctx.pathname.includes('/admin') && ctx.req) {
+    const user = await fetch('http://localhost:3000/api/login', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${cookies.Bearer}`,
+      },
+    });
 
-  if (user.status === 401 && ctx.pathname.includes('/admin') && ctx.req) {
-    ctx.res?.writeHead(302, {
-      Location: '/login',
-    });
-    ctx.res?.end();
-  }
-  if (user.status === 200 && ctx.pathname.includes('/login') && ctx.req) {
-    ctx.res?.writeHead(302, {
-      Location: '/admin',
-    });
-    ctx.res?.end();
+    if (user.status === 401 && ctx.pathname.includes('/admin') && ctx.req) {
+      ctx.res?.writeHead(302, {
+        Location: '/login',
+      });
+      ctx.res?.end();
+    }
+    if (user.status === 200 && ctx.pathname.includes('/login') && ctx.req) {
+      ctx.res?.writeHead(302, {
+        Location: '/admin',
+      });
+      ctx.res?.end();
+    }
   }
   // Make any initial calls we need to fetch data required for SSR
   const categoryes = await apiFetch({ table: 'menue' });
