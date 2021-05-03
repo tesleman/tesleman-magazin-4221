@@ -4,6 +4,10 @@ import React from 'react';
 
 const menuItem = [
   {
+    slug: 'orders',
+    title: 'Заказы',
+  },
+  {
     slug: 'add',
     title: 'Добавить крту товара',
   },

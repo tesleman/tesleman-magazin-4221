@@ -27,7 +27,8 @@ const Cart = () => {
     <Layuot
       baseCategory={{ category: 'Cart', link: '/cart' }}
       category="Cart"
-      src={'/wishlist.jpg'}>
+      src={'/wishlist.jpg'}
+    >
       <Container>
         <HorizontalLabelPositionBelowStepper />
       </Container>
@@ -133,9 +134,10 @@ function HorizontalLabelPositionBelowStepper() {
     setActiveStep(0);
   };
 
-  const cartCount = cart.reduce((acum, item) => acum + item.count, 0);
-  const firstActive = !!cartCount && !!totalCartPrice;
-  const disabledButton = () => {
+  React.useEffect(() => {}, []);
+
+  const disabledButton = (cartCount, totalCartPrice) => {
+    const firstActive = !!cartCount && !!totalCartPrice;
     switch (activeStep) {
       case 0:
         return firstActive;
@@ -152,8 +154,9 @@ function HorizontalLabelPositionBelowStepper() {
   };
 
   React.useEffect(() => {
-    setvalidate(disabledButton());
-  }, [activeStep, isValid]);
+    const cartCount = cart.reduce((acum, item) => acum + item.count, 0);
+    setvalidate(disabledButton(cartCount, totalCartPrice));
+  }, [activeStep, isValid, totalCartPrice]);
 
   return (
     <div className={style.root}>
@@ -186,7 +189,8 @@ function HorizontalLabelPositionBelowStepper() {
                 disabled={!validate}
                 variant="contained"
                 color="primary"
-                onClick={handleNext}>
+                onClick={handleNext}
+              >
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </div>
