@@ -1,7 +1,9 @@
 import { GetServerSideProps } from 'next';
 import React from 'react';
 import Card from '../../api/models/cardScema';
-import AddCard from '../add/index.page';
+import AddEditCard from '../add/AddEditCard';
+
+import AdminNav from '../adminNav';
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   const categories = await Card.findOne({ _id: query._id as string });
 
@@ -12,7 +14,11 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
   };
 };
 const Update = ({ categories }) => {
-  return <AddCard {...categories} />;
+  return (
+    <AdminNav>
+      <AddEditCard {...categories} />
+    </AdminNav>
+  );
 };
 
 export default Update;

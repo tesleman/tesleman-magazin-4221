@@ -1,7 +1,7 @@
-const uploatData = async (images: FileList) => {
+const uploatData = async (images: FileList | Array<string>) => {
   const formData = new FormData();
   // appending images to form data
-  Array.from(images).forEach((file: any) => {
+  Array.from(images as FileList).forEach((file: any) => {
     formData.append('avatar', file);
   });
 

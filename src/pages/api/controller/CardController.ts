@@ -8,12 +8,21 @@ class CardController {
         subtitle: req.body.subtitle,
         description: req.body.description,
         category: req.body.category,
-        images: req.body.images,
+        images: req.body.images || [],
         slug: req.body.slug,
         artikul: req.body.artikul,
         detail: req.body.detail,
         categoryslug: req.body.categoryslug,
-        price: req.body.price,
+        price: req.body.price || 0,
+        seo: {
+          meta_title: req.body.meta_title || `${req.body.title}, купить в интернет-магазине `,
+          meta_keywords:
+            req.body.meta_keywords ||
+            `${req.body.title}, купить ${req.body.title}, приобрести ${req.body.title}, ${req.body.title} в различных цветах, ${req.body.title} от дистрибьютора`,
+          meta_description:
+            req.body.meta_description ||
+            `${req.body.title}  вы можете купить в нашем магазине "название магазина"`,
+        },
       };
       const card = await Card.create(cardSpred);
       res.status(200).json({
