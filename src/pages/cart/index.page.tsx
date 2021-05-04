@@ -20,7 +20,10 @@ import { clearCart } from '../../redux/slicers/cartSlicer';
 
 const schema = yup.object().shape({
   email: yup.string().email('NoEmail').required('Pusto'),
-  phone: yup.string().required(),
+  phone: yup
+    .string()
+    .required('Pusto')
+    .matches(/[0-9|(|)|-]{14}/, 'Must be only digits'),
   name: yup.string().required(),
 });
 const Cart = () => {
@@ -47,7 +50,7 @@ function HorizontalLabelPositionBelowStepper() {
   const [userData, setUserData] = React.useState<formUserdataI>(null);
   const dispatch = useDispatch();
   const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
-  const { handleSubmit, errors, control, formState } = useForm<formUserdataI>({
+  const { handleSubmit, errors, control, formState, getValues } = useForm<formUserdataI>({
     mode: 'all',
     reValidateMode: 'onChange',
     resolver: yupResolver(schema),
@@ -135,10 +138,15 @@ function HorizontalLabelPositionBelowStepper() {
     setActiveStep(0);
   };
 
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {
+    console.log(isValid);
+    console.log(getValues('phone')?.length);
+    console.log(getValues('name'));
+  }, [isValid]);
 
   const disabledButton = (cartCount, totalCartPrice) => {
     const firstActive = !!cartCount && !!totalCartPrice;
+
     switch (activeStep) {
       case 0:
         return firstActive;

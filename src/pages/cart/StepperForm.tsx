@@ -45,7 +45,7 @@ const StepperForm: React.FC<StepperFormPropsI> = ({
                 as={
                   <NumberFormat
                     customInput={Input}
-                    format="+7 (###) ###-####"
+                    format="+#(###)###-####"
                     allowEmptyFormatting
                     mask="_"
                   />
