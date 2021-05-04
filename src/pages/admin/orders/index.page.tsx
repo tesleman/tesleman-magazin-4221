@@ -15,18 +15,11 @@ import { useRouter } from 'next/router';
 import Order, { OrderScemaInterface } from '../../api/models/ordersScema';
 import AdminNav from '../adminNav';
 import Row from './Row';
+import { limitQery } from '../../../utils/ueryCheck';
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
-  const limitQery = (query) => {
-    const nan = Number(query.count);
-    if (!Number.isNaN(nan)) {
-      return nan;
-    }
-    return 5;
-  };
-
   const pageOptions = {
-    page: parseInt(query.page as string, 10) || 0,
-    limit: limitQery(query),
+    page: limitQery(query.page) | 0,
+    limit: limitQery(query.count) | 5,
   };
 
   const orders = await Order.find({})
@@ -59,7 +52,7 @@ const Orders = ({ orders, ordersCount }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     router.push({
       pathname: '/admin/orders',
-      query: { count: event.target.value, page: page },
+      query: { count: event.target.value, page: 0 },
     });
     setPage(0);
   };
