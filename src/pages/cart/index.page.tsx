@@ -138,12 +138,6 @@ function HorizontalLabelPositionBelowStepper() {
     setActiveStep(0);
   };
 
-  React.useEffect(() => {
-    console.log(isValid);
-    console.log(getValues('phone')?.length);
-    console.log(getValues('name'));
-  }, [isValid]);
-
   const disabledButton = (cartCount, totalCartPrice) => {
     const firstActive = !!cartCount && !!totalCartPrice;
 

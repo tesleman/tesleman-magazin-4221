@@ -57,6 +57,17 @@ const CardScema = new Schema(
       type: Boolean,
       default: false,
     },
+    seo: {
+      meta_title: {
+        type: String,
+      },
+      meta_keywords: {
+        type: String,
+      },
+      meta_description: {
+        type: String,
+      },
+    },
 
     images: [
       {
