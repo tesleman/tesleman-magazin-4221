@@ -14,7 +14,7 @@ login.post(
       if (req.user.token) {
         res.setHeader(
           'Set-Cookie',
-          cookie.serialize('Bearer', req.user.token, {
+          cookie.serialize('auth', req.user.token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
             sameSite: 'strict',

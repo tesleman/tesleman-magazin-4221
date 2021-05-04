@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Container,
   Table,
@@ -11,17 +12,18 @@ import {
 } from '@material-ui/core';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import React from 'react';
-import Order from '../../api/models/ordersScema';
+import Order, { OrderScemaInterface } from '../../api/models/ordersScema';
 import AdminNav from '../adminNav';
 import Row from './Row';
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   const limitQery = (query) => {
-    if (!Number.isNaN(query.count)) {
-      return Number(query.count);
+    const nan = Number(query.count);
+    if (!Number.isNaN(nan)) {
+      return nan;
     }
     return 5;
   };
+
   const pageOptions = {
     page: parseInt(query.page as string, 10) || 0,
     limit: limitQery(query),
@@ -31,7 +33,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
     .skip(pageOptions.page * pageOptions.limit)
     .limit(limitQery(query));
   const orderscountDocuments = await Order.find().countDocuments();
-
   return {
     props: {
       orders: JSON.parse(JSON.stringify(orders)),
@@ -50,7 +51,7 @@ const Orders = ({ orders, ordersCount }) => {
     setPage(newPage);
     router.push({
       pathname: '/admin/orders',
-      query: { page: newPage },
+      query: { count: rowsPerPage, page: newPage },
     });
   };
 
@@ -58,7 +59,7 @@ const Orders = ({ orders, ordersCount }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     router.push({
       pathname: '/admin/orders',
-      query: { count: event.target.value },
+      query: { count: event.target.value, page: page },
     });
     setPage(0);
   };
@@ -73,10 +74,11 @@ const Orders = ({ orders, ordersCount }) => {
                 <TableCell>Name</TableCell>
                 <TableCell align="right">Email</TableCell>
                 <TableCell align="right">Phone</TableCell>
+                <TableCell align="right">Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order) => (
+              {orders.map((order: OrderScemaInterface) => (
                 <Row key={order._id} order={order} />
               ))}
             </TableBody>

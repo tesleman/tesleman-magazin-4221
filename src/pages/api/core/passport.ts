@@ -10,8 +10,14 @@ interface UserScemaInterfaceExtends {
   token: string;
 }
 
+const cookieExtractor = function (req) {
+  let token = null;
+  if (req && req.cookies.auth) token = req.cookies.auth;
+  if (req && req.headers.cookies) token = req.headers.cookies;
+  return token;
+};
 const opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: cookieExtractor,
   secretOrKey: process.env.SECRET || 'asdasdqw',
 };
 

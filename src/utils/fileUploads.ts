@@ -26,7 +26,6 @@ const cardCreate = async (data) => {
 };
 
 const CardUpdate = async ({ _id, ...args }) => {
-  console.log(args.data, 'args');
   const cardUpdate = await fetch(`http://${process.env.domein}/api/card`, {
     headers: {
       'Content-Type': 'application/json',

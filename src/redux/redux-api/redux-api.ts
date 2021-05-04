@@ -8,7 +8,7 @@ export const apiFetch = async ({
   all = false,
   cookie = '',
 }: apiFechInterface): Promise<any> => {
-  const str = `http://${process.env.domein}/api/${table}?${page && `page=${page}`}&${
+  const str = `${process.env.domein}/api/${table}?${page && `page=${page}`}&${
     limit && `limit=${limit}`
   }&${category && `category=${category}`}`;
 

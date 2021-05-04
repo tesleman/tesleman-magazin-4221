@@ -2,7 +2,10 @@ import React from 'react';
 import {
   Box,
   Collapse,
+  FormControl,
   IconButton,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -12,11 +15,39 @@ import {
 } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { OrderScemaInterface } from '../../api/models/ordersScema';
 
-const Row = (props) => {
+const statusList = ['New', 'In processing', 'In delivery', 'Done'];
+const Row: React.FC<{ order: OrderScemaInterface }> = (props) => {
   const { order } = props;
-  const [open, setOpen] = React.useState(false);
 
+  const [open, setOpen] = React.useState(false);
+  const [status, setStatus] = React.useState(order.status);
+
+  const updateOrderStatusById = async (_id: string, status: string) => {
+    try {
+      const patchFetchStaus = await fetch(`${process.env.domein}/api/orders`, {
+        credentials: 'include',
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          status,
+          _id,
+        }),
+      });
+      const respons = await patchFetchStaus.json();
+      return respons.message;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const orderUpdate = await updateOrderStatusById(order._id, event.target.value);
+    if (orderUpdate === 'succes') setStatus(event.target.value);
+  };
   return (
     <React.Fragment>
       <TableRow>
@@ -30,6 +61,23 @@ const Row = (props) => {
         </TableCell>
         <TableCell align="right">{order.person.email}</TableCell>
         <TableCell align="right">{order.person.phone}</TableCell>
+        <TableCell align="right">
+          <FormControl>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={status}
+              onChange={handleChange}
+            >
+              {statusList.map((item: string) => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </TableCell>
+        <TableCell align="right">{}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

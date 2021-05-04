@@ -65,7 +65,7 @@ const AddCard = ({
         const images = await uploatData(temporaryImg);
         data.images = images;
         const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, data });
-        console.log(update);
+
         if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug)
           setstateError(cardCreateWithoutImg.message.keyValue);
       }
@@ -78,7 +78,7 @@ const AddCard = ({
         data.images = images;
       }
       const update = await CardUpdate({ _id, data });
-      console.log(update.status);
+
       if (update.status === 200) {
         router.reload();
       }

@@ -1,16 +1,31 @@
-import { model, Schema, Document, models, Model } from 'mongoose';
+import { model, Schema, Document, models, Model, ObjectId } from 'mongoose';
 
 export interface OrderScemaInterface extends Document {
-  title: string;
-  subtitle: string;
-  description: string;
-  category: string;
-  images?: Array<string>;
-  price: number;
+  _id: string;
+  person: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+  order: [
+    {
+      status: string;
+      title: string;
+      price: string;
+      count: string;
+      totalPrice: string;
+      artikul: string;
+      _id: string;
+    },
+  ];
+  status: string;
 }
 
 const OrderScema = new Schema(
   {
+    status: {
+      type: String,
+    },
     person: {
       name: {
         type: String,
@@ -22,24 +37,28 @@ const OrderScema = new Schema(
         type: String,
       },
     },
-    order:[ {
-      title: {
-        type: String,
+    order: [
+      {
+        status: {
+          type: String,
+        },
+        title: {
+          type: String,
+        },
+        price: {
+          type: String,
+        },
+        count: {
+          type: String,
+        },
+        totalPrice: {
+          type: String,
+        },
+        artikul: {
+          type: String,
+        },
       },
-      price: {
-        type: String,
-      },
-
-      count: {
-        type: String,
-      },
-      totalPrice: {
-        type: String,
-      },
-      artikul: {
-        type: String,
-      },}
-    ,]
+    ],
   },
   {
     // Make Mongoose use Unix time (seconds since Jan 1, 1970)

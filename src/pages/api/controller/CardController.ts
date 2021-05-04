@@ -68,7 +68,7 @@ class CardController {
         subtitle,
         images,
       } = req.body;
-      console.log(req.body, 444);
+
       const updateCardBiId = await Card.findByIdAndUpdate(
         cardId,
         {

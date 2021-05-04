@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
+import cors from 'cors';
 import dbConnect from './db';
 import { passport } from './passport';
 
@@ -12,6 +13,7 @@ export default function connect() {
       res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
     },
   })
+    .use(cors())
     .use((req, res, next) => {
       dbConnect();
       next();

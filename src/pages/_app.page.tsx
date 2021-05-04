@@ -34,6 +34,7 @@ export default function MyApp(props) {
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
+
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
@@ -47,6 +48,7 @@ export default function MyApp(props) {
 
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
+
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
@@ -67,14 +69,15 @@ interface AppContextExtends extends AppContext {
 
 MyApp.getInitialProps = async ({ Component, ctx }: AppContextExtends) => {
   let pageProps = {};
-  const cooc = ctx.req?.headers.cookie || 'Bearer=';
+  const cooc = ctx.req?.headers.cookie || 'auth=';
   const cookies = cookie.parse(cooc);
 
   if (ctx.pathname.includes('/admin') && ctx.req) {
     const user = await fetch('http://localhost:3000/api/login', {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookies.Bearer}`,
+        cookies: cookies.auth,
+        // Authorization: `Bearer ${cookies.Bearer}`,
       },
     });
 
