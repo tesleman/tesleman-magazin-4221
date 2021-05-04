@@ -16,6 +16,7 @@ import { useStyles } from './style.cart';
 import FinailStage from './FinailStage';
 import CartStepperItem from './CartStepperItem';
 import StepperForm from './StepperForm';
+import { clearCart } from '../../redux/slicers/cartSlicer';
 
 const schema = yup.object().shape({
   email: yup.string().email('NoEmail').required('Pusto'),
@@ -44,12 +45,11 @@ function HorizontalLabelPositionBelowStepper() {
 
   const [validate, setvalidate] = React.useState(false);
   const [userData, setUserData] = React.useState<formUserdataI>(null);
-
+  const dispatch = useDispatch();
   const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
   const { handleSubmit, errors, control, formState } = useForm<formUserdataI>({
     mode: 'all',
     reValidateMode: 'onChange',
-
     resolver: yupResolver(schema),
   });
   const { isDirty, isValid } = formState;
@@ -123,6 +123,7 @@ function HorizontalLabelPositionBelowStepper() {
     hendleSubmitClickSimular();
     if (buttonFinishref.current && buttonFinishref.current.children[0].innerText === 'FINISH') {
       postRder();
+      dispatch(clearCart());
     }
   };
 

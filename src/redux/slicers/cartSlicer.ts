@@ -70,8 +70,18 @@ const CartSlise = createSlice({
       state.cart = state.cart.filter((elem) => elem._id !== action.payload);
       getTotalPrice(state);
     },
+    clearCart(state: initialStateInterface) {
+      state.cart = [];
+      state.totalCartPrice = 0;
+    },
   },
 });
 
-export const { addTooCart, plussItmCount, minusItmCount, removeItem } = CartSlise.actions;
+export const {
+  addTooCart,
+  plussItmCount,
+  minusItmCount,
+  removeItem,
+  clearCart,
+} = CartSlise.actions;
 export default CartSlise.reducer;
