@@ -7,6 +7,8 @@ import {
   TableCell,
   Table,
   TablePagination,
+  Grid,
+  Typography,
 } from '@material-ui/core';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
@@ -56,37 +58,44 @@ const Catalog = ({ categories, ordersCount }) => {
   };
   return (
     <AdminNav>
-      <TableContainer component={Paper}>
-        <Table size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>title</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {categories.map((row) => (
-              <TableRow key={row.title}>
-                <TableCell align="left">
-                  <Link href={`/admin/catalog/${row.slug}`}>
-                    <a>{row.title}</a>
-                  </Link>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <div>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={ordersCount}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </div>
-      </TableContainer>
+      <Typography style={{ textAlign: 'center' }} variant="h3" component="h2" gutterBottom>
+        Kategory
+      </Typography>
+      <Grid container justify="center">
+        <Grid item xs={9}>
+          <TableContainer component={Paper}>
+            <Table size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>title</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {categories.map((row) => (
+                  <TableRow key={row.title}>
+                    <TableCell align="left">
+                      <Link href={`/admin/catalog/${row.slug}`}>
+                        <a>{row.title}</a>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <div>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={ordersCount}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </div>
+          </TableContainer>
+        </Grid>
+      </Grid>
     </AdminNav>
   );
 };

@@ -8,6 +8,8 @@ import {
   TableRow,
   Paper,
   TablePagination,
+  Grid,
+  Typography,
 } from '@material-ui/core';
 import Link from 'next/link';
 import React from 'react';
@@ -15,19 +17,52 @@ import Card from '../../api/models/cardScema';
 import AdminNav from '../adminNav';
 import { useRouter } from 'next/router';
 import { limitQery } from '../../../utils/ueryCheck';
+import { useForm } from 'react-hook-form';
 
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   const pageOptions = {
-    page: limitQery(query.page) | 0,
-    limit: limitQery(query.count) | 5,
+    page: limitQery(query.page) || 0,
+    limit: limitQery(query.count) || 5,
+    title: query.title || '',
+    artikul: query.artikul || '',
+    categoryslug: query.slug as string,
   };
 
-  const cardBiCategory = await Card.find({ categoryslug: query.slug as string })
+  const qeryFunck = (pageOptions) => {
+    if (!pageOptions.title && !pageOptions.artikul) {
+      return [{ categoryslug: pageOptions.categoryslug as string }];
+    }
+    if (!pageOptions.title && pageOptions.artikul) {
+      return [
+        { categoryslug: pageOptions.categoryslug as string },
+        { artikul: pageOptions.artikul as string },
+      ];
+    }
+    if (pageOptions.title && !pageOptions.artikul) {
+      return [
+        { categoryslug: pageOptions.categoryslug as string },
+        { title: pageOptions.title as string },
+      ];
+    }
+    if (pageOptions.title && pageOptions.artikul) {
+      return [
+        { categoryslug: pageOptions.categoryslug as string },
+        { title: pageOptions.title as string },
+        { artikul: pageOptions.artikul as string },
+      ];
+    }
+  };
+
+  const cardBiCategory = await Card.find({
+    $and: qeryFunck(pageOptions),
+  })
     .skip(pageOptions.page * pageOptions.limit)
     .limit(pageOptions.limit);
+
   const orderscountDocuments = await Card.find({
-    categoryslug: query.slug as string,
+    $and: qeryFunck(pageOptions),
   }).countDocuments();
+
   return {
     props: {
       cards: JSON.parse(JSON.stringify(cardBiCategory)),
@@ -38,68 +73,108 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
 
 function CatalogSlug({ cards, ordersCount }) {
   const router = useRouter();
-
+  const { register, handleSubmit } = useForm();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     router.push({
-      pathname: '/admin/catalog',
-      query: { count: rowsPerPage, page: newPage },
+      pathname: '/admin/catalog/[slug]',
+      query: { slug: router.query.slug, count: rowsPerPage, page: newPage },
     });
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     router.push({
-      pathname: '/admin/catalog',
-      query: { count: event.target.value, page: 0 },
+      pathname: '/admin/catalog/[slug]',
+      query: { slug: router.query.slug, count: event.target.value, page: 0 },
     });
     setPage(0);
   };
+
+  interface dataInterface {
+    artikul?: string;
+    title?: string;
+  }
+  const qeryRouterFunclk = (data: dataInterface) => {
+    if (data.title && !data.artikul) {
+      return { title: data.title };
+    }
+    if (!data.title && data.artikul) {
+      return { artikul: data.artikul };
+    }
+    if (data.title && data.artikul) {
+      return { artikul: data.artikul, title: data.title };
+    }
+  };
+  const handleSubmitFilterForm = (data) => {
+    router.push({
+      pathname: '/admin/catalog/[slug]',
+      query: { slug: router.query.slug, count: rowsPerPage, page: page, ...qeryRouterFunclk(data) },
+    });
+  };
+
   return (
     <AdminNav>
-      <TableContainer component={Paper}>
-        <Table size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>title</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {cards.map((row) => (
-              <TableRow key={row.title}>
-                <TableCell align="left">
-                  <Link href={`/admin/update/${row._id}`}>
-                    <a>{row.title}</a>
-                  </Link>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <div>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={ordersCount}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </div>
-      </TableContainer>
-      {/* <ul>
-        {cards.map((item) => (
-          <Link key={item._id} href={`/admin/update/${item._id}`}>
-            <a>
-              <li>{item.title}</li>
-            </a>
-          </Link>
-        ))}
-      </ul> */}
+      <Typography style={{ textAlign: 'center' }} variant="h3" component="h2" gutterBottom>
+        Категория
+      </Typography>
+
+      <Grid container justify="flex-start">
+        <form action="" onSubmit={handleSubmit(handleSubmitFilterForm)}>
+          <Grid container direction="column" justify="center">
+            <label htmlFor="meta_title">
+              <input ref={register} type="text" name="title" multiple />
+              title
+            </label>
+            <label htmlFor="meta_title">
+              <input ref={register} type="text" name="artikul" multiple />
+              Artikul
+            </label>
+            <button style={{ width: '30%' }} type="submit">
+              submit
+            </button>
+          </Grid>
+        </form>
+
+        <Grid item xs={9}>
+          <TableContainer component={Paper}>
+            <Table size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>title</TableCell>
+                  <TableCell>Artikul</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {cards.map((row) => (
+                  <TableRow key={row.title}>
+                    <TableCell align="left">
+                      <Link href={`/admin/update/${row._id}`}>
+                        <a>{row.title}</a>
+                      </Link>
+                    </TableCell>
+                    <TableCell align="left">{row.artikul}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <div>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={ordersCount}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </div>
+          </TableContainer>
+        </Grid>
+      </Grid>
     </AdminNav>
   );
 }
