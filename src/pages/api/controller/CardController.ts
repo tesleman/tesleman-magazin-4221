@@ -70,7 +70,7 @@ class CardController {
         slug: req.body.slug || card.slug,
         title: req.body.title || card.title,
         category: req.body.category || card.category,
-        categoryslug: req.body || card.categoryslug,
+        categoryslug: req.body.categoryslug || card.categoryslug,
         price: req.body.price || card.price,
         detail: req.body.detail || card.detail,
         artikul: req.body.artikul || card.artikul,
@@ -78,9 +78,9 @@ class CardController {
         subtitle: req.body.subtitle || card.subtitle,
         images: req.body.images || card.images,
         seo: {
-          meta_title: req.body.meta_title || card.seo.meta_title || '',
-          meta_keywords: req.body.meta_keywords || card.seo.meta_keywords || '',
-          meta_description: req.body.meta_description || card.seo.meta_description || '',
+          meta_title: req.body.meta_title || card.seo.meta_title,
+          meta_keywords: req.body.meta_keywords || card.seo.meta_keywords,
+          meta_description: req.body.meta_description || card.seo.meta_description,
         },
       };
 

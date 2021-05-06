@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FormControl, FormHelperText, Grid, NativeSelect } from '@material-ui/core';
+import { Button, FormControl, FormHelperText, Grid, NativeSelect, Paper } from '@material-ui/core';
 import { useRouter } from 'next/router';
 
 import { useForm } from 'react-hook-form';
@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { apiFetch } from '../../../redux/redux-api/redux-api';
 import { uploatData, cardCreate, CardUpdate } from '../../../utils/fileUploads';
 import { responsIntrfaceInput } from './index.page';
+import { useStyles } from './add.style';
 
 const AddEditCard = ({
   slug = '',
@@ -40,6 +41,7 @@ const AddEditCard = ({
   const [stateLocalImages, setLocalImages] = React.useState(images || []);
   const [togleChecbox, setstogleChecbox] = React.useState(false);
   const [selectDefaultValue, setStateDefaultValue] = React.useState(0);
+  const style = useStyles();
   const router = useRouter();
 
   const onSubmit = async (data: responsIntrfaceInput, e) => {
@@ -149,79 +151,105 @@ const AddEditCard = ({
     setLocalImages((prevState) => prevState.filter((e) => e !== elem));
   };
   return (
-    <div>
+    <Paper>
       <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="title">
-          <input
-            key={124234535}
-            onChange={titleCheng}
-            ref={register}
-            type="text"
-            name="title"
-            multiple
-          />
-          title
-        </label>
-        <label htmlFor="title">
-          <input onChange={titleCheng} ref={register} type="text" name="slug" multiple />
-          <Button
-            onClick={() => {
-              titleCheng();
-              checBox();
-            }}
+        <Paper>
+          <Grid
+            className={style.row_item}
+            alignContent="center"
+            alignItems="flex-start"
+            container
+            direction="column"
           >
-            {togleChecbox ? 'Slug' : 'noSlug'}
-          </Button>
-          <input onClick={titleCheng} onChange={checBox} name="checkbox" type="checkbox" />
-          slug
-          {stateError !== null && stateError.slug && (
-            <div>same slug already exist {stateError.slug}</div>
-          )}
-        </label>
-        <label htmlFor="subtitle">
-          <input ref={register} type="text" name="subtitle" multiple />
-          subtitle
-        </label>
-        <label htmlFor="description">
-          <input ref={register} type="text" name="description" multiple />
-          description
-        </label>
-        <label htmlFor="description">
-          <input ref={register} type="text" name="artikul" multiple />
-          artikul
-        </label>
-        <label htmlFor="detail">
-          <textarea ref={register} name="detail" />
-          detail
-        </label>
-        <label htmlFor="price">
-          <input name="price" ref={register} />
-          price
-        </label>
+            <Paper>
+              <Grid
+                className={style.row_item}
+                alignContent="center"
+                alignItems="flex-start"
+                container
+                direction="column"
+              >
+                <label className={style.row_item} htmlFor="title">
+                  <input
+                    key={124234535}
+                    onChange={titleCheng}
+                    ref={register}
+                    type="text"
+                    name="title"
+                    multiple
+                  />
+                  title
+                </label>
+                <label className={style.row_item} htmlFor="title">
+                  <input onChange={titleCheng} ref={register} type="text" name="slug" multiple />
+                  <Button
+                    onClick={() => {
+                      titleCheng();
+                      checBox();
+                    }}
+                  >
+                    {togleChecbox ? 'Slug' : 'noSlug'}
+                  </Button>
+                  <input
+                    className={style.row_item}
+                    onClick={titleCheng}
+                    onChange={checBox}
+                    name="checkbox"
+                    type="checkbox"
+                  />
+                  slug
+                  {stateError !== null && stateError.slug && (
+                    <div>same slug already exist {stateError.slug}</div>
+                  )}
+                </label>
+                <label className={style.row_item} htmlFor="subtitle">
+                  <input ref={register} type="text" name="subtitle" multiple />
+                  subtitle
+                </label>
+                <label className={style.row_item} htmlFor="description">
+                  <input ref={register} type="text" name="description" multiple />
+                  description
+                </label>
+                <label className={style.row_item} htmlFor="description">
+                  <input ref={register} type="text" name="artikul" multiple />
+                  artikul
+                </label>
+                <label className={style.row_item} htmlFor="detail">
+                  <textarea ref={register} name="detail" />
+                  detail
+                </label>
+                <label className={style.row_item} htmlFor="price">
+                  <input name="price" ref={register} />
+                  price
+                </label>
 
-        <FormControl style={{ width: 150 }}>
-          <NativeSelect value={selectDefaultValue} onChange={categoryHandlChang}>
-            {stateCat.map((e, i: number) => (
-              <option key={i} value={i}>
-                {e.title}
-              </option>
-            ))}
-          </NativeSelect>
-          <FormHelperText>Uncontrolled</FormHelperText>
-        </FormControl>
+                <FormControl className={style.row_item} style={{ width: 150 }}>
+                  <NativeSelect value={selectDefaultValue} onChange={categoryHandlChang}>
+                    {stateCat.map((e, i: number) => (
+                      <option key={i} value={i}>
+                        {e.title}
+                      </option>
+                    ))}
+                  </NativeSelect>
+                  <FormHelperText>Uncontrolled</FormHelperText>
+                </FormControl>
 
-        <input name="categoryslug" ref={register} style={{ display: 'none' }} />
-        <input name="category" ref={register} style={{ visibility: 'hidden' }} />
-        <label htmlFor="file">
-          <input ref={register} type="file" name="images" multiple />
-          file
-        </label>
+                <input name="categoryslug" ref={register} style={{ display: 'none' }} />
+                <input name="category" ref={register} style={{ visibility: 'hidden' }} />
+                <label className={style.row_item} htmlFor="file">
+                  <input ref={register} type="file" name="images" multiple />
+                  file
+                </label>
 
-        <button style={{ width: 70 }} type="submit">
-          submit
-        </button>
+                <button className={style.row_item} style={{ width: 70 }} type="submit">
+                  submit
+                </button>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Paper>
       </form>
-      <Grid container direction="row">
+      <Grid className={style.row_item} container direction="row">
         {stateLocalImages &&
           stateLocalImages.map((e, i) => (
             <Grid key={i} item xs={3}>
@@ -230,7 +258,7 @@ const AddEditCard = ({
             </Grid>
           ))}
       </Grid>
-    </div>
+    </Paper>
   );
 };
 
