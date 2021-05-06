@@ -65,35 +65,26 @@ class CardController {
   async updateCard(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     try {
       const cardId = req.body._id;
-      const {
-        slug,
-        title,
-        category,
-        categoryslug,
-        price,
-        detail,
-        artikul,
-        description,
-        subtitle,
-        images,
-      } = req.body;
-
-      const updateCardBiId = await Card.findByIdAndUpdate(
-        cardId,
-        {
-          slug,
-          title,
-          category,
-          categoryslug,
-          price,
-          detail,
-          artikul,
-          description,
-          subtitle,
-          images,
+      const card = await Card.findById({ _id: req.body._id });
+      const cardUpdate = {
+        slug: req.body.slug || card.slug,
+        title: req.body.title || card.title,
+        category: req.body.category || card.category,
+        categoryslug: req.body || card.categoryslug,
+        price: req.body.price || card.price,
+        detail: req.body.detail || card.detail,
+        artikul: req.body.artikul || card.artikul,
+        description: req.body.description || card.description,
+        subtitle: req.body.subtitle || card.subtitle,
+        images: req.body.images || card.images,
+        seo: {
+          meta_title: req.body.meta_title || card.seo.meta_title || '',
+          meta_keywords: req.body.meta_keywords || card.seo.meta_keywords || '',
+          meta_description: req.body.meta_description || card.seo.meta_description || '',
         },
-        { new: true },
-      );
+      };
+
+      const updateCardBiId = await Card.findByIdAndUpdate(cardId, { ...cardUpdate }, { new: true });
       res.status(200).json({
         message: 'succes',
         data: updateCardBiId,

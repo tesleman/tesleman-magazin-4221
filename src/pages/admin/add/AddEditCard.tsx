@@ -37,7 +37,7 @@ const AddEditCard = ({
   });
   const [stateError, setstateError] = React.useState(null);
   const [stateCat, setCat] = React.useState([]);
-  const [stateLocalImages, setLocalImages] = React.useState(images);
+  const [stateLocalImages, setLocalImages] = React.useState(images || []);
   const [togleChecbox, setstogleChecbox] = React.useState(false);
   const [selectDefaultValue, setStateDefaultValue] = React.useState(0);
   const router = useRouter();
@@ -55,23 +55,22 @@ const AddEditCard = ({
         const images = await uploatData(temporaryImg);
         data.images = images;
         const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, data });
-
+        console.log(update);
         if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug)
           setstateError(cardCreateWithoutImg.message.keyValue);
       }
       const temporaryImg = data.images;
       if (temporaryImg.length > 0) {
         const imagesUploda = await uploatData(temporaryImg);
+        setLocalImages((prevImg) => [...prevImg, ...imagesUploda]);
         data.images = [...stateLocalImages, ...imagesUploda];
       }
       if (temporaryImg.length <= 0) {
-        data.images = images;
+        data.images = [...stateLocalImages];
       }
-      const update = await CardUpdate({ _id, data });
 
-      if (update.status === 200) {
-        router.reload();
-      }
+      await CardUpdate({ _id, data });
+
       // e.target.reset();
     } catch (err) {
       console.log(err);

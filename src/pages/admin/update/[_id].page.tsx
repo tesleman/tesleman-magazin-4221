@@ -1,22 +1,22 @@
 import { GetServerSideProps } from 'next';
 import React from 'react';
 import Card from '../../api/models/cardScema';
-import AddEditCard from '../add/AddEditCard';
+import TabPanel from '../add';
 
 import AdminNav from '../adminNav';
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
-  const categories = await Card.findOne({ _id: query._id as string });
+  const card = await Card.findOne({ _id: query._id as string });
 
   return {
     props: {
-      categories: JSON.parse(JSON.stringify(categories)),
+      singleCard: JSON.parse(JSON.stringify(card)),
     },
   };
 };
-const Update = ({ categories }) => {
+const Update = ({ singleCard }) => {
   return (
     <AdminNav>
-      <AddEditCard {...categories} />
+      <TabPanel {...singleCard} />
     </AdminNav>
   );
 };

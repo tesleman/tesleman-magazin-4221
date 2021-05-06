@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
 
   const orders = await Order.find({})
     .skip(pageOptions.page * pageOptions.limit)
-    .limit(limitQery(query));
+    .limit(pageOptions.limit);
   const orderscountDocuments = await Order.find().countDocuments();
   return {
     props: {

@@ -13,6 +13,11 @@ export interface CardScemaInterface extends Document {
   detail?: string;
   categoryslug: string;
   sale: boolean;
+  seo: {
+    meta_title: string;
+    meta_keywords: string;
+    meta_description: string;
+  };
 }
 
 export interface ContactModel extends Model<CardScemaInterface> {}

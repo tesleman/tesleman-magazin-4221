@@ -5,8 +5,9 @@ const uploatData = async (images: FileList | Array<string>) => {
     formData.append('avatar', file);
   });
 
-  const response = await fetch(`http://${process.env.domein}/api/file`, {
+  const response = await fetch(`${process.env.domein}/api/file`, {
     body: formData,
+    credentials: 'omit',
     method: 'post',
   }); // posting file to file system
 
@@ -14,10 +15,11 @@ const uploatData = async (images: FileList | Array<string>) => {
 };
 
 const cardCreate = async (data) => {
-  const cardCreate = await fetch(`http://${process.env.domein}/api/card`, {
+  const cardCreate = await fetch(`${process.env.domein}/api/card`, {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'omit',
     body: JSON.stringify(data),
     method: 'post',
   });
@@ -26,15 +28,23 @@ const cardCreate = async (data) => {
 };
 
 const CardUpdate = async ({ _id, ...args }) => {
-  const cardUpdate = await fetch(`http://${process.env.domein}/api/card`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ _id, ...args.data }),
-    method: 'PATCH',
-  });
-  const returnes = await cardUpdate.json();
-  return returnes;
+  try {
+    const cardId = _id;
+    const dataForUpdate = { ...args.data };
+
+    const cardUpdate = await fetch(`${process.env.domein}/api/card`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'PATCH',
+      credentials: 'include',
+      body: JSON.stringify({ _id: cardId, ...dataForUpdate }),
+    });
+    const returnes = await cardUpdate.json();
+    return returnes;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export { uploatData, cardCreate, CardUpdate };

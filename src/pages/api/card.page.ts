@@ -1,13 +1,13 @@
 import connect from './core/connect';
 import CardController from './controller/CardController';
+import { passport } from './core/passport';
 
 const apiRoute = connect();
 
-apiRoute.post(CardController.postCard);
+apiRoute.post(passport.authenticate('jwt', { session: false }), CardController.postCard);
+apiRoute.patch(passport.authenticate('jwt', { session: false }), CardController.updateCard);
 
 apiRoute.get(CardController.getCatrd);
-
-apiRoute.patch(CardController.updateCard);
 
 export default apiRoute;
 export const config = {

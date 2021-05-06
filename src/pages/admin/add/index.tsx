@@ -17,6 +17,7 @@ const TabPanel = (props) => {
 
       case 1:
         return <SeoTab {...props} />;
+
       default:
         break;
     }
@@ -35,7 +36,7 @@ const TabPanel = (props) => {
         centered
       >
         <Tab label="Item One" />
-        <Tab label="Item Two" />
+        {props._id && <Tab label="Item Two" />}
       </Tabs>
       <>{currentTab(value)}</>
     </Paper>
