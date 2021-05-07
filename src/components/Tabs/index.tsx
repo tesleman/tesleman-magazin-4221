@@ -23,7 +23,7 @@ const TabsCentr: React.FC<{
 
   React.useEffect(() => {
     const payload: apiFechInterface = {
-      category,
+      categoryId: categorys.find((i) => i.title === category)._id,
       page: 0,
       limit: 3,
       table: 'card',

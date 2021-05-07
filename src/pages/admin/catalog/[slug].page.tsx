@@ -18,36 +18,42 @@ import AdminNav from '../adminNav';
 import { useRouter } from 'next/router';
 import { limitQery } from '../../../utils/ueryCheck';
 import { useForm } from 'react-hook-form';
+import Category from '../../api/models/categoryScema';
 
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
+  const currentCategory = await Category.findOne({ slug: query.slug as string });
+  const title = query.title;
+  const regex = new RegExp(`${title}`);
+
   const pageOptions = {
     page: limitQery(query.page) || 0,
     limit: limitQery(query.count) || 5,
-    title: query.title || '',
+    title: query.title !== undefined ? regex : '',
     artikul: query.artikul || '',
+    categoryId: currentCategory._id,
     categoryslug: query.slug as string,
   };
 
   const qeryFunck = (pageOptions) => {
     if (!pageOptions.title && !pageOptions.artikul) {
-      return [{ categoryslug: pageOptions.categoryslug as string }];
+      return [{ categoryId: pageOptions.categoryId }];
     }
     if (!pageOptions.title && pageOptions.artikul) {
       return [
-        { categoryslug: pageOptions.categoryslug as string },
+        { categoryId: pageOptions.categoryId as string },
         { artikul: pageOptions.artikul as string },
       ];
     }
     if (pageOptions.title && !pageOptions.artikul) {
       return [
-        { categoryslug: pageOptions.categoryslug as string },
-        { title: pageOptions.title as string },
+        { categoryId: pageOptions.categoryId as string },
+        { title: { $regex: pageOptions.title } },
       ];
     }
     if (pageOptions.title && pageOptions.artikul) {
       return [
-        { categoryslug: pageOptions.categoryslug as string },
-        { title: pageOptions.title as string },
+        { categoryId: pageOptions.categoryId as string },
+        { title: { $regex: pageOptions.title } },
         { artikul: pageOptions.artikul as string },
       ];
     }
@@ -109,7 +115,7 @@ function CatalogSlug({ cards, ordersCount }) {
       return { artikul: data.artikul, title: data.title };
     }
   };
-  const handleSubmitFilterForm = (data) => {
+  const handleSubmitFilterForm = (data: dataInterface) => {
     router.push({
       pathname: '/admin/catalog/[slug]',
       query: { slug: router.query.slug, count: rowsPerPage, page: page, ...qeryRouterFunclk(data) },
@@ -122,7 +128,7 @@ function CatalogSlug({ cards, ordersCount }) {
         Категория
       </Typography>
 
-      <Grid container justify="flex-start">
+      <Grid container direction="column" justify="flex-start">
         <form action="" onSubmit={handleSubmit(handleSubmitFilterForm)}>
           <Grid container direction="column" justify="center">
             <label htmlFor="meta_title">
@@ -133,10 +139,10 @@ function CatalogSlug({ cards, ordersCount }) {
               <input ref={register} type="text" name="artikul" multiple />
               Artikul
             </label>
-            <button style={{ width: '30%' }} type="submit">
-              submit
-            </button>
           </Grid>
+          <button style={{ width: '10%' }} type="submit">
+            submit
+          </button>
         </form>
 
         <Grid item xs={9}>

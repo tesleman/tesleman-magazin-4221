@@ -1,7 +1,7 @@
 import { apiFechInterface } from '../redux-type';
 
 export const apiFetch = async ({
-  category,
+  categoryId,
   page,
   limit,
   table,
@@ -10,7 +10,7 @@ export const apiFetch = async ({
 }: apiFechInterface): Promise<any> => {
   const str = `${process.env.domein}/api/${table}?${page && `page=${page}`}&${
     limit && `limit=${limit}`
-  }&${category && `category=${category}`}`;
+  }&${categoryId && `categoryId=${categoryId}`}`;
 
   const fecdData = await fetch(str, {
     headers: {

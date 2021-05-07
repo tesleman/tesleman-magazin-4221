@@ -12,6 +12,7 @@ export interface CardScemaInterface extends Document {
   slug: string;
   detail?: string;
   categoryslug: string;
+  categoryId: string;
   sale: boolean;
   seo: {
     meta_title: string;
@@ -54,6 +55,9 @@ const CardScema = new Schema(
     categoryslug: {
       type: String,
       required: [true, 'Please choise category'],
+    },
+    categoryId: {
+      type: String,
     },
     artikul: {
       type: String,

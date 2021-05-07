@@ -43,10 +43,10 @@ class CardController {
       const pageOptions = {
         page: parseInt(req.query.page as string, 10) || 0,
         limit: parseInt(req.query.limit as string, 10) || 10,
-        category: req.query.category ? { category: req.query.category.toString() } : {},
+        categoryId: req.query.categoryId ? { categoryId: req.query.categoryId.toString() } : {},
       };
-      const numberOfCards = await Card.find(pageOptions.category).countDocuments();
-      let card = await Card.find(pageOptions.category)
+      const numberOfCards = await Card.find(pageOptions.categoryId).countDocuments();
+      let card = await Card.find(pageOptions.categoryId)
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
 

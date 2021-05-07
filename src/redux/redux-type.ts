@@ -1,6 +1,6 @@
 export interface apiFechInterface {
   cookie?: string;
-  category?: string;
+  categoryId?: string;
   page?: number;
   limit?: number;
   table: string;
