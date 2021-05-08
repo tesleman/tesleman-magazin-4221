@@ -20,7 +20,7 @@ const sekectArray = [
     text: 'Data ↓',
   },
 ];
-const Filters = ({ frome, too, all }) => {
+const Filters = ({ frome = 0, too = 0, all = 0 }) => {
   const router = useRouter();
 
   const [qeryState, setQeryState] = React.useState(

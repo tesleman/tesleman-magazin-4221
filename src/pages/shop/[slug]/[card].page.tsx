@@ -8,7 +8,8 @@ import { PropsSingleCard } from '../shop-types';
 import { useStyles, useStylesType } from '../styles/shop.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTooCart, cardInterface, Layuot, RootState } from '../shop.import-export';
-import Card from '../../api/models/cardScema';
+import Card, { CardScemaInterface } from '../../api/models/cardScema';
+import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   const card = await Card.findOne({ slug: query.card as string });
@@ -29,7 +30,7 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
     setIndex(i);
   };
 
-  let cartIncludesItem = cart.some((item: cardInterface) => item._id === data._id);
+  let cartIncludesItem = cart.some((item: CardScemaInterface) => item._id === data._id);
 
   const handleCartPlus = () => {
     setcartItemCount(cartItemCount + 1);
@@ -56,6 +57,11 @@ const CartPage: React.FC<PropsSingleCard> = ({ message, data }) => {
       breadcrumbsCard={data.title}
     >
       <Container>
+        <Head>
+          <title>{data.seo.meta_title}</title>.
+          <meta name="description" content={data.seo.meta_description} />
+          <meta name="keywords" content={data.seo.meta_keywords} />
+        </Head>
         <Grid container direction="row">
           <Grid item md={6} xs={12}>
             <Image

@@ -5,14 +5,15 @@ import { Grid, GridSize, Modal } from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ZoomInIcon from '@material-ui/icons/ZoomIn';
-import { cardInterface } from '../component-types';
+
 import { useStylesType, useStyles } from './card.style';
 import { ModalCard } from './ModalCard';
+import { CardScemaInterface } from '../../pages/api/models/cardScema';
 
 export const Card: React.FC<{
-  card: cardInterface;
-  cart: Array<cardInterface>;
-  addTooCartHendl: (payload: cardInterface) => void;
+  card: CardScemaInterface;
+  cart: Array<CardScemaInterface>;
+  addTooCartHendl: (payload: CardScemaInterface) => void;
   gridxs?: GridSize;
   gridsm?: GridSize;
   gridmd?: GridSize;

@@ -1,27 +1,19 @@
 import { Grid } from '@material-ui/core';
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { useStyles, useStylesType } from '../styles/shop.style';
-import {
-  Card,
-  Pagin,
-  apiFetch,
-  addTooCart,
-  RootState,
-  Layuot,
-  cardInterface,
-} from '../shop.import-export';
+import { Card, Pagin, addTooCart, RootState, Layuot, cardInterface } from '../shop.import-export';
 
 import { useRouter } from 'next/router';
 import { cardProps } from '../dbSSprops';
+import { CategoryBaseDocument } from '../../api/models/categoryScema';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   const props = await cardProps(query);
 
   return {
-    props: { json: props },
+    props: JSON.parse(props),
     // will be passed to the page component as props
   };
 };
@@ -29,13 +21,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 export interface propsI {
   totalCount: number;
   card: Array<cardInterface>;
+  category: CategoryBaseDocument;
 }
 
-const SingleCategory: React.FC<{ json: string }> = ({ json }) => {
-  const { totalCount, card }: propsI = JSON.parse(json);
+const SingleCategory: React.FC<propsI> = (props) => {
+  const { totalCount, card, category } = props;
 
   const style: useStylesType = useStyles();
-  const { cart, totalCartPrice } = useSelector((state: RootState) => state.cart);
+  const { cart } = useSelector((state: RootState) => state.cart);
   const limitLocal = 3;
   const [page, setPage] = React.useState(1);
 
@@ -60,10 +53,10 @@ const SingleCategory: React.FC<{ json: string }> = ({ json }) => {
   const addTooCartHendl = React.useCallback((props) => dispatch(addTooCart(props)), []);
 
   const fromeCount = page * limitLocal - limitLocal + 1;
-  const tooCount = fromeCount + card.length - 1;
+  const tooCount = card.length > 0 ? fromeCount + card.length - 1 : 0;
   return (
     <Layuot
-      category={card.length > 0 && card[0].category}
+      category={category.title}
       frome={fromeCount}
       too={tooCount}
       all={count}

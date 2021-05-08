@@ -1,6 +1,6 @@
 import { model, Schema, Document, models, Model } from 'mongoose';
 
-export interface CardScemaInterface extends Document {
+export interface cardInterface {
   _id: string;
   title: string;
   subtitle: string;
@@ -20,6 +20,7 @@ export interface CardScemaInterface extends Document {
     meta_description: string;
   };
 }
+export interface CardScemaInterface extends Document, cardInterface {}
 
 export interface ContactModel extends Model<CardScemaInterface> {}
 const CardScema = new Schema(

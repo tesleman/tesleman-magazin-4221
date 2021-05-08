@@ -1,24 +1,11 @@
+import { CardScemaInterface } from '../api/models/cardScema';
+
 export interface PropsSingleCard {
   message: string;
-  data: singleCard;
+  data: CardScemaInterface;
 }
 
-export interface singleCard {
-  category: string;
-  createdAt: string;
-  description: string;
-  images: Array<string>;
-  price: number;
-  subtitle: string;
-  title: string;
-  detail?: string;
-  slug: string;
-  updatedAt: string;
-  __v: number;
-  _id: string;
-  categoryslug: string;
-  artikul: string;
-}
+export interface singleCard extends CardScemaInterface {}
 
 export interface SingleCategoryI {
   context: string;
@@ -27,6 +14,6 @@ export interface SingleCategoryI {
   cards: {
     pageLenght: number;
     totalCount: number;
-    data: Array<singleCard>;
+    data: Array<CardScemaInterface>;
   };
 }
