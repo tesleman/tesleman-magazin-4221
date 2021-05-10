@@ -29,7 +29,6 @@ class CardController {
         message: 'succes',
         data: card,
       });
-      res.status(400);
     } catch (e) {
       res.status(400).json({
         message: e,

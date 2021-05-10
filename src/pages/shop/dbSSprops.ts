@@ -10,6 +10,7 @@ export const cardProps = async (query) => {
     sort: sortyng(query),
     text: query.q ? { $text: { $search: query.q } } : {},
   };
+
   const category = await Category.findOne({ slug: query.slug });
   const categoryId = (category: CategoryBaseDocument, query) => {
     if (query.slug) {
@@ -32,6 +33,6 @@ export const cardProps = async (query) => {
 };
 
 const sortyng = (query) => {
-  if (query.pricesort) return { price: query.pricesort };
+  if (query.price) return { price: query.price };
   if (query.data) return { createdAt: query.data };
 };

@@ -1,6 +1,6 @@
 import { model, Schema, Document, models, Model } from 'mongoose';
 
-export interface cardInterface {
+export interface CardScemaInterface {
   _id: string;
   title: string;
   subtitle: string;
@@ -20,9 +20,15 @@ export interface cardInterface {
     meta_description: string;
   };
 }
-export interface CardScemaInterface extends Document, cardInterface {}
+export interface cardExtendsInterfaceDocument extends Document {}
 
-export interface ContactModel extends Model<CardScemaInterface> {}
+interface CardScemaInterfaceExtendsInterfaceDocument
+  extends CardScemaInterface,
+    cardExtendsInterfaceDocument {
+  _id: string;
+}
+
+export interface ContactModel extends Model<CardScemaInterfaceExtendsInterfaceDocument> {}
 const CardScema = new Schema(
   {
     title: {
@@ -91,6 +97,7 @@ const CardScema = new Schema(
   },
 );
 CardScema.index({ '$**': 'text' });
-const Card: ContactModel = models.Card || model<CardScemaInterface>('Card', CardScema);
+const Card: ContactModel =
+  models.Card || model<CardScemaInterfaceExtendsInterfaceDocument>('Card', CardScema);
 
 export default Card;

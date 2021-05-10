@@ -8,4 +8,6 @@ category.post(Controller.postCat);
 
 category.get(Controller.getCat);
 
+category.patch(Controller.updateCat);
+
 export default category;

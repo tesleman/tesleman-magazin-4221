@@ -9,6 +9,7 @@ import { apiFetch } from '../../../redux/redux-api/redux-api';
 import { uploatData, cardCreate, CardUpdate } from '../../../utils/fileUploads';
 import { responsIntrfaceInput } from './index.page';
 import { useStyles } from './add.style';
+import { titleCheng } from '../../../utils/slug';
 
 const AddEditCard = ({
   slug = '',
@@ -79,10 +80,6 @@ const AddEditCard = ({
     }
   };
 
-  React.useEffect(() => {
-    titleCheng();
-  }, [togleChecbox]);
-
   const fech = async () => {
     //feching categoryes
     const apiFetchCategoryParams = {
@@ -91,6 +88,9 @@ const AddEditCard = ({
     const category = await apiFetch(apiFetchCategoryParams);
     setCat(category);
   };
+  React.useEffect(() => {
+    titleCheng(togleChecbox, getValues, setValue);
+  }, [togleChecbox]);
   React.useEffect(() => {
     fech();
 
@@ -104,31 +104,6 @@ const AddEditCard = ({
       setStateDefaultValue(defaultValue);
     }
   }, [stateCat]);
-
-  const titleCheng = () => {
-    // slug creator
-    if (!togleChecbox) {
-      // if Checbox is off genereate slug frome slug feald
-      let box = getValues('slug');
-      let slug = slugify(box, {
-        replacement: '_',
-        remove: /[*+~.()'"!:@]/g,
-      });
-      setValue('slug', slug);
-    }
-    if (togleChecbox) {
-      // if Checbox is on genereate slug frome title feald
-      let box = getValues('title');
-      let slug = slugify(box, {
-        replacement: '_',
-        remove: /[*+~.()'"!:@ь]/g,
-        lower: true,
-        locale: 'us',
-      });
-      setValue('slug', slug);
-      setValue('title', box.trim());
-    }
-  };
 
   const checBox = () => {
     setstogleChecbox(!togleChecbox);
@@ -172,7 +147,7 @@ const AddEditCard = ({
                 <label className={style.row_item} htmlFor="title">
                   <input
                     key={124234535}
-                    onChange={titleCheng}
+                    onChange={() => titleCheng(togleChecbox, getValues, setValue)}
                     ref={register}
                     type="text"
                     name="title"
@@ -181,10 +156,16 @@ const AddEditCard = ({
                   title
                 </label>
                 <label className={style.row_item} htmlFor="title">
-                  <input onChange={titleCheng} ref={register} type="text" name="slug" multiple />
+                  <input
+                    onChange={() => titleCheng(togleChecbox, getValues, setValue)}
+                    ref={register}
+                    type="text"
+                    name="slug"
+                    multiple
+                  />
                   <Button
                     onClick={() => {
-                      titleCheng();
+                      titleCheng(togleChecbox, getValues, setValue);
                       checBox();
                     }}
                   >
@@ -192,7 +173,7 @@ const AddEditCard = ({
                   </Button>
                   <input
                     className={style.row_item}
-                    onClick={titleCheng}
+                    onClick={() => titleCheng(togleChecbox, getValues, setValue)}
                     onChange={checBox}
                     name="checkbox"
                     type="checkbox"

@@ -10,6 +10,11 @@ export interface MenueScemaInterface extends Document {
   updatedAt: Date;
   __v: number;
   sort: number;
+  seo: {
+    meta_title: string;
+    meta_keywords: string;
+    meta_description: string;
+  };
 }
 
 const MenueScema = new Schema(
@@ -29,6 +34,17 @@ const MenueScema = new Schema(
     },
     sort: {
       type: Number,
+    },
+    seo: {
+      meta_title: {
+        type: String,
+      },
+      meta_keywords: {
+        type: String,
+      },
+      meta_description: {
+        type: String,
+      },
     },
     subcat: [
       {

@@ -5,28 +5,40 @@ export interface CategoryBaseDocument extends Document {
   title: string;
   meta: string;
   slug: string;
+  sort: number;
+  seo: {
+    meta_title: string;
+    meta_keywords: string;
+    meta_description: string;
+  };
 }
 
 const CategoryScema = new Schema(
   {
     title: {
       type: String,
-
       maxlength: [20, 'Title cannot be more than 20 characters'],
     },
 
     slug: {
       type: String,
-      require: true,
+      require: [true, 'nead  slug'],
       unique: [true, 'nead uniqe slug'],
       maxlength: [20, 'Title cannot be more than 20 characters'],
     },
-    meta: {
-      type: String,
-      maxLenght: [40, 'Title cannot be more than 40 characters'],
-    },
     sort: {
       type: Number,
+    },
+    seo: {
+      meta_title: {
+        type: String,
+      },
+      meta_keywords: {
+        type: String,
+      },
+      meta_description: {
+        type: String,
+      },
     },
   },
   {

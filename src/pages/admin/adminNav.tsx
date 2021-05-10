@@ -15,6 +15,10 @@ const menuItem = [
     slug: 'catalog',
     title: 'Каталог',
   },
+  {
+    slug: 'category',
+    title: 'Категории',
+  },
 ];
 const AdminNav = ({ children }) => {
   return (

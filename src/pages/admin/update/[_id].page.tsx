@@ -4,6 +4,7 @@ import Card from '../../api/models/cardScema';
 import TabPanel from '../add';
 
 import AdminNav from '../adminNav';
+
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   const card = await Card.findOne({ _id: query._id as string });
 

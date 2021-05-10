@@ -1,11 +1,9 @@
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
+import Categoryes from '.';
 import { limitQery } from '../../../utils/ueryCheck';
 import Category from '../../api/models/categoryScema';
 import AdminNav from '../adminNav';
-import Categoryes from '../category';
 
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   const pageOptions = {
@@ -15,20 +13,20 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
   const categories = await Category.find({})
     .skip(pageOptions.page * pageOptions.limit)
     .limit(pageOptions.limit);
-  const orderscountDocuments = await Category.find().countDocuments();
+
+  const count = await Category.find().countDocuments();
   return {
-    props: {
-      categories: JSON.parse(JSON.stringify(categories)),
-      count: orderscountDocuments,
-    },
+    props: { categories: JSON.parse(JSON.stringify(categories)), count },
   };
 };
-const Catalog = ({ categories, count }) => {
+
+const Categorys = ({ categories, count }) => {
+  console.log(categories);
   return (
     <AdminNav>
-      <Categoryes count={count} categories={categories} slug="catalog" />
+      <Categoryes count={count} categories={categories} slug="category" />
     </AdminNav>
   );
 };
 
-export default Catalog;
+export default Categorys;

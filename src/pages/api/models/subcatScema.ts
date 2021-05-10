@@ -1,9 +1,14 @@
 import { model, Schema, Document, models } from 'mongoose';
 
 export interface SubcatScemaInterface extends Document<any> {
+  _id: string;
   title: string;
-  meta: string;
   slug: string;
+  seo: {
+    meta_title: string;
+    meta_keywords: string;
+    meta_description: string;
+  };
 }
 
 const SubcatScema = new Schema(
@@ -16,9 +21,16 @@ const SubcatScema = new Schema(
       type: String,
       unique: [true, 'nead unique slug'],
     },
-    meta: {
-      type: String,
-      maxLenght: [40, 'Title cannot be more than 40 characters'],
+    seo: {
+      meta_title: {
+        type: String,
+      },
+      meta_keywords: {
+        type: String,
+      },
+      meta_description: {
+        type: String,
+      },
     },
   },
   {

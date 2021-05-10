@@ -30,9 +30,17 @@ class Controller {
     try {
       const data = {
         title: req.body.title,
-        meta: req.body.meta ? req.body.meta : '',
         slug: req.body.slug,
         sort: req.body.sort ? req.body.sort : 500,
+        seo: {
+          meta_title: req.body.meta_title || `${req.body.title}, купить в интернет-магазине `,
+          meta_keywords:
+            req.body.meta_keywords ||
+            `${req.body.title}, купить ${req.body.title}, приобрести ${req.body.title}, ${req.body.title} в различных цветах, ${req.body.title} от дистрибьютора`,
+          meta_description:
+            req.body.meta_description ||
+            `${req.body.title}  вы можете купить в нашем магазине "название магазина"`,
+        },
       };
       const categoryCreate = await Category.create(data);
       res.status(200).json({
@@ -40,8 +48,38 @@ class Controller {
         data: categoryCreate,
       });
     } catch (error) {
-      // console.log(error);
+      res.status(301).json({
+        message: 'faild',
+        error: error,
+      });
     }
+  }
+
+  async updateCat(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+    const category = await Category.findOne({ slug: req.body.slug });
+
+    const data = {
+      title: req.body.title || category.title,
+      slug: req.body.slug || category.slug,
+      sort: req.body.sort || category.sort,
+      seo: {
+        meta_title: req.body.meta_title || category.seo.meta_title,
+        meta_keywords: req.body.meta_keywords || category.seo.meta_keywords,
+        meta_description: req.body.meta_description || category.seo.meta_description,
+      },
+    };
+
+    const categoryUpdate = await Category.findByIdAndUpdate(
+      { _id: category._id },
+      { ...data },
+      { new: true },
+    );
+    const respCategUpdeted = await Category.findById({ _id: categoryUpdate._id });
+    console.log(respCategUpdeted);
+    res.status(200).json({
+      message: 'succes',
+      data: respCategUpdeted,
+    });
   }
 }
 
