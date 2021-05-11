@@ -75,7 +75,7 @@ class Controller {
       { new: true },
     );
     const respCategUpdeted = await Category.findById({ _id: categoryUpdate._id });
-    console.log(respCategUpdeted);
+
     res.status(200).json({
       message: 'succes',
       data: respCategUpdeted,

@@ -2,6 +2,7 @@ import React from 'react';
 
 import AdminNav from '../adminNav';
 import TabPanel from '.';
+import { CardScemaInterface } from '../../api/models/cardScema';
 
 export interface responsIntrfaceInput {
   images: Array<string> | FileList;
@@ -14,7 +15,7 @@ export interface responsIntrfaceInput {
   slug: string;
 }
 
-const AddCard = (props) => {
+const AddCard: React.FC<CardScemaInterface> = (props) => {
   return (
     <AdminNav>
       <TabPanel {...props} />

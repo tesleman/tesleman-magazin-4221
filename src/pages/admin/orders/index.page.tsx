@@ -34,7 +34,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
   };
 };
 
-const Orders = ({ orders, ordersCount }) => {
+const Orders: React.FC<{ orders: Array<OrderScemaInterface>; ordersCount: number }> = ({
+  orders,
+  ordersCount,
+}) => {
   const router = useRouter();
 
   const [page, setPage] = React.useState(0);

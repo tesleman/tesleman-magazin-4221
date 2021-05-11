@@ -43,19 +43,17 @@ const Footer: React.FC = () => {
           <h2 className={style.itemTytle}>ABOUT</h2>
           <ul className={style.aboute}>
             <li className={style.abouteLi}>
-              <a href="About_Us">About Us</a>
+              <a href="contacts">Contacts</a>
+            </li>
+
+            <li className={style.abouteLi}>
+              <a href="blog">Blog</a>
             </li>
             <li className={style.abouteLi}>
-              <a href="Shopping_Guide">Shopping Guide</a>
+              <a href="cart">Cart</a>
             </li>
             <li className={style.abouteLi}>
-              <a href="Info">Info</a>
-            </li>
-            <li className={style.abouteLi}>
-              <a href="Polycy">Polycy</a>
-            </li>
-            <li className={style.abouteLi}>
-              <a href="Our_Store">Our Store</a>
+              <a href="shop">Our Store</a>
             </li>
           </ul>
         </Grid>

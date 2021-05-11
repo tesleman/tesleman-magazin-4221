@@ -2,7 +2,11 @@ import React from 'react';
 
 import { useStyles, useStylesType } from './Slider.style';
 
-export const Slide = ({ src, afterChange, beforeChange }) => {
+export const Slide: React.FC<{
+  src: string;
+  afterChange: number;
+  beforeChange: number;
+}> = ({ src, afterChange, beforeChange }) => {
   const style: useStylesType = useStyles();
 
   return (

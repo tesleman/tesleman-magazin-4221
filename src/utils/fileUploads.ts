@@ -1,3 +1,5 @@
+import { responsIntrfaceInput } from '../pages/admin/add/index.page';
+
 const uploatData = async (images: FileList | Array<string>) => {
   const formData = new FormData();
   // appending images to form data
@@ -14,7 +16,7 @@ const uploatData = async (images: FileList | Array<string>) => {
   return await response.json(); // array with image link
 };
 
-const cardCreate = async (data) => {
+const cardCreate = async (data: responsIntrfaceInput) => {
   const cardCreate = await fetch(`${process.env.domein}/api/card`, {
     headers: {
       'Content-Type': 'application/json',

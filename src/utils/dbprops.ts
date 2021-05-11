@@ -1,6 +1,6 @@
-import { limitQery } from '../../utils/ueryCheck';
-import Carda from '../api/models/cardScema';
-import Category, { CategoryBaseDocument } from '../api/models/categoryScema';
+import { limitQery } from './ueryCheck';
+import Carda from '../pages/api/models/cardScema';
+import Category, { CategoryBaseDocument } from '../pages/api/models/categoryScema';
 
 export const cardProps = async (query) => {
   const pageOptions = {

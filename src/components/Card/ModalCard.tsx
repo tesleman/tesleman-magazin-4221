@@ -1,17 +1,20 @@
 import React from 'react';
 import Image from 'next/image';
-import { cardInterface } from '../component-types';
-import { Grid } from '@material-ui/core';
 
-export const ModalCard: React.FC<cardInterface> = ({
+import { Grid } from '@material-ui/core';
+import { CardScemaInterface } from '../../pages/api/models/cardScema';
+import { useStyles } from './card.style';
+
+export const ModalCard: React.FC<CardScemaInterface> = ({
   images,
   title,
   subtitle,
   description,
   category,
-  style,
+
   detail,
 }) => {
+  const style = useStyles();
   return (
     <Grid container direction="row">
       <Grid xs={4}>

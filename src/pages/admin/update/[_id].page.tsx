@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import React from 'react';
-import Card from '../../api/models/cardScema';
+import Card, { CardScemaInterface } from '../../api/models/cardScema';
 import TabPanel from '../add';
 
 import AdminNav from '../adminNav';
@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
     },
   };
 };
-const Update = ({ singleCard }) => {
+const Update: React.FC<{ singleCard: CardScemaInterface }> = ({ singleCard }) => {
   return (
     <AdminNav>
       <TabPanel {...singleCard} />

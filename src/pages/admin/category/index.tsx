@@ -9,12 +9,18 @@ import {
   Table,
   TablePagination,
   Grid,
-  Typography,
+  Button,
 } from '@material-ui/core';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { CardScemaInterface } from '../../api/models/cardScema';
 
-const Categoryes = ({ categories, slug, count }) => {
+const Categoryes: React.FC<{
+  categories: Array<CardScemaInterface>;
+  count: number;
+  slug: string;
+  add_slug: string;
+}> = ({ categories, slug, count, add_slug }) => {
   const router = useRouter();
 
   const [page, setPage] = React.useState(0);
@@ -36,18 +42,20 @@ const Categoryes = ({ categories, slug, count }) => {
     });
     setPage(0);
   };
+  const onClickHeandler = () => {
+    router.push(`${add_slug}`);
+  };
   return (
     <>
-      <Typography style={{ textAlign: 'center' }} variant="h3" component="h2" gutterBottom>
-        Kategory
-      </Typography>
       <Grid container justify="center">
         <Grid item xs={9}>
           <TableContainer component={Paper}>
             <Table size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
-                  <TableCell>title</TableCell>
+                  <TableCell>
+                    <Button onClick={onClickHeandler}>ADD</Button>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

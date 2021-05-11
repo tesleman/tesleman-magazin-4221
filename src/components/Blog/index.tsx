@@ -3,16 +3,17 @@ import React from 'react';
 import Image from 'next/image';
 
 import { useStyles, useStylesType } from './blog.style';
-import { cardInterface } from '../component-types';
-import Link from 'next/link';
 
-const Blog: React.FC<{ cards: Array<cardInterface> }> = ({ cards }) => {
+import Link from 'next/link';
+import { BlogScemaInterface } from '../../pages/api/models/blogScema';
+
+const Blog: React.FC<{ blogs: Array<BlogScemaInterface> }> = ({ blogs }) => {
   const style: useStylesType = useStyles();
   return (
     <div className={style.rootroot}>
       <Container>
-        {cards.map((item: cardInterface, index: number) => (
-          <BlogItem key={item._id} cards={item} index={index} />
+        {blogs.map((item: BlogScemaInterface, index: number) => (
+          <BlogItem key={item._id} blog={item} index={index} />
         ))}
       </Container>
     </div>
@@ -21,7 +22,10 @@ const Blog: React.FC<{ cards: Array<cardInterface> }> = ({ cards }) => {
 
 export default Blog;
 
-export const BlogItem: React.FC<{ cards: any; index: number }> = ({ cards, index }) => {
+export const BlogItem: React.FC<{ blog: BlogScemaInterface; index: number }> = ({
+  blog,
+  index,
+}) => {
   const style: useStylesType = useStyles();
   return (
     <Grid
@@ -36,7 +40,7 @@ export const BlogItem: React.FC<{ cards: any; index: number }> = ({ cards, index
     >
       <Grid className={style.root} item md={4} xs={12}>
         <Image
-          src={cards.images.length > 0 ? cards.images[0] : '/img_no_found.jpg'}
+          src={blog.images.length > 0 ? blog.images[0] : '/img_no_found.jpg'}
           alt="Picture of the author"
           width={480}
           height={350}
@@ -62,7 +66,7 @@ export const BlogItem: React.FC<{ cards: any; index: number }> = ({ cards, index
           feugiat. Aenean magna enim, scelerisque quis augue vulputate, accumsan pharetra diam. Sed
           vehicula nibh quis mi venenatis scelerisque. Nullam...
         </p>
-        <Link href={`/blog/${cards._id}`}>
+        <Link href={`/blog/${blog._id}`}>
           <a>
             <Button color="default" className={style.button}>
               More...

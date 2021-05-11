@@ -3,6 +3,7 @@ import connect from './core/connect';
 import cookie from 'cookie';
 import { UserScemaInterface } from './models/userScema';
 import { passport } from './core/passport';
+
 const login = connect();
 interface NextApiRequestExtendes extends NextApiRequest {
   user: { user: UserScemaInterface; token: string };

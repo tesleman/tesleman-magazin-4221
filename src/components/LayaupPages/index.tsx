@@ -9,16 +9,28 @@ import { useRouter } from 'next/router';
 
 import Filters from './Filters';
 
-const Layuot = (props) => {
+interface propsLayuotinterface {
+  breadcrumbsCard: string;
+  children: JSX.Element;
+  src: string;
+  category: string;
+  baseCategory: { category: string; link: string };
+  frome: number;
+  too: number;
+  all: number;
+  filte: boolean;
+}
+
+const Layuot: React.FC<propsLayuotinterface> = (props) => {
   const {
     breadcrumbsCard = '',
     children,
     src = '/shop-1.jpg',
     category = '',
     baseCategory = { category: '', link: '' },
-    frome = '1',
-    too = '3',
-    all = '3',
+    frome = 1,
+    too = 3,
+    all = 3,
     filte = false,
   } = props;
   const style: useStylesType = useStyles();

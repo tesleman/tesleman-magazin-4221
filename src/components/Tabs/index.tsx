@@ -1,17 +1,18 @@
 import { Paper, Tab, Tabs, Container, Grid } from '@material-ui/core';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { CardScemaInterface } from '../../pages/api/models/cardScema';
 
 import { Card } from '../Card';
-import { cardInterface, categoryI, TabsCentrType } from '../component-types';
+import { categoryI, TabsCentrType } from '../component-types';
 import { apiFechInterface, AppDispatch, getCard, RootState } from '../import-export';
 import { useStyles, useStylesType } from './tabs.style';
 
 const TabsCentr: React.FC<{
-  addTooCartHendl: (payload: cardInterface) => void;
+  addTooCartHendl: (payload: CardScemaInterface) => void;
   categorys: Array<categoryI>;
-  cards: Array<cardInterface>;
-  cart: Array<cardInterface>;
+  cards: Array<CardScemaInterface>;
+  cart: Array<CardScemaInterface>;
 }> = ({ categorys, cards, addTooCartHendl, cart }) => {
   const style: useStylesType = useStyles();
   const [category, seCategory] = React.useState(categorys[0]?.title);
@@ -53,10 +54,10 @@ const TabsCentr: React.FC<{
       <Container>
         <Grid container justify="center" direction="row">
           {entities && categorys[0]?.title !== category
-            ? entities.map((e: cardInterface) => (
+            ? entities.map((e: CardScemaInterface) => (
                 <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />
               ))
-            : cards.map((e: cardInterface) => (
+            : cards.map((e: CardScemaInterface) => (
                 <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />
               ))}
         </Grid>

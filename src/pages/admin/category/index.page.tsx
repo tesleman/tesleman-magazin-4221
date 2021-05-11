@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next';
 import React from 'react';
 import Categoryes from '.';
 import { limitQery } from '../../../utils/ueryCheck';
+import { CardScemaInterface } from '../../api/models/cardScema';
 import Category from '../../api/models/categoryScema';
 import AdminNav from '../adminNav';
 
@@ -20,11 +21,19 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
   };
 };
 
-const Categorys = ({ categories, count }) => {
+const Categorys: React.FC<{ categories: Array<CardScemaInterface>; count: number }> = ({
+  categories,
+  count,
+}) => {
   console.log(categories);
   return (
     <AdminNav>
-      <Categoryes count={count} categories={categories} slug="category" />
+      <Categoryes
+        count={count}
+        categories={categories}
+        slug="category"
+        add_slug="category/add_category"
+      />
     </AdminNav>
   );
 };

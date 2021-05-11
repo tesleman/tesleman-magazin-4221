@@ -2,7 +2,11 @@ import { Grid } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import React from 'react';
 
-const Pagin = ({ handleChange, page, count }) => {
+const Pagin: React.FC<{ handleChange: () => void; page: number; count: number }> = ({
+  handleChange,
+  page,
+  count,
+}) => {
   return (
     <div>
       <Grid container direction="row" justify="center" alignContent="center">

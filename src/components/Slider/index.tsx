@@ -31,11 +31,11 @@ const Slidere = () => {
     slidesToScroll: 1,
     dotsClass: `slick-dots ${style.dots}`,
     lazyLoad: progressive,
-    afterChange: (current) => {
+    afterChange: (current: number) => {
       setBeforeChange(current);
     },
 
-    beforeChange: (current, next) => setAfterChange(next),
+    beforeChange: (current: number, next: number) => setAfterChange(next),
   };
   return (
     <Slider {...settings}>

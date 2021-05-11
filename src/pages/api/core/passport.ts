@@ -4,6 +4,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { User, UserScemaInterface } from '../models/userScema';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
+import { NextApiRequest } from 'next';
 
 interface UserScemaInterfaceExtends {
   user: UserScemaInterface;
@@ -66,7 +67,7 @@ passport.serializeUser(function (user: UserScemaInterface, done) {
   done(null, user._id);
 });
 
-passport.deserializeUser(async (req, id, done) => {
+passport.deserializeUser(async (req: NextApiRequest, id: string, done: any) => {
   // deserialize the username back into user object
   const user = await User.findById(id);
   done(null, user);

@@ -6,8 +6,9 @@ import { useStyles, useStylesType } from '../styles/shop.style';
 import { Card, Pagin, addTooCart, RootState, Layuot, cardInterface } from '../shop.import-export';
 
 import { useRouter } from 'next/router';
-import { cardProps } from '../dbSSprops';
+import { cardProps } from '../../../utils/dbprops';
 import { CategoryBaseDocument } from '../../api/models/categoryScema';
+import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   const props = await cardProps(query);
@@ -25,6 +26,7 @@ export interface propsI {
 }
 
 const SingleCategory: React.FC<propsI> = (props) => {
+  console.log(props);
   const { totalCount, card, category } = props;
 
   const style: useStylesType = useStyles();
@@ -63,6 +65,11 @@ const SingleCategory: React.FC<propsI> = (props) => {
       filte
       baseCategory={{ category: 'Shop', link: '/shop' }}
     >
+      <Head>
+        <title>{category.seo.meta_title}</title>.
+        <meta name="description" content={category.seo.meta_description} />
+        <meta name="keywords" content={category.seo.meta_keywords} />
+      </Head>
       <Grid container direction="row">
         {card.map((e) => (
           <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />

@@ -1,5 +1,5 @@
 import slugify from 'slugify';
-export const titleCheng = (togleChecbox, getValues, setValue) => {
+export const titleCheng = (togleChecbox: boolean, getValues: any, setValue: any) => {
   // slug creator
   if (!togleChecbox) {
     // if Checbox is off genereate slug frome slug feald

@@ -3,15 +3,16 @@ import { Button, FormControl, FormHelperText, Grid, NativeSelect, Paper } from '
 import { useRouter } from 'next/router';
 
 import { useForm } from 'react-hook-form';
-import slugify from 'slugify';
+
 import Image from 'next/image';
 import { apiFetch } from '../../../redux/redux-api/redux-api';
 import { uploatData, cardCreate, CardUpdate } from '../../../utils/fileUploads';
 import { responsIntrfaceInput } from './index.page';
 import { useStyles } from './add.style';
 import { titleCheng } from '../../../utils/slug';
+import { CardScemaInterface } from '../../api/models/cardScema';
 
-const AddEditCard = ({
+const AddEditCard: React.FC<CardScemaInterface> = ({
   slug = '',
   title = '',
   category = '',
@@ -58,7 +59,7 @@ const AddEditCard = ({
         const images = await uploatData(temporaryImg);
         data.images = images;
         const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, data });
-        console.log(update);
+
         if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug)
           setstateError(cardCreateWithoutImg.message.keyValue);
       }
@@ -122,7 +123,7 @@ const AddEditCard = ({
     return slug.findIndex((e) => e.slug === categoryslug);
   };
 
-  const hendleDelleteImage = (elem: number) => {
+  const hendleDelleteImage = (elem: string) => {
     setLocalImages((prevState) => prevState.filter((e) => e !== elem));
   };
   return (

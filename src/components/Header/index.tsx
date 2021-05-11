@@ -44,17 +44,6 @@ const Header: React.FC<{ category: Array<props>; menue: Array<menueI> }> = ({
                       <Button className={style.button}>{el.title}</Button>
                     </a>
                   </Link>
-                  {el.subcat && (
-                    <ul className={style.navulliul}>
-                      {el.subcat.map((elem) => (
-                        <li key={elem._id} className={style.li}>
-                          <Link href={`${elem.slug}`}>
-                            <a>{elem.title}</a>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                 </li>
               ))}
           </ul>

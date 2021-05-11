@@ -15,14 +15,13 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   ulRoot: {
     zIndex: 555,
-    cursor: 'pointer',
+
     margin: 0,
     padding: 0,
     display: 'flex',
     justifyContent: 'center',
     justifyItems: 'center',
     flexDirection: 'row',
-    background: 'white',
   },
   ulli: {
     position: 'relative',

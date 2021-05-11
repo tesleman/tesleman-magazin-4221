@@ -10,7 +10,19 @@ const schema = yup.object().shape({
   slug: yup.string().required('Pusto'),
 });
 
-const CategoryForm = ({
+interface propInterface {
+  seo?: {
+    meta_description?: string;
+    meta_keywords?: string;
+    meta_title?: string;
+  };
+  slug?: string;
+  sort?: string;
+  title?: string;
+  _id?: string;
+}
+
+const CategoryForm: React.FC<propInterface> = ({
   seo = { meta_description: '', meta_keywords: '', meta_title: '' },
 
   slug = '',

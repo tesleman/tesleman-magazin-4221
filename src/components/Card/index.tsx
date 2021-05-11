@@ -84,7 +84,7 @@ export const Card: React.FC<{
       >
         {
           <div className={style.modal}>
-            <ModalCard {...card} style={style} />
+            <ModalCard {...card} />
           </div>
         }
       </Modal>

@@ -10,10 +10,12 @@ import {
   TablePagination,
   Grid,
   Typography,
+  FormControlLabel,
+  Switch,
 } from '@material-ui/core';
 import Link from 'next/link';
 import React from 'react';
-import Card from '../../api/models/cardScema';
+import Card, { CardScemaInterface } from '../../api/models/cardScema';
 import AdminNav from '../adminNav';
 import { useRouter } from 'next/router';
 import { limitQery } from '../../../utils/ueryCheck';
@@ -32,42 +34,48 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
     artikul: query.artikul || '',
     categoryId: currentCategory._id,
     categoryslug: query.slug as string,
+    all: query.all,
   };
 
   const qeryFunck = (pageOptions) => {
+    if (pageOptions.all === 'true') {
+      return {};
+    }
     if (!pageOptions.title && !pageOptions.artikul) {
-      return [{ categoryId: pageOptions.categoryId }];
+      return { $and: [{ categoryId: pageOptions.categoryId }] };
     }
     if (!pageOptions.title && pageOptions.artikul) {
-      return [
-        { categoryId: pageOptions.categoryId as string },
-        { artikul: pageOptions.artikul as string },
-      ];
+      return {
+        $and: [
+          { categoryId: pageOptions.categoryId as string },
+          { artikul: pageOptions.artikul as string },
+        ],
+      };
     }
     if (pageOptions.title && !pageOptions.artikul) {
-      return [
-        { categoryId: pageOptions.categoryId as string },
-        { title: { $regex: pageOptions.title } },
-      ];
+      return {
+        $and: [
+          { categoryId: pageOptions.categoryId as string },
+          { title: { $regex: pageOptions.title } },
+        ],
+      };
     }
     if (pageOptions.title && pageOptions.artikul) {
-      return [
-        { categoryId: pageOptions.categoryId as string },
-        { title: { $regex: pageOptions.title } },
-        { artikul: pageOptions.artikul as string },
-      ];
+      return {
+        $and: [
+          { categoryId: pageOptions.categoryId as string },
+          { title: { $regex: pageOptions.title } },
+          { artikul: pageOptions.artikul as string },
+        ],
+      };
     }
   };
 
-  const cardBiCategory = await Card.find({
-    $and: qeryFunck(pageOptions),
-  })
+  const cardBiCategory = await Card.find(qeryFunck(pageOptions))
     .skip(pageOptions.page * pageOptions.limit)
     .limit(pageOptions.limit);
 
-  const orderscountDocuments = await Card.find({
-    $and: qeryFunck(pageOptions),
-  }).countDocuments();
+  const orderscountDocuments = await Card.find(qeryFunck(pageOptions)).countDocuments();
 
   return {
     props: {
@@ -77,10 +85,14 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
   };
 };
 
-function CatalogSlug({ cards, ordersCount }) {
+const CatalogSlug: React.FC<{ cards: Array<CardScemaInterface>; ordersCount: number }> = ({
+  cards,
+  ordersCount,
+}) => {
   const router = useRouter();
   const { register, handleSubmit } = useForm();
   const [page, setPage] = React.useState(0);
+  const [chece, setChece] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
@@ -122,6 +134,19 @@ function CatalogSlug({ cards, ordersCount }) {
     });
   };
 
+  const setCheceHEandlerChange = () => {
+    setChece((prevState) => (prevState = !prevState));
+    router.push({
+      pathname: '/admin/catalog/[slug]',
+      query: {
+        all: !chece,
+        slug: router.query.slug,
+        count: rowsPerPage,
+        page: page,
+      },
+    });
+  };
+
   return (
     <AdminNav>
       <Typography style={{ textAlign: 'center' }} variant="h3" component="h2" gutterBottom>
@@ -139,6 +164,13 @@ function CatalogSlug({ cards, ordersCount }) {
               <input ref={register} type="text" name="artikul" multiple />
               Artikul
             </label>
+            <FormControlLabel
+              onChange={setCheceHEandlerChange}
+              label="All"
+              labelPlacement="end"
+              value={chece}
+              control={<Switch color="primary" />}
+            />
           </Grid>
           <button style={{ width: '10%' }} type="submit">
             submit
@@ -183,6 +215,6 @@ function CatalogSlug({ cards, ordersCount }) {
       </Grid>
     </AdminNav>
   );
-}
+};
 
 export default CatalogSlug;

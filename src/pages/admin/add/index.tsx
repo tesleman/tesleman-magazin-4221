@@ -1,9 +1,11 @@
 import { Paper, Tab, Tabs } from '@material-ui/core';
 import React from 'react';
+import { CardScemaInterface } from '../../api/models/cardScema';
 import AddEditCard from './AddEditCard';
 import SeoTab from './seoTab';
 
-const TabPanel = (props) => {
+const TabPanel: React.FC<CardScemaInterface> = (props) => {
+  console.log(props);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -23,9 +25,6 @@ const TabPanel = (props) => {
     }
   };
 
-  React.useEffect(() => {
-    console.log(value);
-  }, [value]);
   return (
     <Paper>
       <Tabs

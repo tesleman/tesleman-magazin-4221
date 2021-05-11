@@ -1,7 +1,7 @@
 import React from 'react';
-import { GetServerSideProps, NextApiRequest, NextApiResponse } from 'next';
+import { GetServerSideProps } from 'next';
 import { useSelector, useDispatch } from 'react-redux';
-
+import Head from 'next/head';
 import { Grid } from '@material-ui/core';
 import { useStyles, useStylesType } from './styles/shop.style';
 
@@ -12,7 +12,7 @@ import { addTooCart } from '../../redux/slicers/cartSlicer';
 import Pagin from '../../components/Pagination';
 
 import { useRouter } from 'next/router';
-import { cardProps } from './dbSSprops';
+import { cardProps } from '../../utils/dbprops';
 import { Layuot } from './shop.import-export';
 import { propsI } from './[slug]/index.page';
 
@@ -61,6 +61,11 @@ const Shpo: React.FC<{ json: string }> = ({ json }) => {
       all={totalCounts}
       baseCategory={{ category: 'Shop', link: '/shop' }}
     >
+      <Head>
+        <title>Shop</title>.
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+      </Head>
       <Grid container direction="row">
         {card.map((e) => (
           <Card

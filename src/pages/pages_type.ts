@@ -1,5 +1,3 @@
-import { Control } from 'react-hook-form';
-
 export interface formUserdataI {
   email: string;
   phone: string;

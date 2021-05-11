@@ -8,10 +8,6 @@ const menuItem = [
     title: 'Заказы',
   },
   {
-    slug: 'add',
-    title: 'Добавить крту товара',
-  },
-  {
     slug: 'catalog',
     title: 'Каталог',
   },

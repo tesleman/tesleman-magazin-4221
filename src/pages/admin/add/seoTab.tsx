@@ -11,7 +11,7 @@ interface formInterface {
   meta_description: string;
 }
 
-const SeoTab = ({ _id, seo }) => {
+const SeoTab: React.FC<{ _id: string; seo: formInterface }> = ({ _id, seo }) => {
   const { meta_title, meta_keywords, meta_description } = seo;
   const router = useRouter();
   const style = useStyles();

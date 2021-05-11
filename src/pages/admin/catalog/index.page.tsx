@@ -1,8 +1,7 @@
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { limitQery } from '../../../utils/ueryCheck';
+import { CardScemaInterface } from '../../api/models/cardScema';
 import Category from '../../api/models/categoryScema';
 import AdminNav from '../adminNav';
 import Categoryes from '../category';
@@ -23,10 +22,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
     },
   };
 };
-const Catalog = ({ categories, count }) => {
+const Catalog: React.FC<{ categories: Array<CardScemaInterface>; count: number }> = ({
+  categories,
+  count,
+}) => {
   return (
     <AdminNav>
-      <Categoryes count={count} categories={categories} slug="catalog" />
+      <Categoryes count={count} categories={categories} slug="catalog" add_slug="add" />
     </AdminNav>
   );
 };

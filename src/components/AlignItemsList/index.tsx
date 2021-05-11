@@ -96,14 +96,6 @@ export const ListCartItem = ({ elem, plusHendl, minusHendl, removeHendl }) => {
               </Typography>
 
               <br />
-              {/* <Typography
-              component="span"
-              variant="body2"
-              className={style.inline}
-              color="textPrimary">
-              {elem.description}
-            </Typography> */}
-              <br />
 
               <Typography
                 component="span"
@@ -111,7 +103,7 @@ export const ListCartItem = ({ elem, plusHendl, minusHendl, removeHendl }) => {
                 className={style.inline}
                 color="secondary"
               >
-                {elem.totalPrice} $
+                <span style={{ whiteSpace: 'nowrap' }}>{`${elem.totalPrice} $`}</span>
               </Typography>
             </React.Fragment>
           }

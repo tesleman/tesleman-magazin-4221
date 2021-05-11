@@ -1,26 +1,4 @@
 import { cartInterface } from '../redux/slicers/cartSlicer';
-import { useStylesType } from './Card/card.style';
-
-// export interface cardInterface {
-//   category: string;
-//   createdAt: string;
-//   description: string;
-//   images: Array<string>;
-//   price: number;
-//   subtitle: string;
-//   title: string;
-//   categoryslug: string;
-//   detail?: string;
-//   slug: string;
-//   meta?: string;
-//   updatedAt: string;
-//   __v: number;
-//   _id: string;
-//   style?: useStylesType;
-//   count?: number;
-//   artikul: string;
-//   sale?: boolean;
-// }
 
 export interface AlignItemsListInterface {
   hendlSetAlignItemsList: () => void;

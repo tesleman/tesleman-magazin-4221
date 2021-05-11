@@ -1,14 +1,15 @@
 import { Container, Grid } from '@material-ui/core';
 import moment from 'moment';
 import React from 'react';
+import { CardScemaInterface } from '../../pages/api/models/cardScema';
 import { Card } from '../Card';
-import { cardInterface } from '../component-types';
+
 import { useStyles, useStylesType } from './countdown.style';
 
 const CountDown: React.FC<{
-  card: cardInterface;
-  cart: Array<cardInterface>;
-  addTooCartHendl: (payload: cardInterface) => void;
+  card: CardScemaInterface;
+  cart: Array<CardScemaInterface>;
+  addTooCartHendl: (payload: CardScemaInterface) => void;
 }> = ({ card, addTooCartHendl, cart }) => {
   const style: useStylesType = useStyles();
 

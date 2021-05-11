@@ -1,7 +1,7 @@
 import { useMediaQuery } from '@material-ui/core';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { cardInterface, categoryI } from '../components/component-types';
+import { categoryI } from '../components/component-types';
 import {
   CountDown,
   Blog,
@@ -11,11 +11,11 @@ import {
   addTooCart,
   RootState,
 } from '../components/import-export';
-
 import theme from '../theme';
 import Blogs from './api/models/blogScema';
 import Card, { CardScemaInterface } from './api/models/cardScema';
 import Category, { CategoryBaseDocument } from './api/models/categoryScema';
+import { cardInterface } from './shop/shop.import-export';
 
 interface propFcI {
   category: categoryI[];
@@ -38,7 +38,7 @@ const Home: React.FC<propFcI> = ({ category, cards, blogs, saleContdovnItem }) =
       {!matches && (
         <CountDown addTooCartHendl={addTooCartHendl} cart={cart} card={saleContdovnItem[0]} />
       )}
-      <Blog cards={blogs} />
+      <Blog blogs={blogs} />
       <Advantages />
     </div>
   );

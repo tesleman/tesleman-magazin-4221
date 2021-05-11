@@ -17,6 +17,7 @@ import FinailStage from './FinailStage';
 import CartStepperItem from './CartStepperItem';
 import StepperForm from './StepperForm';
 import { clearCart } from '../../redux/slicers/cartSlicer';
+import Head from 'next/head';
 
 const schema = yup.object().shape({
   email: yup.string().email('NoEmail').required('Pusto'),
@@ -163,6 +164,11 @@ function HorizontalLabelPositionBelowStepper() {
 
   return (
     <div className={style.root}>
+      <Head>
+        <title>Cart</title>.
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+      </Head>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
