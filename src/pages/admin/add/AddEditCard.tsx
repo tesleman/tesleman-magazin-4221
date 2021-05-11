@@ -13,6 +13,7 @@ import { titleCheng } from '../../../utils/slug';
 import { CardScemaInterface } from '../../api/models/cardScema';
 
 const AddEditCard: React.FC<CardScemaInterface> = ({
+  active = true,
   slug = '',
   title = '',
   category = '',
@@ -27,6 +28,7 @@ const AddEditCard: React.FC<CardScemaInterface> = ({
 }) => {
   const { register, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
+      active,
       slug,
       title,
       category,
@@ -54,27 +56,34 @@ const AddEditCard: React.FC<CardScemaInterface> = ({
         const temporaryImg = data.images;
         data.images = [];
         // posting card  with image to DB
+        if (!data.categoryslug) {
+          data.categoryslug = stateCat[0].slug;
+        }
         const cardCreateWithoutImg = await cardCreate(data);
+        if (temporaryImg.length > 0) {
+          const images = await uploatData(temporaryImg);
+          data.images = images;
+        }
 
-        const images = await uploatData(temporaryImg);
-        data.images = images;
-        const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, data });
-
+        // const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, data });
+        console.log(cardCreateWithoutImg, 11);
         if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug)
           setstateError(cardCreateWithoutImg.message.keyValue);
       }
-      const temporaryImg = data.images;
-      if (temporaryImg.length > 0) {
-        const imagesUploda = await uploatData(temporaryImg);
-        setLocalImages((prevImg) => [...prevImg, ...imagesUploda]);
-        data.images = [...stateLocalImages, ...imagesUploda];
-      }
-      if (temporaryImg.length <= 0) {
-        data.images = [...stateLocalImages];
-      }
+      if (_id) {
+        const temporaryImg = data.images;
+        if (temporaryImg.length > 0) {
+          const imagesUploda = await uploatData(temporaryImg);
+          setLocalImages((prevImg) => [...prevImg, ...imagesUploda]);
+          data.images = [...stateLocalImages, ...imagesUploda];
+        }
+        if (temporaryImg.length <= 0) {
+          data.images = [...stateLocalImages];
+        }
 
-      await CardUpdate({ _id, data });
-
+        const ss = await CardUpdate({ _id, data });
+        console.log(ss, 22);
+      }
       // e.target.reset();
     } catch (err) {
       console.log(err);
@@ -99,9 +108,12 @@ const AddEditCard: React.FC<CardScemaInterface> = ({
   }, []);
 
   React.useEffect(() => {
-    const defaultValue = selectedValuseDefault(stateCat, categoryslug, _id);
+    let defaultValue;
 
-    if (defaultValue >= 0) {
+    if (_id) {
+      defaultValue = selectedValuseDefault(stateCat, categoryslug);
+    }
+    if (defaultValue !== undefined) {
       setStateDefaultValue(defaultValue);
     }
   }, [stateCat]);
@@ -116,10 +128,7 @@ const AddEditCard: React.FC<CardScemaInterface> = ({
     setValue('categoryslug', stateCat[+event.target.value].slug);
   };
 
-  const selectedValuseDefault = (slug: any[], categoryslug: string, _id: string) => {
-    if (!_id) {
-      return;
-    }
+  const selectedValuseDefault = (slug: any[], categoryslug: string) => {
     return slug.findIndex((e) => e.slug === categoryslug);
   };
 
@@ -145,6 +154,10 @@ const AddEditCard: React.FC<CardScemaInterface> = ({
                 container
                 direction="column"
               >
+                <label className={style.row_item} htmlFor="title">
+                  <input name="active" ref={register} type="checkbox" />
+                  active
+                </label>
                 <label className={style.row_item} htmlFor="title">
                   <input
                     key={124234535}

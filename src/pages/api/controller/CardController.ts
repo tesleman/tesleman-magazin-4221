@@ -1,19 +1,23 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Card from '../models/cardScema';
+import Category from '../models/categoryScema';
 class CardController {
   async postCard(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     try {
+      const category = await Category.findOne({ slug: req.body.categoryslug });
       const cardSpred = {
+        active: req.body.active || true,
         title: req.body.title,
         subtitle: req.body.subtitle,
         description: req.body.description,
-        category: req.body.category,
+        category: req.body.category || category.title,
         images: req.body.images || [],
         slug: req.body.slug,
         artikul: req.body.artikul,
         detail: req.body.detail,
         categoryslug: req.body.categoryslug,
         price: req.body.price || 0,
+        categoryId: category._id,
         seo: {
           meta_title: req.body.meta_title || `${req.body.title}, купить в интернет-магазине `,
           meta_keywords:
@@ -24,10 +28,12 @@ class CardController {
             `${req.body.title}  вы можете купить в нашем магазине "название магазина"`,
         },
       };
+      console.log(cardSpred);
       const card = await Card.create(cardSpred);
+      console.log(card);
       res.status(200).json({
         message: 'succes',
-        data: card,
+        data: 'card',
       });
     } catch (e) {
       res.status(400).json({
@@ -44,8 +50,12 @@ class CardController {
         limit: parseInt(req.query.limit as string, 10) || 10,
         categoryId: req.query.categoryId ? { categoryId: req.query.categoryId.toString() } : {},
       };
-      const numberOfCards = await Card.find(pageOptions.categoryId).countDocuments();
-      let card = await Card.find(pageOptions.categoryId)
+      const numberOfCards = await Card.find({
+        $and: [pageOptions.categoryId, { active: true }],
+      }).countDocuments();
+      let card = await Card.find({
+        $and: [pageOptions.categoryId, { active: true }],
+      })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
 
@@ -66,6 +76,7 @@ class CardController {
       const cardId = req.body._id;
       const card = await Card.findById({ _id: req.body._id });
       const cardUpdate = {
+        active: req.body.active || card.active,
         slug: req.body.slug || card.slug,
         title: req.body.title || card.title,
         category: req.body.category || card.category,
@@ -84,6 +95,7 @@ class CardController {
       };
 
       const updateCardBiId = await Card.findByIdAndUpdate(cardId, { ...cardUpdate }, { new: true });
+
       res.status(200).json({
         message: 'succes',
         data: updateCardBiId,

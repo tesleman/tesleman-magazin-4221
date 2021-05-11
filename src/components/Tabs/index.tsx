@@ -30,7 +30,7 @@ const TabsCentr: React.FC<{
       table: 'card',
       all: true,
     };
-
+    console.log(payload);
     dispatch(getCard(payload));
   }, [category, dispatch]);
   return (
@@ -53,13 +53,10 @@ const TabsCentr: React.FC<{
       </Paper>
       <Container>
         <Grid container justify="center" direction="row">
-          {entities && categorys[0]?.title !== category
-            ? entities.map((e: CardScemaInterface) => (
-                <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />
-              ))
-            : cards.map((e: CardScemaInterface) => (
-                <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />
-              ))}
+          {entities &&
+            entities.map((e: CardScemaInterface) => (
+              <Card cart={cart} key={e._id} card={e} addTooCartHendl={addTooCartHendl} />
+            ))}
         </Grid>
       </Container>
     </div>

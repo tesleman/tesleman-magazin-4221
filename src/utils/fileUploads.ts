@@ -9,7 +9,7 @@ const uploatData = async (images: FileList | Array<string>) => {
 
   const response = await fetch(`${process.env.domein}/api/file`, {
     body: formData,
-    credentials: 'omit',
+    credentials: 'include',
     method: 'post',
   }); // posting file to file system
 
@@ -21,7 +21,7 @@ const cardCreate = async (data: responsIntrfaceInput) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'omit',
+    credentials: 'include',
     body: JSON.stringify(data),
     method: 'post',
   });

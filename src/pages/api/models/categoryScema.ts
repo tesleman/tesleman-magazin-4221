@@ -6,6 +6,7 @@ export interface CategoryBaseDocument extends Document {
   meta: string;
   slug: string;
   sort: number;
+  active: boolean;
   seo: {
     meta_title: string;
     meta_keywords: string;
@@ -15,6 +16,9 @@ export interface CategoryBaseDocument extends Document {
 
 const CategoryScema = new Schema(
   {
+    active: {
+      type: Boolean,
+    },
     title: {
       type: String,
       maxlength: [20, 'Title cannot be more than 20 characters'],

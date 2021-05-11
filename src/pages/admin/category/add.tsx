@@ -11,6 +11,7 @@ const schema = yup.object().shape({
 });
 
 interface propInterface {
+  active?: boolean;
   seo?: {
     meta_description?: string;
     meta_keywords?: string;
@@ -22,9 +23,20 @@ interface propInterface {
   _id?: string;
 }
 
-const CategoryForm: React.FC<propInterface> = ({
-  seo = { meta_description: '', meta_keywords: '', meta_title: '' },
+interface dataInterface {
+  active?: boolean;
+  meta_description?: string;
+  meta_keywords?: string;
+  meta_title?: string;
+  slug?: string;
+  sort?: string;
+  title?: string;
+  _id?: string;
+}
 
+const CategoryForm: React.FC<propInterface> = ({
+  active = true,
+  seo = { meta_description: '', meta_keywords: '', meta_title: '' },
   slug = '',
   sort = '',
   title = '',
@@ -38,6 +50,7 @@ const CategoryForm: React.FC<propInterface> = ({
     reValidateMode: 'onChange',
     resolver: yupResolver(schema),
     defaultValues: {
+      active,
       meta_description,
       meta_keywords,
       meta_title,
@@ -46,6 +59,7 @@ const CategoryForm: React.FC<propInterface> = ({
       title,
     },
   });
+
   const [togleChecbox, setstogleChecbox] = React.useState(false);
 
   const [error, setError] = React.useState(null);
@@ -56,7 +70,7 @@ const CategoryForm: React.FC<propInterface> = ({
     titleCheng(togleChecbox, getValues, setValue);
   }, [togleChecbox]);
 
-  const onSubmitFeachHeandlwer = async (data) => {
+  const onSubmitFeachHeandlwer = async (data: dataInterface) => {
     const fehData = await fetch(`${process.env.domein}/api/category`, {
       headers: {
         'Content-Type': 'application/json',
@@ -70,7 +84,7 @@ const CategoryForm: React.FC<propInterface> = ({
       setError(error.error);
     }
   };
-  const handlesubmitForm = (data) => {
+  const handlesubmitForm = (data: dataInterface) => {
     onSubmitFeachHeandlwer(data);
   };
 
@@ -78,6 +92,12 @@ const CategoryForm: React.FC<propInterface> = ({
     <div>
       <form onSubmit={handleSubmit(handlesubmitForm)} action="">
         <Grid container alignItems="flex-start" alignContent="center" direction="column">
+          <Grid item xs={6}>
+            <label htmlFor="active">
+              <input style={{ margin: 7 }} ref={register} name="active" type="checkbox" />
+              title
+            </label>
+          </Grid>
           <Grid item xs={6}>
             <label htmlFor="title">
               <input

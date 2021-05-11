@@ -58,7 +58,9 @@ export async function getServerSideProps(): Promise<propsI> {
   try {
     const categorys: CategoryBaseDocument[] = await Category.find().limit(3).exec();
     const blogItem = await Blogs.find().limit(3).exec();
-    const cardsApiFetch: CardScemaInterface[] = await Card.find({ categoryId: categorys[0]._id });
+    const cardsApiFetch: CardScemaInterface[] = await Card.find({
+      $and: [{ categoryId: categorys[0]._id }, { active: true }],
+    }).limit(3);
     const saleItem = await Card.find({ sale: true });
 
     return {

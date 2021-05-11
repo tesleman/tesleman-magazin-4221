@@ -32,6 +32,7 @@ class Controller {
         title: req.body.title,
         slug: req.body.slug,
         sort: req.body.sort ? req.body.sort : 500,
+        active: req.body.active || true,
         seo: {
           meta_title: req.body.meta_title || `${req.body.title}, купить в интернет-магазине `,
           meta_keywords:
@@ -59,6 +60,7 @@ class Controller {
     const category = await Category.findOne({ slug: req.body.slug });
 
     const data = {
+      active: req.body.active || category.active,
       title: req.body.title || category.title,
       slug: req.body.slug || category.slug,
       sort: req.body.sort || category.sort,

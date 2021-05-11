@@ -14,6 +14,7 @@ export interface CardScemaInterface {
   categoryslug: string;
   categoryId: string;
   sale: boolean;
+  active: boolean;
   seo: {
     meta_title: string;
     meta_keywords: string;
@@ -31,6 +32,10 @@ interface CardScemaInterfaceExtendsInterfaceDocument
 export interface ContactModel extends Model<CardScemaInterfaceExtendsInterfaceDocument> {}
 const CardScema = new Schema(
   {
+    active: {
+      type: Boolean,
+      default: true,
+    },
     title: {
       type: String,
       required: [true, 'Please add a title'],
