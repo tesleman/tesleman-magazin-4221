@@ -37,17 +37,41 @@ const SeoTab: React.FC<{ _id: string; seo: formInterface }> = ({ _id, seo }) => 
       <Grid alignContent="center" alignItems="flex-start" container direction="column">
         <Paper>
           <Grid alignContent="center" alignItems="flex-start" container direction="column">
-            <label className={style.row_item} htmlFor="meta_title">
-              <input ref={register} type="text" name="meta_title" multiple />
-              meta title
+            <label htmlFor="meta_title">
+              <Grid container direction="column">
+                meta title
+                <input
+                  className={style.row_item}
+                  ref={register}
+                  type="text"
+                  name="meta_title"
+                  multiple
+                />
+              </Grid>
             </label>
-            <label className={style.row_item} htmlFor="meta_keywords">
-              <input ref={register} type="text" name="meta_keywords" multiple />
-              meta keywords
+            <label htmlFor="meta_keywords">
+              <Grid container direction="column">
+                meta keywords
+                <input
+                  className={style.row_item}
+                  ref={register}
+                  type="text"
+                  name="meta_keywords"
+                  multiple
+                />
+              </Grid>
             </label>
-            <label className={style.row_item} htmlFor="meta_description">
-              <input ref={register} type="text" name="meta_description" multiple />
-              meta description
+            <label htmlFor="meta_description">
+              <Grid container direction="column">
+                meta description
+                <input
+                  className={style.row_item}
+                  ref={register}
+                  type="text"
+                  name="meta_description"
+                  multiple
+                />
+              </Grid>
             </label>
           </Grid>
         </Paper>

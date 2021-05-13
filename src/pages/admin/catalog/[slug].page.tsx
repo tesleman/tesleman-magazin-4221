@@ -91,7 +91,7 @@ const CatalogSlug: React.FC<{ cards: Array<CardScemaInterface>; ordersCount: num
 }) => {
   const router = useRouter();
   const { register, handleSubmit } = useForm();
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(Number(router.query.page) || 0);
   const [chece, setChece] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -184,17 +184,19 @@ const CatalogSlug: React.FC<{ cards: Array<CardScemaInterface>; ordersCount: num
                 <TableRow>
                   <TableCell>title</TableCell>
                   <TableCell>Artikul</TableCell>
+                  <TableCell>Active</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {cards.map((row) => (
-                  <TableRow key={row.title}>
+                  <TableRow key={row._id}>
                     <TableCell align="left">
                       <Link href={`/admin/update/${row._id}`}>
                         <a>{row.title}</a>
                       </Link>
                     </TableCell>
                     <TableCell align="left">{row.artikul}</TableCell>
+                    <TableCell align="left">{row.active ? 'true' : 'false'}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

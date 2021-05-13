@@ -18,26 +18,24 @@ const menuItem = [
 ];
 const AdminNav = ({ children }) => {
   return (
-    <Container>
-      <Grid container direction="row">
-        <Grid item xs={2}>
-          <List>
-            {menuItem.map((item) => (
-              <Link key={item.slug} href={`/admin/${item.slug}`}>
-                <a>
-                  <ListItem button>
-                    <ListItemText primary={item.title} />
-                  </ListItem>
-                </a>
-              </Link>
-            ))}
-          </List>
-        </Grid>
-        <Grid item xs={10}>
-          {children}
-        </Grid>
+    <Grid container direction="row">
+      <Grid item xs={2}>
+        <List>
+          {menuItem.map((item) => (
+            <Link key={item.slug} href={`/admin/${item.slug}`}>
+              <a>
+                <ListItem button>
+                  <ListItemText primary={item.title} />
+                </ListItem>
+              </a>
+            </Link>
+          ))}
+        </List>
       </Grid>
-    </Container>
+      <Grid item xs={10}>
+        {children}
+      </Grid>
+    </Grid>
   );
 };
 

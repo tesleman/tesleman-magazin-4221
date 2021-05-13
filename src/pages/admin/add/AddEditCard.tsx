@@ -149,116 +149,147 @@ const AddEditCard: React.FC<responsIntrfaceInput> = ({
   return (
     <Paper>
       <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit(onSubmit)}>
-        <Paper>
-          <Grid
-            className={style.row_item}
-            alignContent="center"
-            alignItems="flex-start"
-            container
-            direction="column"
-          >
-            <Paper>
-              <Grid
-                className={style.row_item}
-                alignContent="center"
-                alignItems="flex-start"
-                container
-                direction="column"
-              >
-                <label className={style.row_item} htmlFor="title">
-                  <input name="active" ref={register} type="checkbox" />
-                  active
-                </label>
-                <label className={style.row_item} htmlFor="title">
+        <Grid alignContent="center" alignItems="flex-start" container direction="column">
+          <Grid item xs={6}>
+            <label className={style.row_item} htmlFor="title">
+              <input name="active" ref={register} type="checkbox" />
+              active
+            </label>
+          </Grid>
+          <Grid item xs={6}>
+            <label htmlFor="title">
+              <Grid container direction="column">
+                title
+                <input
+                  className={style.row_item}
+                  key={124234535}
+                  onChange={() => titleCheng(togleChecbox, getValues, setValue)}
+                  ref={register}
+                  type="text"
+                  name="title"
+                  multiple
+                />
+              </Grid>
+            </label>
+          </Grid>
+          <Grid item xs={6}>
+            <label htmlFor="title">
+              <Grid className={style.row_item} container direction="row">
+                <Grid item xs={10}>
                   <input
-                    key={124234535}
-                    onChange={() => titleCheng(togleChecbox, getValues, setValue)}
-                    ref={register}
-                    type="text"
-                    name="title"
-                    multiple
-                  />
-                  title
-                </label>
-                <label className={style.row_item} htmlFor="title">
-                  <input
+                    style={{ width: '100%' }}
                     onChange={() => titleCheng(togleChecbox, getValues, setValue)}
                     ref={register}
                     type="text"
                     name="slug"
                     multiple
                   />
-                  <Button
+                  {/* <Button
                     onClick={() => {
                       titleCheng(togleChecbox, getValues, setValue);
                       checBox();
                     }}
                   >
                     {togleChecbox ? 'Slug' : 'noSlug'}
-                  </Button>
-                  <input
-                    className={style.row_item}
-                    onClick={() => titleCheng(togleChecbox, getValues, setValue)}
-                    onChange={checBox}
-                    name="checkbox"
-                    type="checkbox"
-                  />
-                  slug
+                  </Button> */}
+                </Grid>
+                <Grid item xs={2}>
+                  <span style={{ whiteSpace: 'nowrap' }}>
+                    <input
+                      onClick={() => titleCheng(togleChecbox, getValues, setValue)}
+                      onChange={checBox}
+                      name="checkbox"
+                      type="checkbox"
+                    />
+                    {togleChecbox ? 'Slug' : 'noSlug'}
+                  </span>
                   {stateError !== null && stateError?.slug && (
                     <div>
                       <span style={{ color: 'red' }}>{stateError.slug}</span> this slug already
                       exist
                     </div>
                   )}
-                </label>
-                <label className={style.row_item} htmlFor="subtitle">
-                  <input ref={register} type="text" name="subtitle" multiple />
-                  subtitle
-                </label>
-                {stateError?.subtitle && stateError?.subtitle.message}
-                <label className={style.row_item} htmlFor="description">
-                  <input ref={register} type="text" name="description" multiple />
-                  description
-                </label>
-                {stateError?.description && stateError?.description.message}
-                <label className={style.row_item} htmlFor="description">
-                  <input ref={register} type="text" name="artikul" multiple />
-                  artikul
-                </label>
-                <label className={style.row_item} htmlFor="detail">
-                  <textarea ref={register} name="detail" />
-                  detail
-                </label>
-                <label className={style.row_item} htmlFor="price">
-                  <input name="price" ref={register} />
-                  price
-                </label>
-
-                <FormControl className={style.row_item} style={{ width: 150 }}>
-                  <NativeSelect value={selectDefaultValue} onChange={categoryHandlChang}>
-                    {stateCat.map((e, i: number) => (
-                      <option key={i} value={i}>
-                        {e.title}
-                      </option>
-                    ))}
-                  </NativeSelect>
-                  <FormHelperText>Uncontrolled</FormHelperText>
-                </FormControl>
-
-                <input name="categoryslug" ref={register} style={{ display: 'none' }} />
-                <input name="category" ref={register} style={{ visibility: 'hidden' }} />
-                <label className={style.row_item} htmlFor="file">
-                  <input ref={register} type="file" name="images" multiple />
-                  file
-                </label>
-
-                <button className={style.row_item} style={{ width: 70 }} type="submit">
-                  submit
-                </button>
+                </Grid>
               </Grid>
-            </Paper>
+            </label>
           </Grid>
-        </Paper>
+          <label htmlFor="subtitle">
+            <Grid container direction="column">
+              subtitle
+              <input
+                className={style.row_item}
+                ref={register}
+                type="text"
+                name="subtitle"
+                multiple
+              />
+            </Grid>
+          </label>
+          {stateError?.subtitle && stateError?.subtitle.message}
+          <label htmlFor="description">
+            <Grid container direction="column">
+              description
+              <input
+                className={style.row_item}
+                ref={register}
+                type="text"
+                name="description"
+                multiple
+              />
+            </Grid>
+          </label>
+          {stateError?.description && stateError?.description.message}
+          <label htmlFor="description">
+            <Grid container direction="column">
+              artikul
+              <input
+                className={style.row_item}
+                ref={register}
+                type="text"
+                name="artikul"
+                multiple
+              />
+            </Grid>
+          </label>
+          <label htmlFor="detail">
+            <Grid container direction="column">
+              detail
+              <textarea className={style.row_item} ref={register} name="detail" />
+            </Grid>
+          </label>
+          <label htmlFor="price">
+            <Grid container direction="column">
+              price
+              <input className={style.row_item} name="price" ref={register} />
+            </Grid>
+          </label>
+
+          <FormControl style={{ width: 150 }}>
+            <FormHelperText>Category</FormHelperText>
+            <NativeSelect
+              className={style.row_item}
+              value={selectDefaultValue}
+              onChange={categoryHandlChang}
+            >
+              {stateCat.map((e, i: number) => (
+                <option key={i} value={i}>
+                  {e.title}
+                </option>
+              ))}
+            </NativeSelect>
+          </FormControl>
+
+          <input name="categoryslug" ref={register} style={{ display: 'none' }} />
+          <input name="category" ref={register} style={{ visibility: 'hidden' }} />
+          <label className={style.row_item} htmlFor="file">
+            <input ref={register} type="file" name="images" multiple />
+            file
+          </label>
+
+          <button className={style.row_item} style={{ width: 70 }} type="submit">
+            submit
+          </button>
+        </Grid>
       </form>
       <Grid className={style.row_item} container direction="row">
         {stateLocalImages &&

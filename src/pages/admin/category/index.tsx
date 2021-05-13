@@ -60,7 +60,7 @@ const Categoryes: React.FC<{
               </TableHead>
               <TableBody>
                 {categories.map((row) => (
-                  <TableRow key={row.title}>
+                  <TableRow key={row._id}>
                     <TableCell align="left">
                       <Link href={`/admin/${slug}/${row.slug}`}>
                         <a>{row.title}</a>
