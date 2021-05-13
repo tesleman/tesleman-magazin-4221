@@ -28,12 +28,12 @@ class CardController {
             `${req.body.title}  вы можете купить в нашем магазине "название магазина"`,
         },
       };
-      console.log(cardSpred);
+
       const card = await Card.create(cardSpred);
-      console.log(card);
+
       res.status(200).json({
         message: 'succes',
-        data: 'card',
+        data: card,
       });
     } catch (e) {
       res.status(400).json({
@@ -75,8 +75,9 @@ class CardController {
     try {
       const cardId = req.body._id;
       const card = await Card.findById({ _id: req.body._id });
+
       const cardUpdate = {
-        active: req.body.active || card.active,
+        active: req.body.active,
         slug: req.body.slug || card.slug,
         title: req.body.title || card.title,
         category: req.body.category || card.category,
@@ -94,7 +95,11 @@ class CardController {
         },
       };
 
-      const updateCardBiId = await Card.findByIdAndUpdate(cardId, { ...cardUpdate }, { new: true });
+      const updateCardBiId = await Card.findByIdAndUpdate(
+        { _id: cardId },
+        { ...cardUpdate },
+        { new: true },
+      );
 
       res.status(200).json({
         message: 'succes',

@@ -28,8 +28,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query, res, req }
   const regex = new RegExp(`${title}`);
 
   const pageOptions = {
-    page: limitQery(query.page) || 0,
-    limit: limitQery(query.count) || 5,
+    page: limitQery(query.page as string) || 0,
+    limit: limitQery(query.count as string) || 5,
     title: query.title !== undefined ? regex : '',
     artikul: query.artikul || '',
     categoryId: currentCategory._id,

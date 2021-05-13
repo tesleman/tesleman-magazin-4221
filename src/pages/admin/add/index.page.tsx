@@ -5,14 +5,18 @@ import TabPanel from '.';
 import { CardScemaInterface } from '../../api/models/cardScema';
 
 export interface responsIntrfaceInput {
-  images: Array<string> | FileList;
+  active: boolean;
+  slug: string;
   title: string;
-  subtitle: string;
-  description: string;
   category: string;
   categoryslug: string;
+  price: string;
   detail: string;
-  slug: string;
+  artikul: string;
+  description: string;
+  subtitle: string;
+  images: Array<string>;
+  _id: string;
 }
 
 const AddCard: React.FC<CardScemaInterface> = (props) => {

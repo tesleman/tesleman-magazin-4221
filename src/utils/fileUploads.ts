@@ -12,7 +12,6 @@ const uploatData = async (images: FileList | Array<string>) => {
     credentials: 'include',
     method: 'post',
   }); // posting file to file system
-
   return await response.json(); // array with image link
 };
 

@@ -12,7 +12,7 @@ import { useStyles } from './add.style';
 import { titleCheng } from '../../../utils/slug';
 import { CardScemaInterface } from '../../api/models/cardScema';
 
-const AddEditCard: React.FC<CardScemaInterface> = ({
+const AddEditCard: React.FC<responsIntrfaceInput> = ({
   active = true,
   slug = '',
   title = '',
@@ -38,44 +38,57 @@ const AddEditCard: React.FC<CardScemaInterface> = ({
       artikul,
       description,
       subtitle,
+      images: null,
     },
   });
   const [stateError, setstateError] = React.useState(null);
   const [stateCat, setCat] = React.useState([]);
-  const [stateLocalImages, setLocalImages] = React.useState(images || []);
+  const [stateLocalImages, setLocalImages] = React.useState(images);
   const [togleChecbox, setstogleChecbox] = React.useState(false);
   const [selectDefaultValue, setStateDefaultValue] = React.useState(0);
   const style = useStyles();
   const router = useRouter();
 
-  const onSubmit = async (data: responsIntrfaceInput, e) => {
+  const onSubmit = async (data) => {
     // create a card
 
     try {
       if (!_id) {
         const temporaryImg = data.images;
+        console.log(temporaryImg);
         data.images = [];
         // posting card  with image to DB
         if (!data.categoryslug) {
           data.categoryslug = stateCat[0].slug;
         }
         const cardCreateWithoutImg = await cardCreate(data);
+        if (cardCreateWithoutImg.message.errors) {
+          setstateError(cardCreateWithoutImg.message.errors);
+        }
+        if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug) {
+          setstateError(cardCreateWithoutImg.message.keyValue);
+        }
+        console.log(cardCreateWithoutImg);
         if (temporaryImg.length > 0) {
           const images = await uploatData(temporaryImg);
-          data.images = images;
+          data.images = images.images;
         }
 
-        // const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, data });
-        console.log(cardCreateWithoutImg, 11);
-        if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug)
-          setstateError(cardCreateWithoutImg.message.keyValue);
+        const update = await CardUpdate({ _id: cardCreateWithoutImg.data._id, data });
+        if (update.message === 'succes') {
+          router.push(`update/${update.data._id}`);
+        }
+        console.log(update, 11);
       }
       if (_id) {
         const temporaryImg = data.images;
         if (temporaryImg.length > 0) {
           const imagesUploda = await uploatData(temporaryImg);
-          setLocalImages((prevImg) => [...prevImg, ...imagesUploda]);
-          data.images = [...stateLocalImages, ...imagesUploda];
+          if (imagesUploda.message === 'succes') {
+            setValue('images', null);
+          }
+          setLocalImages((prevImg) => [...prevImg, ...imagesUploda.images]);
+          data.images = [...stateLocalImages, ...imagesUploda.images];
         }
         if (temporaryImg.length <= 0) {
           data.images = [...stateLocalImages];
@@ -103,8 +116,6 @@ const AddEditCard: React.FC<CardScemaInterface> = ({
   }, [togleChecbox]);
   React.useEffect(() => {
     fech();
-
-    return () => {};
   }, []);
 
   React.useEffect(() => {
@@ -193,18 +204,23 @@ const AddEditCard: React.FC<CardScemaInterface> = ({
                     type="checkbox"
                   />
                   slug
-                  {stateError !== null && stateError.slug && (
-                    <div>same slug already exist {stateError.slug}</div>
+                  {stateError !== null && stateError?.slug && (
+                    <div>
+                      <span style={{ color: 'red' }}>{stateError.slug}</span> this slug already
+                      exist
+                    </div>
                   )}
                 </label>
                 <label className={style.row_item} htmlFor="subtitle">
                   <input ref={register} type="text" name="subtitle" multiple />
                   subtitle
                 </label>
+                {stateError?.subtitle && stateError?.subtitle.message}
                 <label className={style.row_item} htmlFor="description">
                   <input ref={register} type="text" name="description" multiple />
                   description
                 </label>
+                {stateError?.description && stateError?.description.message}
                 <label className={style.row_item} htmlFor="description">
                   <input ref={register} type="text" name="artikul" multiple />
                   artikul

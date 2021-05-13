@@ -4,15 +4,22 @@ interface NextApiRequestExtand extends NextApiRequest {
 }
 class FileController {
   async FilePost(req: NextApiRequestExtand, res: NextApiResponse) {
-    const file = req.files;
+    try {
+      const file = req.files;
 
-    if (!file) {
-      const error = new Error('Please choose files');
+      if (!file) {
+        const error = new Error('Please choose files');
+      }
+
+      let fileNames = file.map((element) => '/uploads/' + element.filename);
+
+      res.status(200).json({
+        images: fileNames,
+        message: 'succes',
+      });
+    } catch (error) {
+      console.log(error);
     }
-
-    let fileNames = file.map((element) => '/uploads/' + element.filename);
-
-    res.send(fileNames);
   }
 }
 
