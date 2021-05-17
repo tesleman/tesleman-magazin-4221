@@ -71,7 +71,7 @@ const CategoryForm: React.FC<propInterface> = ({
   }, [togleChecbox]);
 
   const onSubmitFeachHeandlwer = async (data: dataInterface) => {
-    const fehData = await fetch(`/api/category`, {
+    const fehData = await fetch(`${process.env.DOMAIN}/api/category`, {
       headers: {
         'Content-Type': 'application/json',
       },

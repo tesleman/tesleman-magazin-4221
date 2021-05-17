@@ -72,7 +72,7 @@ MyApp.getInitialProps = async ({ Component, ctx }: AppContextExtends) => {
   const cookies = cookie.parse(cooc);
 
   if (ctx.pathname.includes('/admin') && ctx.req) {
-    const user = await fetch('http://localhost:3000/api/login', {
+    const user = await fetch(`${process.env.DOMAIN}/api/login`, {
       headers: {
         'Content-Type': 'application/json',
         cookies: cookies.auth,

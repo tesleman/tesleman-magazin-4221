@@ -26,7 +26,7 @@ const Row: React.FC<{ order: OrderScemaInterface }> = (props) => {
 
   const updateOrderStatusById = async (_id: string, status: string) => {
     try {
-      const patchFetchStaus = await fetch(`/api/orders`, {
+      const patchFetchStaus = await fetch(`${process.env.DOMAIN}/api/orders`, {
         credentials: 'include',
         method: 'PATCH',
         headers: {

@@ -7,7 +7,7 @@ const uploatData = async (images: FileList | Array<string>) => {
     formData.append('avatar', file);
   });
 
-  const response = await fetch(`/api/file`, {
+  const response = await fetch(`${process.env.DOMAIN}/api/file`, {
     body: formData,
     credentials: 'include',
     method: 'post',
@@ -16,7 +16,7 @@ const uploatData = async (images: FileList | Array<string>) => {
 };
 
 const cardCreate = async (data: responsIntrfaceInput) => {
-  const cardCreate = await fetch(`/api/card`, {
+  const cardCreate = await fetch(`${process.env.DOMAIN}/api/card`, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -33,7 +33,7 @@ const CardUpdate = async ({ _id, ...args }) => {
     const cardId = _id;
     const dataForUpdate = { ...args.data };
 
-    const cardUpdate = await fetch(`/api/card`, {
+    const cardUpdate = await fetch(`${process.env.DOMAIN}/api/card`, {
       headers: {
         'Content-Type': 'application/json',
       },
