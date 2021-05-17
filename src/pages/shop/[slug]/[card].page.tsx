@@ -13,7 +13,6 @@ import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   const card = await Card.findOne({ slug: query.card as string });
-  // const card = await fetch(`http://${process.env.domein}/api/cardBiId?card=${query.card}`);
 
   return {
     props: { data: JSON.parse(JSON.stringify(card)) }, // will be passed to the page component as props
