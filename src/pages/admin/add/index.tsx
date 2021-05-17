@@ -5,7 +5,6 @@ import AddEditCard from './AddEditCard';
 import SeoTab from './seoTab';
 
 const TabPanel: React.FC<CardScemaInterface> = (props) => {
-  console.log(props);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {

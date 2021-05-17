@@ -30,7 +30,6 @@ const TabsCentr: React.FC<{
       table: 'card',
       all: true,
     };
-    console.log(payload);
     dispatch(getCard(payload));
   }, [category, dispatch]);
   return (

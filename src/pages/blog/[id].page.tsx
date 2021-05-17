@@ -33,26 +33,14 @@ const BlogItem: React.FC<{ blog: BlogScemaInterface }> = ({ blog }) => {
 
 export default BlogItem;
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   dbConnect();
+
   const blogItem = await Blog.findById(params.id).exec();
 
   return {
     props: {
       blog: JSON.parse(JSON.stringify(blogItem)),
     },
-  };
-}
-
-export async function getStaticPaths() {
-  dbConnect();
-  const blogItem = await Blog.find().exec();
-  const paths = blogItem.map((elem) => {
-    return { params: { id: elem._id.toString() } };
-  });
-
-  return {
-    fallback: false,
-    paths,
   };
 }

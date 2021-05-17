@@ -25,7 +25,6 @@ const Categorys: React.FC<{ categories: Array<CardScemaInterface>; count: number
   categories,
   count,
 }) => {
-  console.log(categories);
   return (
     <AdminNav>
       <Categoryes

@@ -15,13 +15,12 @@ import theme from '../theme';
 import Blogs from './api/models/blogScema';
 import Card, { CardScemaInterface } from './api/models/cardScema';
 import Category, { CategoryBaseDocument } from './api/models/categoryScema';
-import { cardInterface } from './shop/shop.import-export';
 
 interface propFcI {
   category: categoryI[];
-  cards: cardInterface[];
+  cards: CardScemaInterface[];
   blogs: any;
-  saleContdovnItem: cardInterface[];
+  saleContdovnItem: CardScemaInterface[];
 }
 const Home: React.FC<propFcI> = ({ category, cards, blogs, saleContdovnItem }) => {
   const { cart } = useSelector((state: RootState) => state.cart);

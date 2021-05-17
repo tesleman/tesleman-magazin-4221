@@ -12,13 +12,13 @@ import { useStyles } from './add.style';
 import { titleCheng } from '../../../utils/slug';
 import { CardScemaInterface } from '../../api/models/cardScema';
 
-const AddEditCard: React.FC<responsIntrfaceInput> = ({
+const AddEditCard: React.FC<CardScemaInterface> = ({
   active = true,
   slug = '',
   title = '',
   category = '',
   categoryslug = '',
-  price = '',
+  price = 0,
   detail = '',
   artikul = '',
   description = '',
@@ -55,7 +55,7 @@ const AddEditCard: React.FC<responsIntrfaceInput> = ({
     try {
       if (!_id) {
         const temporaryImg = data.images;
-        console.log(temporaryImg);
+
         data.images = [];
         // posting card  with image to DB
         if (!data.categoryslug) {
@@ -68,7 +68,7 @@ const AddEditCard: React.FC<responsIntrfaceInput> = ({
         if (cardCreateWithoutImg.message.keyValue && cardCreateWithoutImg.message.keyValue.slug) {
           setstateError(cardCreateWithoutImg.message.keyValue);
         }
-        console.log(cardCreateWithoutImg);
+
         if (temporaryImg.length > 0) {
           const images = await uploatData(temporaryImg);
           data.images = images.images;
@@ -78,7 +78,6 @@ const AddEditCard: React.FC<responsIntrfaceInput> = ({
         if (update.message === 'succes') {
           router.push(`update/${update.data._id}`);
         }
-        console.log(update, 11);
       }
       if (_id) {
         const temporaryImg = data.images;
@@ -95,7 +94,6 @@ const AddEditCard: React.FC<responsIntrfaceInput> = ({
         }
 
         const ss = await CardUpdate({ _id, data });
-        console.log(ss, 22);
       }
       // e.target.reset();
     } catch (err) {

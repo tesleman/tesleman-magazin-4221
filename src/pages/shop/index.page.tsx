@@ -61,27 +61,29 @@ const Shpo: React.FC<{ json: string }> = ({ json }) => {
       all={totalCounts}
       baseCategory={{ category: 'Shop', link: '/shop' }}
     >
-      <Head>
-        <title>Shop</title>.
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-      </Head>
-      <Grid container direction="row">
-        {card.map((e) => (
-          <Card
-            gridxs={12}
-            gridsm={6}
-            gridmd={3}
-            cart={cart}
-            key={e._id}
-            card={e}
-            addTooCartHendl={addTooCartHendl}
-          />
-        ))}
-      </Grid>
-      <Grid container direction="row" justify="center" alignContent="center">
-        <Pagin page={page} handleChange={handleChange} count={count} />
-      </Grid>
+      <>
+        <Head>
+          <title>Shop</title>.
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+        </Head>
+        <Grid container direction="row">
+          {card.map((e) => (
+            <Card
+              gridxs={12}
+              gridsm={6}
+              gridmd={3}
+              cart={cart}
+              key={e._id}
+              card={e}
+              addTooCartHendl={addTooCartHendl}
+            />
+          ))}
+        </Grid>
+        <Grid container direction="row" justify="center" alignContent="center">
+          <Pagin page={page} handleChange={handleChange} count={count} />
+        </Grid>
+      </>
     </Layuot>
   );
 };

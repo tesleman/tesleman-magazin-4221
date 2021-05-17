@@ -10,7 +10,7 @@ export interface responsIntrfaceInput {
   title: string;
   category: string;
   categoryslug: string;
-  price: string;
+  price: number;
   detail: string;
   artikul: string;
   description: string;

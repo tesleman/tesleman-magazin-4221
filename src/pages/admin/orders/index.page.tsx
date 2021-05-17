@@ -18,8 +18,8 @@ import Row from './Row';
 import { limitQery } from '../../../utils/ueryCheck';
 export const getServerSideProps: GetServerSideProps = async ({ query, res, req }) => {
   const pageOptions = {
-    page: limitQery(query.page) | 0,
-    limit: limitQery(query.count) | 5,
+    page: limitQery(query.page as string) | 0,
+    limit: limitQery(query.count as string) | 5,
   };
 
   const orders = await Order.find({})

@@ -10,15 +10,15 @@ import { useRouter } from 'next/router';
 import Filters from './Filters';
 
 interface propsLayuotinterface {
-  breadcrumbsCard: string;
+  breadcrumbsCard?: string;
   children: JSX.Element;
-  src: string;
-  category: string;
-  baseCategory: { category: string; link: string };
-  frome: number;
-  too: number;
-  all: number;
-  filte: boolean;
+  src?: string;
+  category?: string;
+  baseCategory?: { category: string; link: string };
+  frome?: number;
+  too?: number;
+  all?: number;
+  filte?: boolean;
 }
 
 const Layuot: React.FC<propsLayuotinterface> = (props) => {

@@ -17,17 +17,19 @@ export async function getServerSideProps() {
 
 const Blog: React.FC<{ blogs: Array<BlogScemaInterface> }> = ({ blogs }) => {
   return (
-    <Layuot categor="Blog" baseCategory={{ category: 'Blog', link: '/blog' }}>
-      <Head>
-        <title>Blog</title>.
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-      </Head>
-      <Container>
-        {blogs.map((element, index) => (
-          <BlogItem key={element._id} cards={element} index={index} />
-        ))}
-      </Container>
+    <Layuot category="Blog" baseCategory={{ category: 'Blog', link: '/blog' }}>
+      <>
+        <Head>
+          <title>Blog</title>.
+          <meta name="description" content="" />
+          <meta name="keywords" content="" />
+        </Head>
+        <Container>
+          {blogs.map((element, index) => (
+            <BlogItem key={element._id} blog={element} index={index} />
+          ))}
+        </Container>
+      </>
     </Layuot>
   );
 };

@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { PropsSingleCard } from '../shop-types';
 import { useStyles, useStylesType } from '../styles/shop.style';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTooCart, cardInterface, Layuot, RootState } from '../shop.import-export';
+import { addTooCart, Layuot, RootState } from '../shop.import-export';
 import Card, { CardScemaInterface } from '../../api/models/cardScema';
 import Head from 'next/head';
 
