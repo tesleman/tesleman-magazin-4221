@@ -3,6 +3,6 @@ module.exports = {
   env: {
     DOMAIN: process.env.DOMAIN,
     MONGO_URI: process.env.MONGO_URL,
-    SECRET: procces.env.SECRET,
+    SECRET: proces.env.SECRET,
   },
 };
