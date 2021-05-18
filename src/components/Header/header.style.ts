@@ -15,13 +15,20 @@ export const useStyles = makeStyles((theme: Theme) => ({
   },
   ulRoot: {
     zIndex: 555,
-
     margin: 0,
     padding: 0,
     display: 'flex',
     justifyContent: 'center',
     justifyItems: 'center',
     flexDirection: 'row',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column',
+    },
+  },
+  sidePhone: {
+    [theme.breakpoints.down('sm')]: {
+      visibility: 'hidden',
+    },
   },
   ulli: {
     position: 'relative',
@@ -95,8 +102,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
   catalogText: {
     textAlign: 'left',
     padding: 5,
-    [theme.breakpoints.only('xs')]: {
-      fontSize: '10px',
+    [theme.breakpoints.down('sm')]: {
+      visibility: 'hidden',
     },
   },
   ListItem: {

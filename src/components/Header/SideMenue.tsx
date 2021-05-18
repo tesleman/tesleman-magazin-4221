@@ -48,7 +48,13 @@ const TemporaryDrawer: React.FC<{ menue: Array<menueI> }> = ({ menue }) => {
             Каталог товаров
           </Grid>
           <Grid className={style.catalogText} item xs={4}>
-            <Grid container direction="row" alignContent="center" alignItems="center">
+            <Grid
+              className={style.sidePhone}
+              container
+              direction="row"
+              alignContent="center"
+              alignItems="center"
+            >
               <Grid xs={4} item>
                 <LocalPhoneIcon />
               </Grid>
