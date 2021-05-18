@@ -5,3 +5,13 @@ export const limitQery = (query: string) => {
   }
   return;
 };
+
+export const qeryPrceHendler = (router) => {
+  if (!router.query.price) return;
+  return { price: router.query.price };
+};
+
+export const qeryTextHendler = (router) => {
+  if (!router.query.q) return;
+  return { q: router.query.q };
+};

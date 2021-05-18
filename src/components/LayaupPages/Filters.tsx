@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, FormControl, Grid, InputLabel, Select, TextField } from '@material-ui/core';
 import { NextRouter, useRouter } from 'next/router';
+import { qeryPrceHendler, qeryTextHendler } from '../../utils/ueryCheck';
 
 const sekectArray = [
   {
@@ -39,11 +40,19 @@ const Filters = ({ frome = 0, too = 0, all = 0 }) => {
 
   const slug = (router: NextRouter) => {
     if (!router.query.slug) return;
-    return { slug: router.query.slug, q: router.query.q ? (router.query.q as string) : '' };
+    return {
+      slug: router.query.slug,
+      ...qeryTextHendler(router),
+      ...qeryPrceHendler(router),
+    };
   };
   const page = (router: NextRouter) => {
     if (!router.query.page) return;
-    return { page: router.query.page, q: router.query.q ? (router.query.q as string) : '' };
+    return {
+      page: router.query.page,
+      ...qeryTextHendler(router),
+      ...qeryPrceHendler(router),
+    };
   };
   const textPageSearch = (value: string) => {
     return { q: value, page: 1 };

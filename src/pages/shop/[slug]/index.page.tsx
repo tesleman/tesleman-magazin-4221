@@ -10,6 +10,7 @@ import { cardProps } from '../../../utils/dbprops';
 import { CategoryBaseDocument } from '../../api/models/categoryScema';
 import Head from 'next/head';
 import { CardScemaInterface } from '../../api/models/cardScema';
+import { qeryPrceHendler, qeryTextHendler } from '../../../utils/ueryCheck';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   const props = await cardProps(query);
@@ -37,10 +38,7 @@ const SingleCategory: React.FC<propsI> = (props) => {
   const count = Math.ceil(totalCount / limitLocal);
   const router = useRouter();
   const dispatch = useDispatch();
-  const qeryTextHendler = () => {
-    if (!router.query.q) return;
-    return { q: router.query.q };
-  };
+
   const handleChange = (event, value) => {
     setPage(value);
     router.push(
@@ -50,7 +48,8 @@ const SingleCategory: React.FC<propsI> = (props) => {
         query: {
           slug: router.query.slug,
           page: value,
-          ...qeryTextHendler(),
+          ...qeryTextHendler(router),
+          ...qeryPrceHendler(router),
         },
       },
       undefined,
