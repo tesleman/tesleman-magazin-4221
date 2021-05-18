@@ -35,7 +35,7 @@ const Filters = ({ frome = 0, too = 0, all = 0 }) => {
     if (!value) return;
     //разбивка значения инпута для формата чтоб запушить в qery
     const splitedValue = value.split(' ');
-    console.log(splitedValue[0]);
+
     switch (splitedValue[0]) {
       case 'data':
         return { data: splitedValue[1], price: '' };
