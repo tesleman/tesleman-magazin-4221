@@ -39,30 +39,31 @@ const Filters = ({ frome = 0, too = 0, all = 0 }) => {
 
   const slug = (router: NextRouter) => {
     if (!router.query.slug) return;
-    return { slug: router.query.slug };
+    return { slug: router.query.slug, q: router.query.q ? (router.query.q as string) : '' };
   };
   const page = (router: NextRouter) => {
     if (!router.query.page) return;
-    return { page: router.query.page };
+    return { page: router.query.page, q: router.query.q ? (router.query.q as string) : '' };
   };
   const textPageSearch = (value: string) => {
-    if (!value) return;
-    return { q: value };
+    return { q: value, page: 1 };
   };
   const onTextHandleChang = (event: React.ChangeEvent<HTMLInputElement>) => {
     setstateText(event.target.value);
   };
+
   React.useEffect(() => {
-    if (router.pathname.split('/').includes('shop')) setQeryFunctyon();
+    setQeryFunctyon();
 
     return () => {};
   }, [qeryState, stateText]);
 
   const setQeryFunctyon = () => {
+    const text = textPageSearch(stateText);
     const sort = sorting(qeryState);
     const pages = page(router);
     const slugs = slug(router);
-    const text = textPageSearch(stateText);
+
     router.push(
       {
         query: {
@@ -92,17 +93,11 @@ const Filters = ({ frome = 0, too = 0, all = 0 }) => {
               <Grid item xs={6}>
                 <InputLabel htmlFor="filled-age-native-simple">Sorting</InputLabel>
                 <Select defaultValue={qeryState} native onChange={onHandleChang}>
-                  {/* <select onChange={onHandleChang} name="price"> */}
                   {sekectArray.map((element) => (
                     <option key={element.value} value={element.value}>
                       {element.text}
                     </option>
                   ))}
-                  {/* <option value="price ascending">Price &#8593; </option> */}
-                  {/* <option value="price descending">Price &#8595;</option>
-                  <option value="data ascending">Data &#8593; </option>
-                  <option value="data descending">Data &#8595;</option> */}
-                  {/* </select> */}
                 </Select>
               </Grid>
               <Grid item xs={6}>

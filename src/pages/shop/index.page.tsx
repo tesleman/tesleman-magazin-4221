@@ -37,16 +37,21 @@ const Shpo: React.FC<{ json: string }> = ({ json }) => {
 
   const [page, setPage] = React.useState(+router.query.page || 1);
 
-  const handleChange = React.useCallback((event, value) => {
+  const qeryTextHendler = () => {
+    if (!router.query.q) return;
+    return { q: router.query.q };
+  };
+
+  const handleChange = (event, value) => {
     setPage(value);
     router.push(
       {
-        query: { page: value },
+        query: { page: value, ...qeryTextHendler() },
       },
       undefined,
       { scroll: false },
     );
-  }, []);
+  };
 
   const limitLocal = 3;
   const count = Math.ceil(totalCounts / limitLocal);
@@ -81,7 +86,7 @@ const Shpo: React.FC<{ json: string }> = ({ json }) => {
           ))}
         </Grid>
         <Grid container direction="row" justify="center" alignContent="center">
-          <Pagin page={page} handleChange={handleChange} count={count} />
+          <Pagin page={+router.query.page || 1} handleChange={handleChange} count={count} />
         </Grid>
       </>
     </Layuot>

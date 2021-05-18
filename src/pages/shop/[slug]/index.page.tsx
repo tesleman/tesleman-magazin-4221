@@ -37,7 +37,11 @@ const SingleCategory: React.FC<propsI> = (props) => {
   const count = Math.ceil(totalCount / limitLocal);
   const router = useRouter();
   const dispatch = useDispatch();
-  const handleChange = React.useCallback((event, value) => {
+  const qeryTextHendler = () => {
+    if (!router.query.q) return;
+    return { q: router.query.q };
+  };
+  const handleChange = (event, value) => {
     setPage(value);
     router.push(
       {
@@ -46,12 +50,13 @@ const SingleCategory: React.FC<propsI> = (props) => {
         query: {
           slug: router.query.slug,
           page: value,
+          ...qeryTextHendler(),
         },
       },
       undefined,
       { scroll: false },
     );
-  }, []);
+  };
   const addTooCartHendl = React.useCallback((props) => dispatch(addTooCart(props)), []);
 
   const fromeCount = page * limitLocal - limitLocal + 1;
@@ -77,7 +82,7 @@ const SingleCategory: React.FC<propsI> = (props) => {
           ))}
         </Grid>
         <Grid container direction="row" justify="center" alignContent="center">
-          <Pagin page={page} handleChange={handleChange} count={count} />
+          <Pagin page={+router.query.page || 1} handleChange={handleChange} count={count} />
         </Grid>
       </>
     </Layuot>
