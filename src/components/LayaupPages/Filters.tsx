@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, FormControl, Grid, InputLabel, Select, TextField } from '@material-ui/core';
 import { NextRouter, useRouter } from 'next/router';
-import { qeryPrceHendler, qeryTextHendler } from '../../utils/ueryCheck';
+import { qerySorteHendler, qeryTextHendler } from '../../utils/ueryCheck';
 
 const sekectArray = [
   {
@@ -35,7 +35,16 @@ const Filters = ({ frome = 0, too = 0, all = 0 }) => {
     if (!value) return;
     //разбивка значения инпута для формата чтоб запушить в qery
     const splitedValue = value.split(' ');
-    return { [splitedValue[0]]: splitedValue[1] };
+    console.log(splitedValue[0]);
+    switch (splitedValue[0]) {
+      case 'data':
+        return { data: splitedValue[1], price: '' };
+      case 'price':
+        return { price: splitedValue[1], data: '' };
+
+      default:
+        break;
+    }
   };
 
   const slug = (router: NextRouter) => {
@@ -43,7 +52,7 @@ const Filters = ({ frome = 0, too = 0, all = 0 }) => {
     return {
       slug: router.query.slug,
       ...qeryTextHendler(router),
-      ...qeryPrceHendler(router),
+      ...qerySorteHendler(router),
     };
   };
   const page = (router: NextRouter) => {
@@ -51,7 +60,7 @@ const Filters = ({ frome = 0, too = 0, all = 0 }) => {
     return {
       page: router.query.page,
       ...qeryTextHendler(router),
-      ...qeryPrceHendler(router),
+      ...qerySorteHendler(router),
     };
   };
   const textPageSearch = (value: string) => {

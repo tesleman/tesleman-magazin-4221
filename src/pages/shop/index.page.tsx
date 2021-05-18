@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { cardProps } from '../../utils/dbprops';
 import { Layuot } from './shop.import-export';
 import { propsI } from './[slug]/index.page';
-import { qeryPrceHendler, qeryTextHendler } from '../../utils/ueryCheck';
+import { qerySorteHendler, qeryTextHendler } from '../../utils/ueryCheck';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   const props = await cardProps(query);
@@ -42,7 +42,11 @@ const Shpo: React.FC<{ json: string }> = ({ json }) => {
     setPage(value);
     router.push(
       {
-        query: { page: value, ...qeryTextHendler(router), ...qeryPrceHendler(router) },
+        query: {
+          page: value,
+          ...qeryTextHendler(router),
+          ...qerySorteHendler(router),
+        },
       },
       undefined,
       { scroll: false },

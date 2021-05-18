@@ -10,7 +10,7 @@ import { cardProps } from '../../../utils/dbprops';
 import { CategoryBaseDocument } from '../../api/models/categoryScema';
 import Head from 'next/head';
 import { CardScemaInterface } from '../../api/models/cardScema';
-import { qeryPrceHendler, qeryTextHendler } from '../../../utils/ueryCheck';
+import { qerySorteHendler, qeryTextHendler } from '../../../utils/ueryCheck';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   const props = await cardProps(query);
@@ -49,7 +49,7 @@ const SingleCategory: React.FC<propsI> = (props) => {
           slug: router.query.slug,
           page: value,
           ...qeryTextHendler(router),
-          ...qeryPrceHendler(router),
+          ...qerySorteHendler(router),
         },
       },
       undefined,
